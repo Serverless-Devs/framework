@@ -1,6 +1,7 @@
-const funtions = require('../../src/index.js');
+const { https } = require('./src/index.js');
 
-module.exports = funtions.https.onRequest((req, res, context) => {
+exports.handler = https.onRequest((req, res, context) => {
+  console.log(req, res, context);
   return {
     code: 200,
     message: 'success',
