@@ -38,10 +38,11 @@ exports.handler = (req, resp, context) => {
   getRawBody(req, async (err, body) => {
     const resBody = JSON.parse(body.toString());
     const { payload, event, name } = resBody;
+    console.log('event, name',event, name)
     const latestTags = payload['dist-tags'];
     const { version } = payload.versions[latestTags.latest];
     // 发布版本通知
-    if (event === 'package:publish') {
+    if (event === 'package:publish' || event === 'package:change') {
       try {
         await makeRequest(`npm包：${name}，发布新版本：${version}`);
         resp.send('publish hook success');
