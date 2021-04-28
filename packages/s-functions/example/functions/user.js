@@ -1,9 +1,9 @@
 const { https } = require('./src/index.js');
 
-exports.handler = https.onRequest((req, res, context) => {
-  console.log(req, res, context);
+exports.handler = https.onRequest((params, context) => {
+  console.log(context);
   return {
     code: 200,
-    message: 'success',
+    params,
   };
 });
