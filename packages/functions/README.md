@@ -1,4 +1,11 @@
 # 整体架构
+### 完整生命周期
+![lifecycle](
+https://img.alicdn.com/imgextra/i2/O1CN01d8pfdj1dihqU8SQzT_!!6000000003770-2-tps-1324-812.png)
+
+### 初始化示例
+![init](https://img.alicdn.com/imgextra/i1/O1CN010V5nQ51ociRAzvObH_!!6000000005246-1-tps-1140-747.gif)
+### 结构图
 ![architect](
 https://img.alicdn.com/imgextra/i1/O1CN01rdmubh1pR60RuIDf5_!!6000000005356-2-tps-1284-962.png
 )
