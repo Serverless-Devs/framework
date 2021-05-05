@@ -1,0 +1,30 @@
+edition: 1.0.0
+access: default
+region: cn-hangzhou
+
+services:
+  function-starter:
+    component: function
+    props:
+      app: exampleApp
+      http:
+        - /
+        - like
+      tables:
+        instance: mamba
+        endpoint: xxxx
+        table:
+          - people:
+              name: string
+              phone: integer
+          - cats:
+              catId: string
+              encrypt: boolean
+
+
+
+
+
+
+
+
