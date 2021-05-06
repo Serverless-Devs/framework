@@ -1,5 +1,3 @@
-import client from './client';
+import { initializer } from './initializer';
 
-export {
-  client,
-};
+export { initializer };

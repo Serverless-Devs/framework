@@ -1,3 +1,3 @@
 export * as https from './providers/https';
 
-export * as DataStore from './providers/table';
+export * as table from './providers/table';
