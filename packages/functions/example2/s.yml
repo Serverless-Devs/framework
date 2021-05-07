@@ -6,10 +6,12 @@ services:
   function-starter:
     component: function
     props:
-      app: exampleApp
+      app:
+        name: exampleApp
+        runtime: nodejs12
       http:
         - /
-        - like
+        - user
       tables:
         instance: mamba
         endpoint: xxxx

@@ -1,15 +1,16 @@
 import TableStore from 'tablestore';
+import { IContext } from '../interface';
 
-interface Initializer {
+interface IInitializer {
   endpoint: string;
   instancename: string;
 }
 
-const client = (params: Initializer) => new TableStore.Client({
-  accessKeyId: '<your access key id>',
-  accessKeySecret: '<your access key secret>',
-  endpoint: params.endpoint,
-  instancename: params.instancename,
-});
-
-export const initializer = (params: Initializer) => client(params);
+export const initializer = (context: IContext, params: IInitializer) => {
+  const { credentials } = context;
+  return new TableStore.Client({
+    accessKeyId: credentials.accessKeyId,
+    accessKeySecret: credentials.accessKeySecret,
+    ...params,
+  });
+};
