@@ -8,20 +8,10 @@ services:
     props:
       app:
         name: exampleApp
-        runtime: nodejs12
+        runtime: nodejs14
       http:
         - /
         - user
-      tables:
-        instance: mamba
-        endpoint: xxxx
-        table:
-          - people:
-              name: string
-              phone: integer
-          - cats:
-              catId: string
-              encrypt: boolean
 
 
 
