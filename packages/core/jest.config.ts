@@ -8,7 +8,6 @@ export default {
   coverageProvider: 'v8',
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testMatch: ['**/test/loadComponent.test.ts'],
   testPathIgnorePatterns: ['./test/fixtures'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
 };

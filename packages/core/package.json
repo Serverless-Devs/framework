@@ -1,0 +1,14 @@
+{
+  "name": "@serverless-devs/mid-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {}
+}
