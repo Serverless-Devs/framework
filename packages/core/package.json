@@ -5,10 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
+    "test": "jest",
+    "test:cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  }
 }

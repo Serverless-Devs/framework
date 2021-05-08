@@ -15,11 +15,5 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "f2elint commit-file-scan",
-      "commit-msg": "f2elint commit-msg-scan"
-    }
   }
 }
