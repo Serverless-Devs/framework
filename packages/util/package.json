@@ -18,10 +18,6 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "dependencies": {
-    "http-errors": "^1.8.0"
-  },
-  "devDependencies": {
-    "@types/http-errors": "^1.8.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

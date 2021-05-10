@@ -1,29 +1,6 @@
 import { EVENT, HTTP, INITIALIZER } from './constant';
 import { IFcHttpRes, IFcRequest, IFcContext, IMidRequest } from './interface';
-
-export const isPlainObject = (value: object) => {
-  return Object.prototype.toString.call(value) === '[object Object]';
-};
-
-export const isContainerEmpty = (value: any): boolean => {
-  if (isPlainObject(value)) {
-    return Object.keys(value).length > 0;
-  } else if (Array.isArray(value)) {
-    return value.length > 0;
-  }
-  return true;
-};
-
-export const omit = (value: object, list: string[]) => {
-  const newObject = {};
-  if (!isPlainObject(value)) return newObject;
-  Object.keys(value)
-    .filter((item) => list.indexOf(item) > -1)
-    .map((key) => {
-      newObject[key] = value[key];
-    });
-  return newObject;
-};
+import { isPlainObject, isContainerEmpty, omit } from '@serverless-devs/noah-util';
 
 const makeHttpResponse = ({ statusCode, headers, deleteHeaders, body }: IFcHttpRes, httpResp) => {
   // statusCode
