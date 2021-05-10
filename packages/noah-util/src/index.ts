@@ -32,3 +32,14 @@ export const jsonSafeParse = (string: string, reviver) => {
 
   return string;
 };
+
+export const normalizeHttpResponse = (response) => {
+  // May require updating to catch other types
+  if (response === undefined) {
+    response = {};
+  } else if (Array.isArray(response) || typeof response !== 'object' || response === null) {
+    response = { body: response };
+  }
+  response.headers = response?.headers ?? {};
+  return response;
+};
