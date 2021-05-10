@@ -1,11 +1,25 @@
-# 内置middlewares
+# 如何开发？
+
+- 在根目录下安装依赖
+
+```shell
+npm install
+```
+
+- 为各个包安装依赖并建立软连接
+
+```
+lerna bootstrap
+```
+
+# 内置 middlewares
 
 ## request 转化
 
-1. http-json-body-parser 自动使用`application/json`解析HTTP请求，并将改body转化为JOSN object。
-2. http-form-body-parser 自动为`application/x-www-form-urlencoded`的HTTP请求，并将body转化为对象
-3. http-urlencode-path-parser 自动解析带有URL编码路径的HTTP请求。
-4. validator 根据自定义schemas自动验证传入events和传出response
+1. http-json-body-parser 自动使用`application/json`解析 HTTP 请求，并将改 body 转化为 JOSN object。
+2. http-form-body-parser 自动为`application/x-www-form-urlencoded`的 HTTP 请求，并将 body 转化为对象
+3. http-urlencode-path-parser 自动解析带有 URL 编码路径的 HTTP 请求。
+4. validator 根据自定义 schemas 自动验证传入 events 和传出 response
 
 ## response 转化
 
@@ -20,9 +34,6 @@
 
 2. apigateway-response-parser
 
+```
 
-
-
-
-
-
+```

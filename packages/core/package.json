@@ -12,7 +12,9 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "dependencies": {
+    "@serverless-devs/noah-util": "^0.0.1"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "f2elint commit-file-scan",

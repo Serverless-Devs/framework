@@ -16,3 +16,4 @@ run/
 package-lock.json
 .nodejs-cache
 .tmp
+**/lib
