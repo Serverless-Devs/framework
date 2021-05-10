@@ -1,35 +1,34 @@
-const mimePattern = /^application\/(.+\+)?json(;.*)?$/;
-
-const defaults = {
-  reviver: undefined,
+export const isPlainObject = (value: object) => {
+  return Object.prototype.toString.call(value) === '[object Object]';
 };
 
-export interface Options {
-  reviver?: (key: string, value: any) => any;
-}
+export const isContainerEmpty = (value: any): boolean => {
+  if (isPlainObject(value)) {
+    return Object.keys(value).length > 0;
+  } else if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+  return true;
+};
 
-export default (opts?: Options) => {
-  const options = { ...defaults, ...(opts || {}) };
-  const httpJsonBodyParserMiddlewareBefore = async (request) => {
-    const { headers, body } = request.event;
+export const omit = (value: object, list: string[]) => {
+  const newObject = {};
+  if (!isPlainObject(value)) return newObject;
+  Object.keys(value)
+    .filter((item) => list.indexOf(item) > -1)
+    .map((key) => {
+      newObject[key] = value[key];
+    });
+  return newObject;
+};
 
-    const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
+export const jsonSafeParse = (string: string, reviver) => {
+  if (typeof string !== 'string') return string;
+  const firstChar = string[0];
+  if (firstChar !== '{' && firstChar !== '[' && firstChar !== '"') return string;
+  try {
+    return JSON.parse(string, reviver);
+  } catch (e) {}
 
-    if (mimePattern.test(contentTypeHeader)) {
-      try {
-        const data = request.event.isBase64Encoded ? Buffer.from(body, 'base64').toString() : body;
-
-        request.event.body = JSON.parse(data, options.reviver);
-      } catch (err) {
-        const createError = require('http-errors');
-        throw new createError.UnprocessableEntity(
-          'Content type defined as JSON but an invalid JSON was provided',
-        );
-      }
-    }
-  };
-
-  return {
-    before: httpJsonBodyParserMiddlewareBefore,
-  };
+  return string;
 };

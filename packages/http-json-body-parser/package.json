@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/mid-core",
+  "name": "@serverless-devs/http-json-body-parser",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -12,11 +12,16 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "f2elint commit-file-scan",
       "commit-msg": "f2elint commit-msg-scan"
     }
+  },
+  "dependencies": {
+    "http-errors": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/http-errors": "^1.8.0"
   }
 }

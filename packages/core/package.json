@@ -1,11 +1,11 @@
 {
-  "name": "@serverless-devs/mid-core",
+  "name": "@serverless-devs/noah-core",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest",
+    "test": "jest ./test/index.test.ts",
     "test:cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
