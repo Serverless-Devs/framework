@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/noah-core",
+  "name": "@serverless-devs/noah-validator",
   "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",
@@ -13,12 +13,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/noah-util": "^0.0.1"
+    "ajv": "^8.3.0",
+    "ajv-formats": "^2.1.0",
+    "ajv-formats-draft2019": "^1.4.3",
+    "ajv-i18n": "^4.0.0",
+    "http-errors": "^1.8.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "f2elint commit-file-scan",
       "commit-msg": "f2elint commit-msg-scan"
     }
+  },
+  "devDependencies": {
+    "@types/http-errors": "^1.8.0",
+    "@serverless-devs/noah-core": "^0.0.1"
   }
 }
