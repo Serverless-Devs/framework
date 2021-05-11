@@ -1,8 +1,10 @@
 import { IMidRequest, IPlugin } from './interface';
 import { analizeRequestParams, analizeEvents, makeResult } from './util';
-import { HTTP } from './constant';
+import { HTTP, INITIALIZER } from './constant';
 
-const middy = (baseHandler?: Function, plugin?: IPlugin) => {
+const internal = {};
+
+const middy = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
   baseHandler = baseHandler || function () {};
   plugin?.beforePrefetch?.();
   const beforeMiddlewares = [];
@@ -33,6 +35,10 @@ const middy = (baseHandler?: Function, plugin?: IPlugin) => {
       plugin,
     );
   };
+
+  if (plugin && plugin.initializer) {
+    instance.initializer = plugin.initializer;
+  }
 
   instance.use = (middlewares) => {
     if (Array.isArray(middlewares)) {
@@ -128,6 +134,9 @@ const runRequest = async (
     await plugin?.requestEnd?.();
   }
   makeResult(request);
+  if (request.type === INITIALIZER) {
+    Object.assign(internal, request.result);
+  }
   return request.error ? undefined : request;
 };
 

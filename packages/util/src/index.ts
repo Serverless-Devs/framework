@@ -43,3 +43,68 @@ export const normalizeHttpResponse = (response) => {
   response.headers = response?.headers ?? {};
   return response;
 };
+
+/**
+ *
+ * @param variables
+ * @param request
+ * 基本用法:
+ *  const getInternalRequest = {
+  internal: {
+    boolean: true,
+    number: 1,
+    string: 'string',
+    array: [],
+    object: {
+      key: 'value'
+    },
+  }
+  getInternal(
+    ['array', 'object'],
+    getInternalRequest
+  ) => { array: [],object: {key: 'value'} }
+ */
+export const getInternal = async (variables, request) => {
+  if (!variables) return {};
+  let keys = [];
+  let values = [];
+  if (variables === true) {
+    keys = values = Object.keys(request.internal);
+  } else if (typeof variables === 'string') {
+    keys = values = [variables];
+  } else if (Array.isArray(variables)) {
+    keys = values = variables;
+  } else if (typeof variables === 'object') {
+    keys = Object.keys(variables);
+    values = Object.values(variables);
+  }
+  const promises = [];
+  for (const internalKey of values) {
+    // 'internal.key.sub_value' -> { [key]: internal.key.sub_value }
+    const pathOptionKey = internalKey.split('.');
+    const rootOptionKey = pathOptionKey.shift();
+    let valuePromise = request.internal[rootOptionKey];
+    if (typeof valuePromise?.then !== 'function') {
+      valuePromise = Promise.resolve(valuePromise);
+    }
+    promises.push(valuePromise.then((value) => pathOptionKey.reduce((p, c) => p?.[c], value)));
+  }
+  // ensure promise has resolved by the time it's needed
+  // If one of the promises throws it will bubble up to @middy/core
+  // @ts-ignore
+  values = await Promise.allSettled(promises);
+  const errors = values.filter((res) => res.status === 'rejected').map((res) => res.reason.message);
+  if (errors.length) throw new Error(JSON.stringify(errors));
+  return keys.reduce(
+    (obj, key, index) => ({ ...obj, [sanitizeKey(key)]: values[index].value }),
+    {},
+  );
+};
+
+const sanitizeKeyPrefixLeadingNumber = /^([0-9])/;
+const sanitizeKeyRemoveDisallowedChar = /[^a-zA-Z0-9]+/g;
+const sanitizeKey = (key) => {
+  return key
+    .replace(sanitizeKeyPrefixLeadingNumber, '_$1')
+    .replace(sanitizeKeyRemoveDisallowedChar, '_');
+};

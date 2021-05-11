@@ -1,10 +1,16 @@
 export interface IPlugin {
+  initializer?: Function;
+  // (IFcContext) => {};
   beforePrefetch?: Function;
   requestStart?: Function;
 }
 
 export interface IStringMap {
   [key: string]: string;
+}
+
+export interface IMap {
+  [key: string]: any;
 }
 
 export enum FcMethod {

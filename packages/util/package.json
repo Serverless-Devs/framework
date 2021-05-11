@@ -18,6 +18,5 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "dependencies": {},
   "devDependencies": {}
 }

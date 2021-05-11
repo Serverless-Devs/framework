@@ -2,7 +2,7 @@ export const mockResponse = {
   setStatusCode: () => {},
   setHeader: () => {},
   deleteHeader: () => {},
-  send: console.log,
+  send: (value) => console.log(`HTTP response: ${value}`),
 };
 export const EVENT = 'event';
 export const ACCESS_KEY_ID = '123456';

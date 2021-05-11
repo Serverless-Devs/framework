@@ -34,6 +34,8 @@ lerna bootstrap
 
 2. apigateway-response-parser (华力)
 
-3. initialzer 守帅
+3. table-initialzer
 
-4. auth(auth2.0, jwt, cookie)
+4. 层管理
+
+5. 构建工具 (守帅)
