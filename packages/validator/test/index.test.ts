@@ -196,4 +196,67 @@ describe('validator测试', () => {
       ]);
     });
   });
+
+  test('It should validate response', async () => {
+    const expectedResponse = {
+      body: 'Hello world',
+      statusCode: 200,
+    };
+
+    const handler = middy((request) => {
+      return expectedResponse;
+    });
+
+    const schema = {
+      type: 'object',
+      required: ['body', 'statusCode'],
+      properties: {
+        body: {
+          type: 'string',
+        },
+        statusCode: {
+          type: 'number',
+        },
+      },
+    };
+
+    handler.use(validator({ outputSchema: schema }));
+
+    const event = {
+      preferredLanguage: 'pt',
+      body: JSON.stringify({ something: 'somethingelse' }),
+    };
+    await handler(event, mockContext, (err, result) => {
+      expect(result).toStrictEqual(expectedResponse);
+    });
+  });
+
+  test('It should make requests with invalid responses fail with an Internal Server Error', async () => {
+    const handler = middy((request) => {
+      return {};
+    });
+
+    const schema = {
+      type: 'object',
+      required: ['body', 'statusCode'],
+      properties: {
+        body: {
+          type: 'string',
+        },
+        statusCode: {
+          type: 'number',
+        },
+      },
+    };
+
+    handler.use(validator({ outputSchema: schema }));
+
+    const event = {
+      preferredLanguage: 'pt',
+      body: JSON.stringify({ something: 'somethingelse' }),
+    };
+    await handler(event, mockContext, (err, result) => {
+      expect(err.message).toStrictEqual('Response object failed validation');
+    });
+  });
 });

@@ -44,12 +44,12 @@ const validatorMiddleware = (opts = {}) => {
   };
 
   const validatorMiddlewareAfter = async (request) => {
-    const valid = outputSchema(request.response);
+    const valid = outputSchema(request.result);
 
     if (!valid) {
       const error = new createError.InternalServerError('Response object failed validation');
       error.details = outputSchema.errors;
-      error.response = request.response;
+      error.response = request.result;
       throw error;
     }
   };
