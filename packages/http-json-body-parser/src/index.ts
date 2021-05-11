@@ -1,25 +1,26 @@
-const mimePattern = /^application\/(.+\+)?json(;.*)?$/;
 
-const defaults = {
-  reviver: undefined,
-};
+var getRawBody = require('raw-body');
+
+const mimePattern = /^application\/(.+\+)?json(;.*)?$/;
 
 export interface Options {
   reviver?: (key: string, value: any) => any;
 }
 
-export default (opts?: Options) => {
-  const options = { ...defaults, ...(opts || {}) };
+export default () => {
   const httpJsonBodyParserMiddlewareBefore = async (request) => {
-    const { headers, body } = request.event;
+    const { headers } = request.req;
 
     const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
 
     if (mimePattern.test(contentTypeHeader)) {
       try {
-        const data = request.event.isBase64Encoded ? Buffer.from(body, 'base64').toString() : body;
-
-        request.event.body = JSON.parse(data, options.reviver);
+        await new Promise(resolve => {
+          getRawBody(request.req, (err, body) => {
+            request.req.body = body.toString();
+            resolve(request.req);
+          });
+        });
       } catch (err) {
         const createError = require('http-errors');
         throw new createError.UnprocessableEntity(

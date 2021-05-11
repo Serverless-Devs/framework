@@ -4,9 +4,9 @@ export const isPlainObject = (value: object) => {
 
 export const isContainerEmpty = (value: any): boolean => {
   if (isPlainObject(value)) {
-    return Object.keys(value).length > 0;
+    return Object.keys(value).length === 0;
   } else if (Array.isArray(value)) {
-    return value.length > 0;
+    return value.length === 0;
   }
   return true;
 };
