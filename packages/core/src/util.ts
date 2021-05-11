@@ -5,9 +5,8 @@ import { isContainerEmpty, omit } from '@serverless-devs/noah-util';
 const makeHttpResponse = ({ statusCode, headers, deleteHeaders, body }: IFcHttpRes, httpResp) => {
   // statusCode
   if (statusCode !== undefined) {
-    httpResp.setStatusCode();
+    httpResp.setStatusCode(statusCode);
   }
-
   // headers
   if (!isContainerEmpty(headers)) {
     Object.keys(headers).forEach((key) => {
