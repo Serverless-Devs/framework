@@ -1,6 +1,8 @@
-import { IMidRequest, IPlugin } from './interface';
+import { IMidRequest as IMidRequestInner, IPlugin } from './interface';
 import { analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
+
+export interface IMidRequest extends IMidRequestInner {}
 
 const internal = {};
 

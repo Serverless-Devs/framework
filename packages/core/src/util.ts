@@ -1,8 +1,11 @@
 import { EVENT, HTTP, INITIALIZER } from './constant';
-import { IFcHttpRes, IFcRequest, IFcContext, IMidRequest } from './interface';
+import { IFcHttpRes, IFcRequest, IFcContext, IMidRequest, IFcResponse } from './interface';
 import { isContainerEmpty, omit } from '@serverless-devs/noah-util';
 
-const makeHttpResponse = ({ statusCode, headers, deleteHeaders, body }: IFcHttpRes, httpResp) => {
+const makeHttpResponse = (
+  { statusCode, headers, deleteHeaders, body }: IFcHttpRes,
+  httpResp: IFcResponse,
+) => {
   // statusCode
   if (statusCode !== undefined) {
     httpResp.setStatusCode(statusCode);

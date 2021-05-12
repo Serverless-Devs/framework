@@ -64,9 +64,16 @@ export interface IFcHttpRes {
   body?: string;
 }
 
+export interface IFcResponse {
+  setStatusCode: Function;
+  setHeader: Function;
+  deleteHeader: Function;
+  send: Function;
+}
+
 export interface IMidRequest {
   req?: IFcRequest;
-  res?: { [key: string]: string };
+  res?: IFcResponse;
   event?: string | Buffer;
   context: IFcContext;
   callback?: Function;
