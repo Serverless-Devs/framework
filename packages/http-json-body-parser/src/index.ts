@@ -39,7 +39,7 @@ const httpJsonBodyParserMiddleware = (opts?: Options) => {
               reject(error);
             }
           } else {
-            request.req.body = body;
+            request.req.body = body.toString();
             resolve(request.req);
           }
         });

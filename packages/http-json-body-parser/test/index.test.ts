@@ -1,6 +1,8 @@
-import middy from '@serverless-devs/noah-core';
-import jsonBodyParser from '../src/index';
+const middy = require('@serverless-devs/noah-core');
+const jsonBodyParser = require('../src/index');
+
 import { mockResponse, mockContext } from './fixtures/mock-data';
+
 var http = require('http');
 
 describe('http-json-body-parser 测试', () => {
@@ -115,7 +117,8 @@ describe('http-json-body-parser 测试', () => {
       handler.use(jsonBodyParser());
       const data = await handler(req, mockResponse, mockContext);
 
-      expect(typeof data.result).toEqual('object');
+      console.log(data.result);
+      expect(typeof data.result).toEqual('string');
       res.end();
     })
 
