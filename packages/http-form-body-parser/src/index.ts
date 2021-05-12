@@ -7,10 +7,9 @@ const defaults = {
 export interface Options {
   reviver?: (key: string, value: any) => any;
 }
-
-export default (opts?: Options) => {
+const httpFormBodyParserMiddleware = (opts?: Options) => {
   const options = { ...defaults, ...(opts || {}) };
-  const httpJsonBodyParserMiddlewareBefore = async (request) => {
+  const httpFormBodyParserMiddlewareBefore = async (request) => {
     const { headers, body } = request.event;
 
     const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
@@ -30,6 +29,8 @@ export default (opts?: Options) => {
   };
 
   return {
-    before: httpJsonBodyParserMiddlewareBefore,
+    before: httpFormBodyParserMiddlewareBefore,
   };
 };
+
+module.exports = httpFormBodyParserMiddleware;

@@ -137,4 +137,4 @@ const chooseLanguage = ({ preferredLanguage }, defaultLanguage) => {
   return defaultLanguage;
 };
 
-export default validatorMiddleware;
+module.exports = validatorMiddleware;

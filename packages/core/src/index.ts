@@ -153,4 +153,4 @@ const runMiddlewares = async (request, middlewares, plugin) => {
   }
 };
 
-export default middy;
+module.exports = middy;
