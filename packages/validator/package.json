@@ -4,6 +4,7 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
+    "dev": "npx tsc -w",
     "build": "npx tsc",
     "test": "jest ./test/index.test.ts",
     "test:cov": "jest --coverage",
@@ -17,7 +18,8 @@
     "ajv-formats": "^2.1.0",
     "ajv-formats-draft2019": "^1.4.3",
     "ajv-i18n": "^4.0.0",
-    "http-errors": "^1.8.0"
+    "http-errors": "^1.8.0",
+    "@serverless-devs/http-json-body-parser": "^0.0.1"
   },
   "husky": {
     "hooks": {

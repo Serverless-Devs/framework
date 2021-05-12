@@ -14,7 +14,9 @@ const ajvDefaults = {
 };
 
 const defaults = {
-  inputSchema: null,
+  eventSchema: null,
+  bodySchema: null,
+  urlSchema: null,
   outputSchema: null,
   ajvOptions: {},
   ajvInstance: undefined,
@@ -22,30 +24,64 @@ const defaults = {
 };
 
 const validatorMiddleware = (opts = {}) => {
-  let { inputSchema, outputSchema, ajvOptions, ajvInstance, defaultLanguage } = {
+  let {
+    eventSchema,
+    bodySchema,
+    urlSchema,
+    outputSchema,
+    ajvOptions,
+    ajvInstance,
+    defaultLanguage,
+  } = {
     ...defaults,
     ...opts,
   };
-  inputSchema = compile(inputSchema, ajvOptions, ajvInstance);
+  eventSchema = compile(eventSchema, ajvOptions, ajvInstance);
+  bodySchema = compile(bodySchema, ajvOptions, ajvInstance);
+  urlSchema = compile(urlSchema, ajvOptions, ajvInstance);
   outputSchema = compile(outputSchema, ajvOptions, ajvInstance);
 
   const validatorMiddlewareBefore = async (request) => {
-    const valid = inputSchema(request.event);
-    if (!valid) {
-      const error = new createError.BadRequest('Event object failed validation');
-      request.event.headers = { ...request.event.headers };
-
-      const language = chooseLanguage(request.event, defaultLanguage);
-      localize[language](inputSchema.errors);
-
-      error.details = inputSchema.errors;
-      throw error;
+    if (request.event) {
+      // 事件函数
+      const data = JSON.parse(request.event.toString());
+      const valid = eventSchema(event);
+      if (!valid) {
+        const error = new createError.BadRequest('Event object failed validation');
+        const language = chooseLanguage(data, defaultLanguage);
+        localize[language](eventSchema.errors);
+        error.details = eventSchema.errors;
+        throw error;
+      }
+    } else {
+      // http函数
+      // body
+      if (bodySchema) {
+        const valid = bodySchema(request.req.body);
+        if (!valid) {
+          const error = new createError.BadRequest('Body object failed validation');
+          const language = chooseLanguage(request.req.body, defaultLanguage);
+          localize[language](bodySchema.errors);
+          error.details = bodySchema.errors;
+          throw error;
+        }
+      }
+      // path和queries
+      if (urlSchema) {
+        const valid = urlSchema({ path: request.req.path, queries: request.req.queries });
+        if (!valid) {
+          const error = new createError.BadRequest('Url object failed validation');
+          const language = chooseLanguage(request.req.queries, defaultLanguage);
+          localize[language](urlSchema.errors);
+          error.details = urlSchema.errors;
+          throw error;
+        }
+      }
     }
   };
 
   const validatorMiddlewareAfter = async (request) => {
     const valid = outputSchema(request.result);
-
     if (!valid) {
       const error = new createError.InternalServerError('Response object failed validation');
       error.details = outputSchema.errors;
@@ -53,6 +89,8 @@ const validatorMiddleware = (opts = {}) => {
       throw error;
     }
   };
+
+  const inputSchema = eventSchema || bodySchema || urlSchema;
   return {
     before: inputSchema ? validatorMiddlewareBefore : null,
     after: outputSchema ? validatorMiddlewareAfter : null,

@@ -98,7 +98,7 @@ export const analizeRequestParams = ({ res, req, result, context, event, type }:
     const restResponse = omit(res, ['statusCode', 'headers', 'deleteHeaders', 'body']);
     return {
       req,
-      res: !isContainerEmpty(restResponse) ? result : Object.assign({}, restResponse, result || {}),
+      res: isContainerEmpty(restResponse) ? result : Object.assign({}, restResponse, result || {}),
       context,
     };
   }
