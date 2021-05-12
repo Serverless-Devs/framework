@@ -1,36 +1,43 @@
-const mimePattern = /^application\/(.+\+)?json(;.*)?$/;
 
-const defaults = {
-  reviver: undefined,
-};
+const { parse } = require('qs');
 
-export interface Options {
-  reviver?: (key: string, value: any) => any;
-}
-const httpFormBodyParserMiddleware = (opts?: Options) => {
-  const options = { ...defaults, ...(opts || {}) };
-  const httpFormBodyParserMiddlewareBefore = async (request) => {
-    const { headers, body } = request.event;
+const getFormBody = require('body/form');
 
-    const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
+const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/
 
-    if (mimePattern.test(contentTypeHeader)) {
-      try {
-        const data = request.event.isBase64Encoded ? Buffer.from(body, 'base64').toString() : body;
-
-        request.event.body = JSON.parse(data, options.reviver);
-      } catch (err) {
-        const createError = require('http-errors');
-        throw new createError.UnprocessableEntity(
-          'Content type defined as JSON but an invalid JSON was provided',
-        );
-      }
+const httpFormBodyParserMiddleware = () => {
+  const httpUrlencodeBodyParserMiddlewareBefore = async (request) => {
+    try {
+      await new Promise((resolve, reject) => {
+        getFormBody(request.req, (err, formBody) => {
+          console.log('----formBody---', formBody)
+          const { headers, isBase64Encoded } = request.req;
+          const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
+          if (mimePattern.test(contentTypeHeader)) { // 
+            try {
+              // base64 buffer 需要先转为可识别的 utf-8 的 buffer，再转为 string
+              const data = isBase64Encoded
+                ? Buffer.from(formBody, 'base64').toString()
+                : formBody
+              request.req.body = parse(data)
+              resolve(request.req);
+            } catch (e) {
+              reject(e);
+            }
+          } else {
+            request.req.body = formBody;
+            resolve(request.req);
+          }
+        });
+      });
+    } catch (err) {
+      throw new Error(err);
     }
-  };
+  }
 
   return {
-    before: httpFormBodyParserMiddlewareBefore,
+    before: httpUrlencodeBodyParserMiddlewareBefore,
   };
-};
+}
 
 module.exports = httpFormBodyParserMiddleware;
