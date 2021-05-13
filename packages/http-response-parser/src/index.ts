@@ -34,7 +34,7 @@ const httpResponseParserMiddleware = () => {
     if ('json' in result) {
       res.setHeader('content-type', 'application/json; charset=utf8');
       const { json, ...rest } = request.result;
-      request.result = { ...rest, body: json };
+      request.result = { ...rest, body: JSON.stringify(json) };
       return;
     }
 
