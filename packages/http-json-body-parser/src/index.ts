@@ -7,7 +7,7 @@ const defaults = {
   reviver: undefined,
 };
 
-export interface Options {
+interface Options {
   reviver?: (key: string, value: any) => any;
 }
 
@@ -38,4 +38,5 @@ const httpJsonBodyParserMiddleware = (opts?: Options) => {
   };
 };
 
-module.exports = httpJsonBodyParserMiddleware;
+export = httpJsonBodyParserMiddleware;
+
