@@ -1,6 +1,7 @@
 import { EVENT, HTTP, INITIALIZER } from './constant';
 import { IFcHttpRes, IFcRequest, IFcContext, IMidRequest, IFcResponse } from './interface';
 import { isContainerEmpty, omit } from '@serverless-devs/noah-util';
+import body from '_@types_body@5.1.0@@types/body';
 
 const makeHttpResponse = (
   { statusCode, headers, deleteHeaders, body }: IFcHttpRes,
@@ -117,3 +118,11 @@ export const analizeRequestParams = ({
     };
   }
 };
+
+export const getBody = async (request) =>
+  new Promise((resolve) => {
+    body(request.req, (e, b) => {
+      request.req.body = b;
+      resolve(request);
+    });
+  });

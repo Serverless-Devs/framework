@@ -1,5 +1,6 @@
 const { parse } = require('qs');
 
+<<<<<<< HEAD
 const getFormBody = require('body/form');
 
 const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;

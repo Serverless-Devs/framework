@@ -19,6 +19,9 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
+  "devDependencies": {
+    "@serverless-devs/noah-core": "^0.0.1"
+  },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"

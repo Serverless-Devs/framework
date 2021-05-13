@@ -14,12 +14,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/noah-util": "^0.0.1"
+    "@serverless-devs/noah-util": "^0.0.1",
+    "body": "^5.1.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "f2elint commit-file-scan",
       "commit-msg": "f2elint commit-msg-scan"
     }
+  },
+  "devDependencies": {
+    "@types/body": "^5.1.0"
   }
 }

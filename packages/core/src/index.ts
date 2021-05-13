@@ -1,7 +1,6 @@
 import { IMidRequest } from './interface';
-import { analizeRequestParams, analizeEvents, makeResult } from './util';
+import { getBody, analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
-// import { isContainerEmpty } from '@serverless-devs/noah-util';
 
 const internal = {};
 
@@ -102,6 +101,9 @@ const runRequest = async (
   onErrorMiddlewares,
 ) => {
   try {
+    if (request.type === 'HTTP') {
+      await getBody(request);
+    }
     await runMiddlewares(request, beforeMiddlewares);
     // Check if before stack hasn't exit early
     if (request.result === undefined) {
