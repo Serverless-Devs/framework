@@ -85,7 +85,7 @@ describe('http-json-body-parser 测试', () => {
       } catch (e) {
         console.log(e);
         expect(e.message).toEqual(
-          'UnprocessableEntityError: Content type defined as JSON but an invalid JSON was provided',
+          'Content type defined as JSON but an invalid JSON was provided',
         );
       }
       res.end();
@@ -158,7 +158,7 @@ describe('http-json-body-parser 测试', () => {
         mockContext,
       );
     } catch (err) {
-      expect(err.message).toEqual('TypeError: stream.on is not a function'); // getRawBody 方法依赖于http请求，http req 会携带 on 等方法
+      expect(err.message).toEqual('stream.on is not a function'); // getRawBody 方法依赖于http请求，http req 会携带 on 等方法
     }
   });
 
@@ -208,7 +208,7 @@ describe('http-json-body-parser 测试', () => {
         await handler(req, mockResponse, mockContext);
       } catch (err) {
         expect(err.message).toEqual(
-          'UnprocessableEntityError: Content type defined as JSON but an invalid JSON was provided',
+          'Content type defined as JSON but an invalid JSON was provided',
         );
         res.end();
       }

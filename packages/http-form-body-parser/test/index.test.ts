@@ -1,5 +1,6 @@
 const noah = require('@serverless-devs/noah-core');
-const jsonFormParser = require('../src/index');
+const jsonBodyParser = require('@serverless-devs/http-json-body-parser');
+const formBodyParser = require('../src/index');
 
 import { mockResponse, mockContext } from './fixtures/mock-data';
 var http = require('http');
@@ -10,7 +11,7 @@ describe('http-form-body-parser 测试', () => {
       const handler = noah((request) => {
         return request.req.body;
       });
-      handler.use(jsonFormParser());
+      handler.use(formBodyParser()).use(jsonBodyParser());
       const data = await handler(req, mockResponse, mockContext);
       expect(data.result).toEqual({
         a: {

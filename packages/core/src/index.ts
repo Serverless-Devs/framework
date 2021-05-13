@@ -1,13 +1,14 @@
 import { IMidRequest as IMidRequestInner, IPlugin } from './interface';
 import { analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
+import body from 'body';
 
 export type IMidRequest = IMidRequestInner;
 
 const internal = {};
 
 const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
-  baseHandler = baseHandler || function () {};
+  baseHandler = baseHandler || function () { };
   plugin?.beforePrefetch?.();
   const beforeMiddlewares = [];
   const afterMiddlewares = [];
@@ -100,6 +101,9 @@ const runRequest = async (
   plugin,
 ) => {
   try {
+    if (request.type === 'HTTP') {
+      await getBody(request);
+    }
     await runMiddlewares(request, beforeMiddlewares, plugin);
     // Check if before stack hasn't exit early
     if (request.result === undefined) {
@@ -154,5 +158,12 @@ const runMiddlewares = async (request, middlewares, plugin) => {
     }
   }
 };
+
+const getBody = async (request) => new Promise(resolve => {
+  body(request.req, (e, b) => {
+    request.req.body = b;
+    resolve(request);
+  })
+})
 
 module.exports = noah;
