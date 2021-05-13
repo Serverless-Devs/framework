@@ -36,6 +36,14 @@ lerna bootstrap
 
 3. table-initialzer
 
-4. 层管理
+## 默认中间件
+- http-json-body-parser
+- http-form-body-parser
+- http-urlencode-path-parser
+- validator
+- http-response-parser
 
-5. 构建工具 (守帅)
+## 插件
+- tablestore-initialzer-plugin
+- rds-initialzer-plugin
+- mongo-initialzer-plugin

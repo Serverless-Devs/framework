@@ -131,22 +131,20 @@ describe('core 插件测试', () => {
     expect(result).toBe(undefined);
   });
 
+  // TODO: 测试 tablestore的初始化
   test('HTTP触发器 initializer函数使用', async () => {
     const mockRequest = { method: 'GET' };
     const handler = middy(
       (request) => {
         console.log(request.internal);
-        console.log(request.req.modifiedAssign);
-        // expect(request.req.method).toBe('GET');
-        // expect(request.req.modifiedAssign).toBeTruthy();
         return { body: 'hello' };
       },
-      // {
-      //   initializer: middy((mockContext) => {
-      //     console.log('----initializer-----');
-      //     return { name: 'dankun' };
-      //   }),
-      // },
+      {
+        initializer: middy((mockContext) => {
+          console.log('----initializer-----');
+          return { name: 'dankun' };
+        }),
+      },
     );
 
     await handler.initializer(mockContext, mockCallback);
