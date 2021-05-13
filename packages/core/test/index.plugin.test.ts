@@ -35,6 +35,7 @@ describe('core 插件测试', () => {
 
     handler.after(getLambdaContext);
     const result = await handler(mockRequest, mockResponse, mockContext);
+    // @ts-ignore
     expect(result.res.body).toBe('modifyed');
   });
 
@@ -131,23 +132,27 @@ describe('core 插件测试', () => {
     expect(result).toBe(undefined);
   });
 
-  // TODO: 测试 tablestore的初始化
   test('HTTP触发器 initializer函数使用', async () => {
     const mockRequest = { method: 'GET' };
-    const handler = noah(
-      (request) => {
-        console.log(request.internal);
-        request.internal.tablestoreClient.create();
-        return { body: 'hello' };
-      },
-      {
-        initializer: noah((mockContext) => {
+    const handler = noah((request) => {
+      console.log(request.internal);
+      return { body: 'hello' };
+    });
+
+    const myPlugin = () => {
+      return {
+        initializer: (request) => {
           console.log('----initializer-----');
-          return { name: 'dankun' };
-        }),
-      },
-    );
-    await handler.initializer(mockContext, mockCallback);
+          return { client: 'dankun' };
+        },
+      };
+    };
+    handler.use(myPlugin());
+
+    if (handler.initializerHandler) {
+      await handler.initializerHandler(mockContext, mockCallback);
+    }
+    await handler(mockRequest, mockResponse, mockContext);
     await handler(mockRequest, mockResponse, mockContext);
   });
 });

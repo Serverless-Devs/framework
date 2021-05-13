@@ -1,22 +1,20 @@
-import { IMidRequest as IMidRequestInner, IPlugin } from './interface';
+import { IMidRequest } from './interface';
 import { analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
-
-export type IMidRequest = IMidRequestInner;
+// import { isContainerEmpty } from '@serverless-devs/noah-util';
 
 const internal = {};
 
-const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
+const noah = (baseHandler?: (...any) => any) => {
   baseHandler = baseHandler || function () {};
-  plugin?.beforePrefetch?.();
   const beforeMiddlewares = [];
   const afterMiddlewares = [];
   const onErrorMiddlewares = [];
+  const initializerPlugins = [];
 
-  const instance = (first, second, thrid?: any) => {
+  const instance = function (first, second, thrid?: any) {
     const { type, callback, event, req, res, context } = analizeEvents(first, second, thrid);
 
-    plugin?.requestStart?.();
     const request: IMidRequest = {
       req,
       res,
@@ -26,6 +24,7 @@ const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
       type,
       result: undefined,
       error: undefined,
+      internal,
     };
 
     return runRequest(
@@ -34,13 +33,8 @@ const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
       baseHandler,
       [...afterMiddlewares],
       [...onErrorMiddlewares],
-      plugin,
     );
   };
-
-  if (plugin && plugin.initializer) {
-    instance.initializer = plugin.initializer;
-  }
 
   instance.use = (middlewares) => {
     if (Array.isArray(middlewares)) {
@@ -53,9 +47,9 @@ const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
   };
 
   instance.applyMiddleware = (middleware) => {
-    const { before, after, onError } = middleware;
+    const { before, after, initializer, onError } = middleware;
 
-    if (!before && !after && !onError) {
+    if (!before && !after && !onError && !initializer) {
       throw new Error(
         'Middleware must be an object containing at least one key among "before", "after", "onError"',
       );
@@ -63,8 +57,16 @@ const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
 
     if (before) instance.before(before);
     if (after) instance.after(after);
+    if (initializer) instance.initializer(initializer);
     if (onError) instance.onError(onError);
+    return instance;
+  };
+  instance.initializerHandler = undefined;
 
+  instance.initializer = (initializerPlugin) => {
+    initializerPlugins.push(initializerPlugin);
+    // @ts-ignore
+    instance.initializerHandler = fcInitializer(initializerPlugins);
     return instance;
   };
 
@@ -86,6 +88,7 @@ const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
     before: beforeMiddlewares,
     after: afterMiddlewares,
     onError: onErrorMiddlewares,
+    initializer: initializerPlugins,
   };
 
   return instance;
@@ -97,23 +100,20 @@ const runRequest = async (
   baseHandler,
   afterMiddlewares,
   onErrorMiddlewares,
-  plugin,
 ) => {
   try {
-    await runMiddlewares(request, beforeMiddlewares, plugin);
+    await runMiddlewares(request, beforeMiddlewares);
     // Check if before stack hasn't exit early
     if (request.result === undefined) {
-      plugin?.beforeHandler?.();
       request.result = await baseHandler(analizeRequestParams(request));
-      plugin?.afterHandler?.();
-      await runMiddlewares(request, afterMiddlewares, plugin);
+      await runMiddlewares(request, afterMiddlewares);
     }
   } catch (e) {
     // Reset result changes made by after stack before error thrown
     request.result = undefined;
     request.error = e;
     try {
-      await runMiddlewares(request, onErrorMiddlewares, plugin);
+      await runMiddlewares(request, onErrorMiddlewares);
       // Catch if onError stack hasn't handled the error
       if (request.type === HTTP) {
         if (request.result === undefined || request.res === undefined) {
@@ -133,7 +133,7 @@ const runRequest = async (
       }
     }
   } finally {
-    await plugin?.requestEnd?.();
+    // await plugin?.requestEnd?.();
   }
   makeResult(request);
   if (request.type === INITIALIZER) {
@@ -142,11 +142,9 @@ const runRequest = async (
   return request.error ? undefined : request;
 };
 
-const runMiddlewares = async (request, middlewares, plugin) => {
+const runMiddlewares = async (request, middlewares) => {
   for (const nextMiddleware of middlewares) {
-    plugin?.beforeMiddleware?.(nextMiddleware?.name);
     const res = await nextMiddleware?.(request);
-    plugin?.afterMiddleware?.(nextMiddleware?.name);
     // short circuit chaining and respond early
     if (res !== undefined) {
       request.result = res;
@@ -155,4 +153,13 @@ const runMiddlewares = async (request, middlewares, plugin) => {
   }
 };
 
-module.exports = noah;
+const fcInitializer = (initializerList) =>
+  noah((context) => {
+    const items = {};
+    for (const item of initializerList) {
+      Object.assign(items, item(context));
+    }
+    return items;
+  });
+
+export = noah;

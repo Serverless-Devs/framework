@@ -1,9 +1,9 @@
-export interface IPlugin {
-  initializer?: Function;
-  // (IFcContext) => {};
-  beforePrefetch?: Function;
-  requestStart?: Function;
-}
+// export interface IPlugin {
+//   initializer?: Function;
+//   // (IFcContext) => {};
+//   beforePrefetch?: Function;
+//   requestStart?: Function;
+// }
 
 export interface IStringMap {
   [key: string]: string;
@@ -80,6 +80,7 @@ export interface IMidRequest {
   type: string;
   result: any;
   error: Error;
+  internal: IMap;
 }
 
 //

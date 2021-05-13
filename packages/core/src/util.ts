@@ -79,7 +79,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
   }
 };
 
-export const makeResult = ({ res, type, callback, result, error }: IMidRequest) => {
+export const makeResult = ({ internal, res, type, callback, result, error }: IMidRequest) => {
   if (type === INITIALIZER || type === EVENT) {
     error ? callback(error) : callback(null, result);
   } else {
@@ -87,15 +87,25 @@ export const makeResult = ({ res, type, callback, result, error }: IMidRequest) 
   }
 };
 
-export const analizeRequestParams = ({ res, req, result, context, event, type }: IMidRequest) => {
+export const analizeRequestParams = ({
+  internal,
+  res,
+  req,
+  result,
+  context,
+  event,
+  type,
+}: IMidRequest) => {
   if (type === INITIALIZER) {
     return {
       context,
+      internal,
     };
   } else if (type === EVENT) {
     return {
       event,
       context,
+      internal,
     };
   } else {
     const restResponse = omit(res, ['statusCode', 'headers', 'deleteHeaders', 'body']);
@@ -103,6 +113,7 @@ export const analizeRequestParams = ({ res, req, result, context, event, type }:
       req,
       res: isContainerEmpty(restResponse) ? result : Object.assign({}, restResponse, result || {}),
       context,
+      internal,
     };
   }
 };
