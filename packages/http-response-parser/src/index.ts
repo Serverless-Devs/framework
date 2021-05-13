@@ -50,4 +50,4 @@ const httpResponseParserMiddleware = () => {
   };
 };
 
-module.exports = httpResponseParserMiddleware;
+export = httpResponseParserMiddleware;

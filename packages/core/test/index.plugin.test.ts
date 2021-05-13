@@ -141,7 +141,7 @@ describe('core 插件测试', () => {
 
     const myPlugin = () => {
       return {
-        initializer: (request) => {
+        initializer: (context) => {
           console.log('----initializer-----');
           return { client: 'dankun' };
         },
@@ -152,7 +152,6 @@ describe('core 插件测试', () => {
     if (handler.initializerHandler) {
       await handler.initializerHandler(mockContext, mockCallback);
     }
-    await handler(mockRequest, mockResponse, mockContext);
     await handler(mockRequest, mockResponse, mockContext);
   });
 });
