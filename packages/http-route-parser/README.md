@@ -8,7 +8,7 @@
 const listHandler = (req, context) => {
 	return { body: {"success": true} }
 }
-middy.use("http-route-parser({
+noah.use("http-route-parser({
   'get /list': 'listHandler',
   'get /add': 'addHandler',
   'get /delete': 'deleteHandler',

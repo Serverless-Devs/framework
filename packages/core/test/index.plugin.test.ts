@@ -1,10 +1,10 @@
-import middy from '../src/index';
+import noah from '../src/index';
 import { mockResponse, mockContext, mockEvent, mockCallback } from './fixtures/mock-data';
 
 describe('core 插件测试', () => {
   test('HTTP触发器 before 中间件 可以改变req参数', async () => {
     const mockRequest = { method: 'GET' };
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       expect(request.req.method).toBe('GET');
       expect(request.req.modifiedAssign).toBeTruthy();
       return { body: 'hello' };
@@ -25,7 +25,7 @@ describe('core 插件测试', () => {
   test('HTTP触发器 after 中间件 可以访问改变res参数', async () => {
     const mockRequest = { method: 'GET' };
 
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       return { body: 'init' };
     });
 
@@ -39,7 +39,7 @@ describe('core 插件测试', () => {
   });
 
   test('Event 触发器 before 中间件 可以修改event参数', async () => {
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       expect(request.event).toBe('event__subfix');
     });
 
@@ -54,7 +54,7 @@ describe('core 插件测试', () => {
   test('HTTP 触发器业务出现onError情况出现的时候, before 插件代码执行', async () => {
     const mockRequest = { method: 'GET' };
 
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       expect(request.res.body).toBe('modifyed');
       throw new Error('异常出现');
     });
@@ -76,7 +76,7 @@ describe('core 插件测试', () => {
   test('HTTP 触发器业务出现onError情况出现的时候, after 插件代码不执行', async () => {
     const mockRequest = { method: 'GET' };
 
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       throw new Error('异常出现');
     });
 
@@ -95,7 +95,7 @@ describe('core 插件测试', () => {
   });
 
   test('event 触发器业务出现onError情况出现的时候, before 插件代码执行', async () => {
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       expect(request.event).toBe('dankun event');
       throw new Error('异常出现');
     });
@@ -114,7 +114,7 @@ describe('core 插件测试', () => {
   });
 
   test('event 触发器业务出现onError情况出现的时候, after 插件代码不执行', async () => {
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       throw new Error('异常出现');
     });
 
@@ -134,19 +134,19 @@ describe('core 插件测试', () => {
   // TODO: 测试 tablestore的初始化
   test('HTTP触发器 initializer函数使用', async () => {
     const mockRequest = { method: 'GET' };
-    const handler = middy(
+    const handler = noah(
       (request) => {
         console.log(request.internal);
+        request.internal.tablestoreClient.create();
         return { body: 'hello' };
       },
       {
-        initializer: middy((mockContext) => {
+        initializer: noah((mockContext) => {
           console.log('----initializer-----');
           return { name: 'dankun' };
         }),
       },
     );
-
     await handler.initializer(mockContext, mockCallback);
     await handler(mockRequest, mockResponse, mockContext);
   });

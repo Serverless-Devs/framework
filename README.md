@@ -34,7 +34,7 @@ lerna bootstrap
 
 2. apigateway-response-parser (华力)
 
-3. table-initialzer
+3. tablestore-initialzer-plugin
 
 ## 默认中间件
 - http-json-body-parser
@@ -42,7 +42,7 @@ lerna bootstrap
 - http-urlencode-path-parser
 - validator
 - http-response-parser
-
+  
 ## 插件
 - tablestore-initialzer-plugin
 - rds-initialzer-plugin

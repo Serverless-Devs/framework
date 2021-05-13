@@ -28,10 +28,10 @@ Fc 函数计算的 HTTP 函数参数格式为`(req, res, context)`。校验 req.
 
 ```javascript
 'use strict';
-const middy = require('@serverless-devs/noah-core').default;
+const noah = require('@serverless-devs/noah-core').default;
 const validator = require('@serverless-devs/noah-validator').default;
 
-const handler = middy((request) => {
+const handler = noah((request) => {
   return { body: 'hello world' };
 });
 
@@ -78,10 +78,10 @@ module.exports = { handler };
 
 ```javascript
 'use strict';
-const middy = require('@serverless-devs/noah-core').default;
+const noah = require('@serverless-devs/noah-core').default;
 const validator = require('@serverless-devs/noah-validator').default;
 
-const handler = middy((request) => {
+const handler = noah((request) => {
   return { body: 'hello world', statusCode: 200 };
 });
 

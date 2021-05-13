@@ -1,10 +1,10 @@
-import middy from '@serverless-devs/noah-core';
+import noah from '@serverless-devs/noah-core';
 import validator from '../src/index';
 import { mockContext } from './fixtures/mock-data';
 
 describe('validator测试', () => {
   test('It should validate an incoming object', async () => {
-    const handler = middy((request) => {
+    const handler = noah((request) => {
       return request.event.body;
     });
     const schema = {

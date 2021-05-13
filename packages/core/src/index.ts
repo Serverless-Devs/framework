@@ -2,11 +2,11 @@ import { IMidRequest as IMidRequestInner, IPlugin } from './interface';
 import { analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
 
-export interface IMidRequest extends IMidRequestInner {}
+export type IMidRequest = IMidRequestInner;
 
 const internal = {};
 
-const middy = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
+const noah = (baseHandler?: (...any) => any, plugin?: IPlugin) => {
   baseHandler = baseHandler || function () {};
   plugin?.beforePrefetch?.();
   const beforeMiddlewares = [];
@@ -155,4 +155,4 @@ const runMiddlewares = async (request, middlewares, plugin) => {
   }
 };
 
-module.exports = middy;
+module.exports = noah;
