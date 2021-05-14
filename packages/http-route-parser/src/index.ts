@@ -1,37 +1,32 @@
-var getRawBody = require('raw-body');
+/**
+ * 本地测试用例模拟的 httpServetRequest 请求 stream 流，与 FC 略不一样？FC 已经对 path 结构了
+ * 
+ * 以 /user/id?id=1 GET 为例：
+ * 
+ * 测试用例 req：如 { url: "/user/id?id=1", method: "GET" }
+ * FC req： 如 { path: "/user/id", method: 'GET', queries: { id = 1 } }
+ */
+const { match: compile } = require('path-to-regexp');
 
-const mimePattern = /^application\/(.+\+)?json(;.*)?$/;
+const matchFunc = (path: string, option?: object) => compile(path, option);
 
-export interface Options {
-  reviver?: (key: string, value: any) => any;
-}
+/*eslint guard-for-in: 0*/
 
-const httpJsonBodyParserMiddleware = () => {
-  const httpJsonBodyParserMiddlewareBefore = async (request) => {
-    const { headers } = request.req;
+const httpRouterParserMiddleware = (route: Object, option) => {
 
-    const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
-
-    if (mimePattern.test(contentTypeHeader)) {
-      try {
-        await new Promise((resolve) => {
-          getRawBody(request.req, (err, body) => {
-            request.req.body = body.toString();
-            resolve(request.req);
-          });
-        });
-      } catch (err) {
-        const createError = require('http-errors');
-        throw new createError.UnprocessableEntity(
-          'Content type defined as JSON but an invalid JSON was provided',
-        );
+  const httpUrlencodeBodyParserMiddlewareBefore = (request) => {
+    const { method, path } = request.req;
+    for (const i in route) {
+      const match = matchFunc(i, option);
+      const [uri] = path.split('?');
+      if (match(uri) && route[i] && route[i][method]) { // path，method 匹配成功
+        route[i][method](request, match(path));
       }
     }
-  };
-
+  }
   return {
-    before: httpJsonBodyParserMiddlewareBefore,
-  };
-};
+    before: httpUrlencodeBodyParserMiddlewareBefore,
+  }
+}
 
-module.exports = httpJsonBodyParserMiddleware;
+export = httpRouterParserMiddleware;
