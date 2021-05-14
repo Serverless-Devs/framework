@@ -44,11 +44,10 @@ const validatorMiddleware = (opts = {}) => {
   const validatorMiddlewareBefore = async (request) => {
     if (request.event) {
       // 事件函数
-      const data = JSON.parse(request.event.toString());
-      const valid = eventSchema(event);
+      const valid = eventSchema(request.event);
       if (!valid) {
         const error = new createError.BadRequest('Event object failed validation');
-        const language = chooseLanguage(data, defaultLanguage);
+        const language = chooseLanguage(request.event, defaultLanguage);
         localize[language](eventSchema.errors);
         error.details = eventSchema.errors;
         throw error;
