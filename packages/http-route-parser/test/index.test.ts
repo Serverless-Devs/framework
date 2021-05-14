@@ -12,11 +12,11 @@ describe('http-route-parser 测试', () => {
       });
       handler.use(jsonBodyParser()).use(routeParser({
         '/user/:id': {
-          GET: (v, m) => console.log('----GET----   /user/:id', v.path, m),
-          POST: (v, m) => console.log('----POST----   /user/:id', v.path, m),
+          GET: (v, m) => console.log('----GET----   /user/:id', { path: v.path, method: v.method, queries: v.queries }, m),
+          POST: (v, m) => console.log('----POST----   /user/:id', { path: v.path, method: v.method, queries: v.queries, body: v.body }, m),
         },
         '/name': {
-          GET: v => console.log('----GET----   /name', v.path),
+          GET: v => console.log('----GET----   /name', { path: v.path, method: v.method, queries: v.queries }),
         }
       }));
       req.path = req.url; // 这里是因为本地模拟的http请求 stream 流与 FC 不一致，手动加上
@@ -28,7 +28,7 @@ describe('http-route-parser 测试', () => {
     server.listen(() => {
       var { port } = server.address();
       var client = http.request({
-        method: 'POST',
+        method: 'GET',
         port: port,
         path: '/user/1',
         headers: {

@@ -10,13 +10,13 @@ const defaults = {
 interface Options {
   reviver?: (key: string, value: any) => any;
 }
-
+const methods = ['put', 'post', 'patch']; // 理论上只有这些method才需要对body做转换
 const httpJsonBodyParserMiddleware = (opts?: Options) => {
   const options = { ...defaults, ...(opts || {}) };
   const httpJsonBodyParserMiddlewareBefore = async (request) => {
-    const { headers, isBase64Encoded, body } = request.req;
+    const { headers, isBase64Encoded, body, method = '' } = request.req;
     const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
-    if (mimePattern.test(contentTypeHeader)) {
+    if (mimePattern.test(contentTypeHeader) && methods.includes(method.toLowerCase())) {
       if (body && typeof body === 'object') return; // 已经是对象不处理
       try {
         // base64 buffer 需要先转为可识别的 utf-8 的 buffer，再转为 string
