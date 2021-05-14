@@ -59,7 +59,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
     type = EVENT;
     callback = thrid;
     context = second;
-    event = Buffer.isBuffer(first) ? first.toString() : first;
+    event = Buffer.isBuffer(first) ? JSON.parse(first.toString()) : first;
     return {
       event,
       context,
