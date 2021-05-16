@@ -1,4 +1,4 @@
-import { IMidRequest } from './interface';
+import { INoahRequest } from './interface';
 import { getBody, analizeRequestParams, analizeEvents, makeResult } from './util';
 import { HTTP, INITIALIZER } from './constant';
 
@@ -14,7 +14,7 @@ const noah = (baseHandler?: (...any) => any) => {
   const instance = function (first, second, thrid?: any) {
     const { type, callback, event, req, res, context } = analizeEvents(first, second, thrid);
 
-    const request: IMidRequest = {
+    const request: INoahRequest = {
       req,
       res,
       event,
@@ -94,7 +94,7 @@ const noah = (baseHandler?: (...any) => any) => {
 };
 
 const runRequest = async (
-  request: IMidRequest,
+  request: INoahRequest,
   beforeMiddlewares,
   baseHandler,
   afterMiddlewares,

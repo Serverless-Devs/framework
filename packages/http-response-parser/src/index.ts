@@ -1,7 +1,7 @@
-import { IMidRequest } from '@serverless-devs/noah-core';
+import { INoahRequest } from '@serverless-devs/noah-core/lib/interface';
 
 const httpResponseParserMiddleware = () => {
-  const httpResponseParserMiddlewareAfter = async (request: IMidRequest) => {
+  const httpResponseParserMiddlewareAfter = async (request: INoahRequest) => {
     const { res, result } = request;
     if ('html' in result) {
       res.setHeader('content-type', 'text/html; charset=utf8');
@@ -42,7 +42,6 @@ const httpResponseParserMiddleware = () => {
       res.setHeader('content-type', 'application/xml; charset=utf8');
       const { xml, ...rest } = request.result;
       request.result = { ...rest, body: xml };
-      return;
     }
   };
   return {

@@ -1,6 +1,6 @@
 import { EVENT, HTTP, INITIALIZER } from './constant';
-import { IFcHttpRes, IFcRequest, IFcContext, IMidRequest, IFcResponse } from './interface';
-import { isContainerEmpty, omit } from '@serverless-devs/noah-util';
+import { IFcHttpRes, IFcRequest, IFcContext, INoahRequest, IFcResponse } from './interface';
+import { isContainerEmpty, omit, jsonSafeParse } from '@serverless-devs/noah-util';
 import body from 'body';
 
 const makeHttpResponse = (
@@ -38,11 +38,11 @@ const makeHttpResponse = (
  * @param thrid
  */
 export const analizeEvents = (first, second, thrid?: any) => {
-  let type: string,
-    callback: Function,
-    event: string,
-    req: IFcRequest,
-    res = undefined;
+  let type: string;
+  let callback: Function;
+  let event: string;
+  let req: IFcRequest;
+  let res;
   let context: IFcContext = {};
   if (typeof thrid === 'undefined') {
     // initializer
@@ -59,7 +59,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
     type = EVENT;
     callback = thrid;
     context = second;
-    event = Buffer.isBuffer(first) ? JSON.parse(first.toString()) : first;
+    event = Buffer.isBuffer(first) ? jsonSafeParse(first.toString()) : first;
     return {
       event,
       context,
@@ -80,7 +80,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
   }
 };
 
-export const makeResult = ({ internal, res, type, callback, result, error }: IMidRequest) => {
+export const makeResult = ({ res, type, callback, result, error }: INoahRequest) => {
   if (type === INITIALIZER || type === EVENT) {
     error ? callback(error) : callback(null, result);
   } else {
@@ -96,7 +96,7 @@ export const analizeRequestParams = ({
   context,
   event,
   type,
-}: IMidRequest) => {
+}: INoahRequest) => {
   if (type === INITIALIZER) {
     return {
       context,

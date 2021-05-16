@@ -1,12 +1,12 @@
 {
-  "name": "@serverless-devs/permission",
+  "name": "@serverless-devs/resource",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest ./test/index.test.ts",
-    "test:cov": "jest --coverage",
+    "test": "jest",
+    "cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
   },

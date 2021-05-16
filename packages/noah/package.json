@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest ./test/index.test.ts",
-    "test:cov": "jest --coverage",
+    "test": "jest",
+    "cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
   },
@@ -18,8 +18,6 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

@@ -22,7 +22,10 @@ export const omit = (value: object, list: string[]) => {
   return newObject;
 };
 
-export const jsonSafeParse = (string: string, reviver) => {
+export const jsonSafeParse = (
+  string: string,
+  reviver?: (this: any, key: string, value: any) => any,
+) => {
   if (typeof string !== 'string') return string;
   const firstChar = string[0];
   if (firstChar !== '{' && firstChar !== '[' && firstChar !== '"') return string;

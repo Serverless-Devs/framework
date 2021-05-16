@@ -2,5 +2,5 @@
 set -e
 
 # cp ./README.md ./packages/midway/README.md
-lerna clean --yes
-
+lerna exec -- rm -rf ./libs
+lerna run build

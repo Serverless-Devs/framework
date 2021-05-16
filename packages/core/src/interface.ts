@@ -1,10 +1,3 @@
-// export interface IPlugin {
-//   initializer?: Function;
-//   // (IFcContext) => {};
-//   beforePrefetch?: Function;
-//   requestStart?: Function;
-// }
-
 export interface IStringMap {
   [key: string]: string;
 }
@@ -71,7 +64,7 @@ export interface IFcResponse {
   send: Function;
 }
 
-export interface IMidRequest {
+export interface INoahRequest {
   req?: IFcRequest;
   res?: IFcResponse;
   event?: string | Buffer;
@@ -82,28 +75,3 @@ export interface IMidRequest {
   error: Error;
   internal: IMap;
 }
-
-//
-// interface IBaseEventParams {
-//   type: string;
-//   result: undefined;
-//   error: undefined;
-// }
-//
-// export interface IHttpParams extends IBaseEventParams {
-//   req?: any;
-//   res?: any;
-//   context: any;
-// }
-//
-// export interface IEventParams extends IBaseEventParams {
-//   event?: any;
-//   context: any;
-//   callback?: Function;
-// }
-//
-// export interface IInitializerParams extends IBaseEventParams {
-//   event?: any;
-//   context: any;
-//   callback?: Function;
-// }
