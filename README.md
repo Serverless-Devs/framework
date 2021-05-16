@@ -47,3 +47,4 @@ lerna bootstrap
 - tablestore-initialzer-plugin
 - rds-initialzer-plugin
 - mongo-initialzer-plugin
+
