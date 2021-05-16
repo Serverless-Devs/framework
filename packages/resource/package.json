@@ -1,0 +1,27 @@
+{
+  "name": "@serverless-devs/resource",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "jest",
+    "cov": "jest --coverage",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  },
+  "dependencies": {
+    "http-errors": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/http-errors": "^1.8.0"
+  }
+}

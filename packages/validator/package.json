@@ -1,0 +1,34 @@
+{
+  "name": "@serverless-devs/noah-validator",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./lib/index.js",
+  "scripts": {
+    "dev": "npx tsc -w",
+    "build": "npx tsc",
+    "test": "jest",
+    "cov": "jest --coverage",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^8.3.0",
+    "ajv-formats": "^2.1.0",
+    "ajv-formats-draft2019": "^1.4.3",
+    "ajv-i18n": "^4.0.0",
+    "http-errors": "^1.8.0",
+    "@serverless-devs/http-json-body-parser": "^0.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  },
+  "devDependencies": {
+    "@types/http-errors": "^1.8.0",
+    "@serverless-devs/noah-core": "^0.0.1"
+  }
+}
