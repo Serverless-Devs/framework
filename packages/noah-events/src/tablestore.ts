@@ -1,0 +1,1 @@
+// tablestore触发器
