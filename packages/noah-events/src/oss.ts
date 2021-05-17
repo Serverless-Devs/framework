@@ -1,6 +1,6 @@
 // @ts-ignore
 
-import { isDeployStage, noop, generateConfig } from './util';
+import { isFcEnv, noop, generateConfig } from './util';
 import noah from '@serverless-devs/noah-core';
 
 interface IOSSConfig {
@@ -17,7 +17,7 @@ const onEvent = (
     handler: noop,
   },
 ) => {
-  if (isDeployStage) return noah(config.handler);
+  if (isFcEnv) return noah(config.handler);
   generateConfig(config);
 };
 

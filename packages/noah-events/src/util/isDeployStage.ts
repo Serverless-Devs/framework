@@ -1,1 +1,1 @@
-export const isDeployStage = process.env.FC_FUNC_CODE_PATH !== undefined;
+export const isFcEnv = process.env.FC_FUNC_CODE_PATH !== undefined;

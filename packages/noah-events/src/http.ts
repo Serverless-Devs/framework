@@ -1,5 +1,5 @@
 import noah from '@serverless-devs/noah-core';
-import { isDeployStage, noop, generateConfig } from './util';
+import { isFcEnv, noop, generateConfig } from './util';
 
 interface IHttpConfig {
   authType?: string;
@@ -14,7 +14,7 @@ const onRequest = (
     handler: noop,
   },
 ) => {
-  if (isDeployStage) return noah(config.handler);
+  if (isFcEnv) return noah(config.handler);
   generateConfig(config);
 };
 
