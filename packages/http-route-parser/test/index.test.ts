@@ -1,8 +1,8 @@
 import { mockResponse, mockContext } from './fixtures/mock-data';
-const noah = require('@serverless-devs/noah-core');
-const jsonBodyParser = require('@serverless-devs/http-json-body-parser');
-const routeParser = require('../src/index');
-var http = require('http');
+import noah from '@serverless-devs/noah-core';
+import jsonBodyParser from '@serverless-devs/http-json-body-parser';
+import routeParser from '../src/index';
+const http = require('http');
 
 describe('http-route-parser 测试', () => {
   it('测试：基本事例', (done) => {
