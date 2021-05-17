@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean": "lerna run clean && rm -rf ./packages/**/lib",
-    "bootstrap": "rm -f ./packages/.DS* && lerna bootstrap --concurrency 4",
+    "bootstrap": "rm -f ./packages/.DS* && lerna bootstrap --no-ci --hoist --loglevel warn --concurrency 4",
     "build": "lerna run build",
     "test": "lerna run test"
   },
