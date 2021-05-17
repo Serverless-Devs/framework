@@ -1,54 +1,37 @@
 // @ts-ignore
 
+import { isDeployStage, noop, generateConfig } from './util';
 import noah from '@serverless-devs/noah-core';
 
 interface IOSSConfig {
-  event?: string;
+  bucketName: string;
+  handler: (...any) => any;
   events?: string[];
   filterPrefix?: string;
   filterSuffix?: string;
 }
 
-const onEvent = (bucketName: string, handler: (...any) => any, config?: IOSSConfig) => {
-  config = config || {};
-  const { events, filterPrefix, filterSuffix } = config;
-  const argsCopy = {
-    filterPrefix,
-    filterSuffix,
-    events,
-  };
-  console.log(argsCopy);
-  // 或者直接执行部署操作?
-  // 解析出需要的资源等信息
-  return noah(handler);
+const onEvent = (
+  config: IOSSConfig = {
+    bucketName: '',
+    handler: noop,
+  },
+) => {
+  if (isDeployStage) return noah(config.handler);
+  generateConfig(config);
 };
 
-const onObjectCreated = (bucketName: string, handler: (...any) => any, config?: IOSSConfig) => {
-  config = config || {};
-  const { event = '*', filterPrefix, filterSuffix } = config;
-  const argsCopy = {
-    filterPrefix,
-    filterSuffix,
-    events: [`oss:ObjectCreated:${event}`],
-  };
-  return onEvent(bucketName, handler, argsCopy);
+const onObjectCreated = (config: IOSSConfig) => {
+  return onEvent(Object.assign({ events: ['oss:ObjectCreated:*'] }, config));
 };
 
-const onObjectRemoved = (bucketName: string, handler: (...any) => any, config?: IOSSConfig) => {
-  config = config || {};
-  const { event, filterPrefix, filterSuffix } = config;
-  const argsCopy = {
-    filterPrefix,
-    filterSuffix,
-    events: event
-      ? [`oss:ObjectRemoved:${event}`]
-      : [
-          'oss:ObjectRemoved:DeleteObject',
-          'oss:ObjectRemoved:DeleteObjects',
-          'oss:ObjectRemoved:AbortMultipartUpload',
-        ],
-  };
-  return onEvent(bucketName, handler, argsCopy);
+const onObjectRemoved = (config: IOSSConfig) => {
+  const defaultEvents = [
+    'oss:ObjectRemoved:DeleteObject',
+    'oss:ObjectRemoved:DeleteObjects',
+    'oss:ObjectRemoved:AbortMultipartUpload',
+  ];
+  return onEvent(Object.assign({ events: defaultEvents }, config));
 };
 
 export const oss = {
