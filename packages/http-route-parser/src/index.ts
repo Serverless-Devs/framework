@@ -12,7 +12,7 @@ const matchFunc = (path: string, option?: object) => compile(path, option);
 
 /*eslint guard-for-in: 0*/
 
-const httpRouterParserMiddleware = (route: Object, option) => {
+const httpRouterParserMiddleware = (route: Object, option?: object) => {
 
   const httpUrlencodeBodyParserMiddlewareBefore = (request) => {
     const { method, path } = request.req;

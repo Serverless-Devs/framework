@@ -1,9 +1,8 @@
-const noah = require('@serverless-devs/noah-core');
-const jsonBodyParser = require('../src/index');
-
+import noah from '@serverless-devs/noah-core';
 import { mockResponse, mockContext } from './fixtures/mock-data';
+import jsonBodyParser from '../src/index';
 
-var http = require('http');
+const http = require('http');
 
 describe('http-json-body-parser 测试', () => {
   it('测试：基本事例', (done) => {

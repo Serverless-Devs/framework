@@ -4,7 +4,7 @@ import { HTTP, INITIALIZER } from './constant';
 
 const internal = {};
 
-const noah = (baseHandler?: (...any) => any) => {
+const noah = (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
   baseHandler = baseHandler || function () {};
   const beforeMiddlewares = [];
   const afterMiddlewares = [];
@@ -89,6 +89,7 @@ const noah = (baseHandler?: (...any) => any) => {
     onError: onErrorMiddlewares,
     initializer: initializerPlugins,
   };
+  baseMiddlewares && instance.use(baseMiddlewares);
 
   return instance;
 };

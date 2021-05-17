@@ -18,6 +18,12 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "@serverless-devs/noah-core": "^0.0.1",
+    "@serverless-devs/http-form-body-parser": "^0.0.1",
+    "@serverless-devs/http-json-body-parser": "^0.0.1",
+    "@serverless-devs/http-route-parser": "^0.0.1",
+    "@serverless-devs/http-response-parser": "^0.0.1"
+  },
   "devDependencies": {}
 }
