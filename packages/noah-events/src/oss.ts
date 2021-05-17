@@ -11,12 +11,7 @@ interface IOSSConfig {
   filterSuffix?: string;
 }
 
-const onEvent = (
-  config: IOSSConfig = {
-    bucketName: '',
-    handler: noop,
-  },
-) => {
+const onEvent = (config: IOSSConfig) => {
   if (isFcEnv) return noah(config.handler);
   generateConfig(config);
 };
