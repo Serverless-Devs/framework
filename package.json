@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "clean": "lerna run clean && rm -rf ./packages/**/lib && rm -rf ./packages/**/package-lock.json && rm -f package-lock.json && rm -f package-lock.json",
+    "clean": "lerna run clean && rm -rf ./packages/**/lib",
     "bootstrap": "rm -f ./packages/.DS* && lerna bootstrap --concurrency 4",
     "build": "lerna run build",
     "test": "lerna run test"
