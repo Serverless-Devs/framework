@@ -1,6 +1,8 @@
+// @ts-ignore
+
 import noah from '@serverless-devs/noah-core';
 
-export interface IOSSConfig {
+interface IOSSConfig {
   event?: string;
   events?: string[];
   filterPrefix?: string;
@@ -49,7 +51,7 @@ const onObjectRemoved = (bucketName: string, handler: (...any) => any, config?: 
   return onEvent(bucketName, handler, argsCopy);
 };
 
-export default {
+export const oss = {
   onEvent,
   onObjectCreated,
   onObjectRemoved,
