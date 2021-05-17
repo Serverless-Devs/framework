@@ -21,6 +21,7 @@ export interface IFcRequest {
   method: FcMethod;
   clientIP: string;
   url: string;
+  match?: { [key: string]: any };
 }
 
 export interface IFcContext {

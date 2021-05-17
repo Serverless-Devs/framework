@@ -12,8 +12,8 @@ describe('http-route-parser 测试', () => {
       });
       handler.use(jsonBodyParser()).use(routeParser({
         '/user/:id': {
-          GET: (v, m) => console.log('----GET----   /user/:id', { path: v.path, method: v.method, queries: v.queries }, m),
-          POST: (v, m) => console.log('----POST----   /user/:id', { path: v.path, method: v.method, queries: v.queries, body: v.body }, m),
+          GET: (request) => console.log('----GET----   /user/:id', request.req.match),
+          POST: (request) => console.log('----POST----   /user/:id', request.req.match),
         },
         '/name': {
           GET: v => console.log('----GET----   /name', { path: v.path, method: v.method, queries: v.queries }),

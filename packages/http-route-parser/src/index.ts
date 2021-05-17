@@ -20,7 +20,8 @@ const httpRouterParserMiddleware = (route: Object, option?: object) => {
       const match = matchFunc(i, option);
       const [uri] = path.split('?');
       if (match(uri) && route[i] && route[i][method]) { // path，method 匹配成功
-        route[i][method](request.req, match(path));
+        request.req.match = match(path);
+        route[i][method](request);
       }
     }
   }
