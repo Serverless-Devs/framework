@@ -5,8 +5,11 @@ interface IOSSConfig {
   bucketName: string;
   handler: (arg0: any) => any;
   events?: string[];
-  filterPrefix?: string;
-  filterSuffix?: string;
+  filter?: {
+    prefix: string;
+    suffix: string;
+    target: string;
+  };
 }
 
 const onEvent = (config: IOSSConfig) => {

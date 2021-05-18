@@ -30,29 +30,38 @@ import fs from 'fs-extra';
 import yaml from 'js-yaml';
 import path from 'path';
 
-type ConfigType = 'oss';
+type ConfigType = 'oss' | 'http';
 export const generateConfig = (type: ConfigType, args: any) => {
-  console.log(args);
+  console.log(args, 'args');
+
   const filePath = path.resolve(process.cwd(), 'config.yml');
   if (!fs.existsSync(filePath)) {
     throw new Error(`${process.cwd()}路径下不存在config.yml文件`);
   }
   const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
-  console.log(content);
-  // 写入oss配置
+  console.log(content, 'content');
+
+  // oss配置
   if (type === 'oss') {
     content.oss = {
       bucketName: args.bucketName,
       events: args.events,
     };
-    if (args.filterPrefix && args.filterSuffix) {
+    if (args.filter) {
       content.oss.filter = {
         key: {
-          Prefix: args.filterPrefix,
-          Suffix: args.filterSuffix,
+          Prefix: args.filter.prefix,
+          Suffix: args.filter.suffix,
+          Target: args.filter.target,
         },
       };
     }
-    fs.writeFileSync(filePath, yaml.dump(content));
   }
+  // http配置
+  if (type === 'http') {
+    content.http = args;
+  }
+
+  // 配置写入config.yml文件
+  fs.writeFileSync(filePath, yaml.dump(content));
 };
