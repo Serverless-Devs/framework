@@ -1,10 +1,10 @@
-import noah from '@serverless-devs/noah-core';
+import noah from '@serverless-devs/noah';
 import { isFcEnv, noop, generateConfig } from './util';
 
 interface IHttpConfig {
   authType?: string;
   methods?: string[];
-  handler: (...any) => any;
+  handler: (arg0: any) => any;
 }
 
 const onRequest = (
@@ -15,7 +15,7 @@ const onRequest = (
   },
 ) => {
   if (isFcEnv) return noah(config.handler);
-  generateConfig(config);
+  generateConfig('oss', config);
 };
 
 export const http = {

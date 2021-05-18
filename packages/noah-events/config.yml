@@ -1,0 +1,10 @@
+function:
+  runtime: nodejs12
+oss:
+  bucketName: my-bukect
+  events:
+    - oss:ObjectCreated:*
+  filter:
+    key:
+      Prefix: source/
+      Suffix: .png
