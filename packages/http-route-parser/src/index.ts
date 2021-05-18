@@ -14,14 +14,14 @@ const matchFunc = (path: string, option?: object) => compile(path, option);
 
 const httpRouterParserMiddleware = (route: Object, option?: object) => {
 
-  const httpUrlencodeBodyParserMiddlewareBefore = (request) => {
+  const httpUrlencodeBodyParserMiddlewareBefore = async (request) => {
     const { method, path } = request.req;
     for (const i in route) {
       const match = matchFunc(i, option);
       const [uri] = path.split('?');
       if (match(uri) && route[i] && route[i][method]) { // path，method 匹配成功
         request.req.match = match(path);
-        route[i][method](request);
+        await route[i][method](request);
       }
     }
   }
