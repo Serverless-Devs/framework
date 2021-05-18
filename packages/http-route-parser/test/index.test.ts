@@ -8,7 +8,6 @@ describe('http-route-parser 测试', () => {
   it('测试：基本事例', (done) => {
     var server = http.createServer(async (req, res) => {
       const handler = noah((request) => {
-        测试CI错误
         return request.req.body;
       });
       handler.use(jsonBodyParser()).use(routeParser({
