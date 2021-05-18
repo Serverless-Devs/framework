@@ -17,3 +17,7 @@ http:
     - PUT
     - DELETE
     - HEAD
+scheduler:
+  cronExpression: 0 0 8 * * *
+  enable: true
+  payload: awesome-fc

@@ -30,7 +30,7 @@ import fs from 'fs-extra';
 import yaml from 'js-yaml';
 import path from 'path';
 
-type ConfigType = 'oss' | 'http';
+type ConfigType = 'oss' | 'http' | 'scheduler';
 export const generateConfig = (type: ConfigType, args: any) => {
   console.log(args, 'args');
 
@@ -60,6 +60,11 @@ export const generateConfig = (type: ConfigType, args: any) => {
   // http配置
   if (type === 'http') {
     content.http = args;
+  }
+
+  // scheduler配置
+  if (type === 'scheduler') {
+    content.scheduler = args;
   }
 
   // 配置写入config.yml文件
