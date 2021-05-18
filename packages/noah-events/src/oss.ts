@@ -1,19 +1,20 @@
-// @ts-ignore
-
-import { isFcEnv, noop, generateConfig } from './util';
-import noah from '@serverless-devs/noah-core';
+import { isFcEnv, generateConfig } from './util';
+import noah from '@serverless-devs/noah';
 
 interface IOSSConfig {
   bucketName: string;
-  handler: (...any) => any;
+  handler: (arg0: any) => any;
   events?: string[];
-  filterPrefix?: string;
-  filterSuffix?: string;
+  filter?: {
+    prefix: string;
+    suffix: string;
+    target: string;
+  };
 }
 
 const onEvent = (config: IOSSConfig) => {
   if (isFcEnv) return noah(config.handler);
-  generateConfig(config);
+  generateConfig('oss', config);
 };
 
 const onObjectCreated = (config: IOSSConfig) => {

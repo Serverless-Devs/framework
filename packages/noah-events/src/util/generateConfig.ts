@@ -25,4 +25,48 @@
  ```
  如果代码和配置文件同时，这时候配置文件会优先于代码。
  */
-export const generateConfig = (args: any) => {};
+
+import fs from 'fs-extra';
+import yaml from 'js-yaml';
+import path from 'path';
+
+type ConfigType = 'oss' | 'http' | 'scheduler';
+export const generateConfig = (type: ConfigType, args: any) => {
+  console.log(args, 'args');
+
+  const filePath = path.resolve(process.cwd(), 'config.yml');
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`${process.cwd()}路径下不存在config.yml文件`);
+  }
+  const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
+  console.log(content, 'content');
+
+  // oss配置
+  if (type === 'oss') {
+    content.oss = {
+      bucketName: args.bucketName,
+      events: args.events,
+    };
+    if (args.filter) {
+      content.oss.filter = {
+        key: {
+          Prefix: args.filter.prefix,
+          Suffix: args.filter.suffix,
+          Target: args.filter.target,
+        },
+      };
+    }
+  }
+  // http配置
+  if (type === 'http') {
+    content.http = args;
+  }
+
+  // scheduler配置
+  if (type === 'scheduler') {
+    content.scheduler = args;
+  }
+
+  // 配置写入config.yml文件
+  fs.writeFileSync(filePath, yaml.dump(content));
+};

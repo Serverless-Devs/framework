@@ -1,15 +1,29 @@
-const { oss } = require('../src/index');
+import { oss } from '../src';
 
-describe('事件函数', () => {
-  test('测试OSS 事件', async () => {
-    // const handler = oss.onObjectCreated({
-    //   bucketName: 'my-bukect',
-    //   handler: (request) => {
-    //     return {
-    //       success: 'true',
-    //     };
-    //   },
-    // });
-    // TODO: test
+describe('oss测试', () => {
+  test('onObjectCreated 测试', async () => {
+    oss.onObjectCreated({
+      bucketName: 'my-bukect-01',
+      handler: (request) => {
+        return {
+          success: 'true',
+        };
+      },
+      filter: {
+        prefix: 'source/',
+        suffix: '.png',
+        target: 'target/',
+      },
+    });
   });
+  // test('onObjectRemoved 测试', async () => {
+  //   oss.onObjectRemoved({
+  //     bucketName: 'my-bukect-01',
+  //     handler: (request) => {
+  //       return {
+  //         success: 'true',
+  //       };
+  //     },
+  //   });
+  // });
 });
