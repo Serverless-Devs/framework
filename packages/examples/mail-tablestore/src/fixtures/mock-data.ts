@@ -24,6 +24,6 @@ export const TRANSPORT = {
   auth: {
     user: '243973775@qq.com',
     // 这里密码不是qq密码，是你设置的smtp授权码
-    pass: 'xxxxxxxxxxxx',
+    pass: 'xxxxxxxx',
   }
 }
