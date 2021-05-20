@@ -1,0 +1,19 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@serverless-devs/http-form-body-parser": "^0.0.1",
+    "@serverless-devs/http-json-body-parser": "^0.0.1",
+    "@serverless-devs/http-route-parser": "^0.0.1",
+    "@serverless-devs/noah-core": "^0.0.1",
+    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

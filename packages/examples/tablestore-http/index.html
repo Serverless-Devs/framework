@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>FC 测试</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="root"
+       style="display: flex; align-items: center; justify-content: center;padding: 20px;">
+    <div>
+      <div style="display: flex; margin-bottom: 20px;">测试</div>
+      <div style="border: 1px solid #eee;padding: 20px;">
+        <div style="display: flex; margin-bottom: 10px;">
+          <div style="width:60px"><span style="color: red">*</span>id:</div>
+          <input id="id"
+                 placeholder="STRING" />
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+          <div style="width:60px">用户名:</div>
+          <input id="name"
+                 placeholder="STRING" />
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+          <div style="width:60px">年龄:</div>
+          <input id="age"
+                 placeholder="INTEGER"
+                 type="number" />
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+          <div style="width:60px">性别:</div>
+          <input id="sex"
+                 placeholder="STRING" />
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+          <div style="width:60px">邮箱:</div>
+          <input id="email"
+                 placeholder="STRING" />
+        </div>
+        <button id="submit"
+                style="cursor: pointer; background-color: #0077cc;color: #fff;border: 0;">提交</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  $("#submit").click(() => {
+    if (!$("#id").val()) {
+      alert("请输入id");
+      return;
+    }
+    const params = {
+      id: $("#id").val(),
+      name: $("#name").val() || undefined,
+      age: $("#age").val() ? parseInt($("#age").val(), 10) : undefined,
+      sex: $("#sex").val() || undefined,
+      email: $("#email").val() || undefined,
+    }
+    console.log(params);
+    const URL = 'https://1267445841694946.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/tablestore-server/tablestore-http/add-tablestore';
+    $.post(URL, params, (data, status) => {
+      alert("发送成功" + "\nStatus: " + status);
+    });
+  })
+</script>
+
+</html>
