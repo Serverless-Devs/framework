@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@serverless-devs/noah-core": "^0.0.1",
+    "@serverless-devs/noah-util": "^0.0.1",
     "@serverless-devs/tablestore-initialzer-plugin": "^0.0.1",
     "cbor": "^7.0.5"
   },
