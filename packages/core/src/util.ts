@@ -59,7 +59,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
     type = EVENT;
     callback = thrid;
     context = second;
-    event = Buffer.isBuffer(first) ? jsonSafeParse(first.toString()) : first;
+    event = first; // typeof event = Buffer
     return {
       event,
       context,
@@ -120,13 +120,13 @@ export const analizeRequestParams = ({
 };
 
 export const getBody = async (request) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     try {
       body(request.req, (e, b) => {
         request.req.body = b;
         resolve(request);
       });
     } catch (e) {
-      resolve(request);
+      reject(request);
     }
   });

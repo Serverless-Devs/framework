@@ -64,7 +64,7 @@
       email: $("#email").val() || undefined,
     }
     console.log(params);
-    const URL = 'https://1267445841694946.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/tablestore-server/tablestore-http/add-tablestore';
+    const URL = 'https://1267445841694946.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/tablestore-server/tablestore-http/PutRow';
     $.post(URL, params, (data, status) => {
       alert("发送成功" + "\nStatus: " + status);
     });

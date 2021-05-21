@@ -4,7 +4,6 @@ const formBodyParser = require('@serverless-devs/http-form-body-parser');
 const routeParser = require('@serverless-devs/http-route-parser');
 const tableStorePlugin = require('@serverless-devs/tablestore-initialzer-plugin');
 
-
 const route = {
     '/PutRow': {
         POST: async (request) => {

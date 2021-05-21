@@ -5,7 +5,6 @@
   "main": "index.js",
   "dependencies": {
     "@serverless-devs/noah-core": "^0.0.1",
-    "@serverless-devs/noah-util": "^0.0.1",
     "nodemailer": "^6.6.0"
   },
   "devDependencies": {},
