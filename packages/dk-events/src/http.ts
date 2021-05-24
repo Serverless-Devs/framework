@@ -6,13 +6,12 @@ interface IHttpConfig {
   handler?: (arg0: any) => any;
 }
 
-const onRequest = (
-  config: IHttpConfig = {
-    http: [{ authType: 'anonymous', methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'] }],
-  },
-) => {
+const onRequest = (config: IHttpConfig) => {
   if (isFcEnv) return dk(config.handler);
-  generateConfig('http', config);
+  generateConfig('http', {
+    http: [{ authType: 'anonymous', methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'] }],
+    ...config,
+  });
 };
 
 export const http = {
