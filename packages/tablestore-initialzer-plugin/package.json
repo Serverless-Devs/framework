@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/tablestore-initialzer-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3-alpha.0",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.2"
+    "@serverless-devs/dk-core": "^0.0.3-alpha.0"
   },
   "jest": {
     "preset": "ts-jest",
