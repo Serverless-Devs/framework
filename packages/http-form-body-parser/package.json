@@ -19,12 +19,12 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dk-core": "^0.0.3-alpha.1",
-    "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.1"
+    "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.1",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
+    "@serverless-devs/dk-core": "^0.0.3-alpha.1",
     "jest": "^26.6.3",
-    "qs": "^6.10.1",
     "ts-jest": "^26.5.6"
   },
   "publishConfig": {

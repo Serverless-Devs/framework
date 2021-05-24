@@ -19,11 +19,11 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dk-core": "^0.0.3-alpha.1",
     "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.1",
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {
+    "@serverless-devs/dk-core": "^0.0.3-alpha.1",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6"
   },

@@ -5,7 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest ./test/scheduler.test.ts",
+    "test": "jest ./test/oss.test.ts",
     "cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"

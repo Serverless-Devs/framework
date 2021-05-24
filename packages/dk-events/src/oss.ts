@@ -20,7 +20,13 @@ const onEvent = (config: IOSSConfig) => {
 };
 
 const onObjectCreated = (config: IOSSConfig) => {
-  return onEvent(Object.assign({ events: ['oss:ObjectCreated:*'] }, config));
+  return onEvent({
+    ...config,
+    oss: config.oss.map((item) => ({
+      events: ['oss:ObjectCreated:*'],
+      ...item,
+    })),
+  });
 };
 
 const onObjectRemoved = (config: IOSSConfig) => {
@@ -29,7 +35,13 @@ const onObjectRemoved = (config: IOSSConfig) => {
     'oss:ObjectRemoved:DeleteObjects',
     'oss:ObjectRemoved:AbortMultipartUpload',
   ];
-  return onEvent(Object.assign({ events: defaultEvents }, config));
+  return onEvent({
+    ...config,
+    oss: config.oss.map((item) => ({
+      events: defaultEvents,
+      ...item,
+    })),
+  });
 };
 
 export const oss = {

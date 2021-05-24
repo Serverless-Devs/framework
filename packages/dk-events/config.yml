@@ -1,6 +1,14 @@
 function:
   runtime: nodejs12
-oss: []
+oss:
+  - bucketName: my-bukect-01
+    events:
+      - oss:ObjectCreated:*
+    filter:
+      key:
+        Prefix: source/
+        Suffix: .png
+        Target: target/
 http:
   - authType: anonymous
     methods:
