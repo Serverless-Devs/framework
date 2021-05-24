@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk",
-  "version": "0.0.3-alpha.6",
+  "version": "0.0.3-alpha.8",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "@serverless-devs/dk-core": "^0.0.3-alpha.1",
     "@serverless-devs/http-form-body-parser": "^0.0.3-alpha.5",
     "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.5",
-    "@serverless-devs/http-response-parser": "^0.0.3-alpha.6",
+    "@serverless-devs/http-response-parser": "^0.0.3-alpha.8",
     "@serverless-devs/http-route-parser": "^0.0.3-alpha.5"
   },
   "publishConfig": {
