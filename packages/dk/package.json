@@ -19,7 +19,7 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dkore": "^0.0.1",
+    "@serverless-devs/dk-core": "^0.0.1",
     "@serverless-devs/http-form-body-parser": "^0.0.1",
     "@serverless-devs/http-json-body-parser": "^0.0.1",
     "@serverless-devs/http-route-parser": "^0.0.1",

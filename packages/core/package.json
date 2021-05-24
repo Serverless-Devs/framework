@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/dktil": "^0.0.1",
+    "@serverless-devs/dk-util": "^0.0.1",
     "body": "^5.1.0"
   },
   "husky": {
