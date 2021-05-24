@@ -8,7 +8,6 @@ dest
 dist
 coverage
 .idea
-package-lock.json
 .DS_*
 .nyc*
 !**/fixtures/app/node_modules/hello/*
@@ -16,4 +15,3 @@ run/
 .nodejs-cache
 .tmp
 **/lib
-packages/*/package-lock.json
