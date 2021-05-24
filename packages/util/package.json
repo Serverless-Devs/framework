@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-util",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -18,7 +18,6 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "devDependencies": {},
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"

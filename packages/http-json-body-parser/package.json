@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/http-json-body-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dk-core": "^0.0.1",
+    "@serverless-devs/dk-core": "^0.0.2",
     "http-errors": "^1.8.0"
   },
   "devDependencies": {

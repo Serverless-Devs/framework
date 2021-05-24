@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/http-route-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,8 +19,8 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/http-json-body-parser": "^0.0.1",
-    "@serverless-devs/dk-core": "^0.0.1",
+    "@serverless-devs/dk-core": "^0.0.2",
+    "@serverless-devs/http-json-body-parser": "^0.0.2",
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {

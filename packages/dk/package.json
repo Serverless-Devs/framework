@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,13 +19,12 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dk-core": "^0.0.1",
-    "@serverless-devs/http-form-body-parser": "^0.0.1",
-    "@serverless-devs/http-json-body-parser": "^0.0.1",
-    "@serverless-devs/http-route-parser": "^0.0.1",
-    "@serverless-devs/http-response-parser": "^0.0.1"
+    "@serverless-devs/dk-core": "^0.0.2",
+    "@serverless-devs/http-form-body-parser": "^0.0.2",
+    "@serverless-devs/http-json-body-parser": "^0.0.2",
+    "@serverless-devs/http-response-parser": "^0.0.2",
+    "@serverless-devs/http-route-parser": "^0.0.2"
   },
-  "devDependencies": {},
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"

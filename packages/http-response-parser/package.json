@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/http-response-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.1"
+    "@serverless-devs/dk-core": "^0.0.2"
   },
   "jest": {
     "preset": "ts-jest",
