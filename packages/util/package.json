@@ -18,7 +18,6 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "devDependencies": {},
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"

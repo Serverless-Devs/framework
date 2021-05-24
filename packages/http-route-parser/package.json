@@ -19,8 +19,8 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/http-json-body-parser": "^0.0.1",
     "@serverless-devs/dk-core": "^0.0.1",
+    "@serverless-devs/http-json-body-parser": "^0.0.1",
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {
