@@ -1,6 +1,7 @@
 {
   "name": "@serverless-devs/resource",
   "version": "0.0.3-alpha.0",
+  "private": "true",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -24,5 +25,5 @@
   "devDependencies": {
     "@types/http-errors": "^1.8.0"
   },
-  "gitHead": "ed3593d072f629ebe45cac90cfd2961ef2bbff48"
+  "gitHead": "1ae2ce434657ff04a7b6084eea6e7a070775e9e5"
 }
