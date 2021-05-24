@@ -5,7 +5,7 @@ const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;
 const methods = ['put', 'post', 'patch']; // 理论上只有这些method才需要对body做转换
 const httpFormBodyParserMiddleware = () => {
   const httpUrlencodeBodyParserMiddlewareBefore = async (request) => {
-    const { headers, isBase64Encoded, body, method = '' } = request.req;
+    const { headers, isBase64Encoded, body, method = '' } = request.req ?? {};
     const contentTypeHeader = headers?.['Content-Type'] ?? headers?.['content-type'];
     if (mimePattern.test(contentTypeHeader) && methods.includes(method.toLowerCase())) {
       if (body && typeof body === 'object') return; // 已经是对象不处理
