@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/http-json-body-parser",
-  "version": "0.0.3-alpha.3",
+  "version": "0.0.3-alpha.5",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
