@@ -1,4 +1,4 @@
-import noah from '@serverless-devs/noah-core';
+import dk from '@serverless-devs/dk-core';
 import jsonBodyParser from '@serverless-devs/http-json-body-parser';
 import formBodyParser from '../src/index';
 
@@ -8,7 +8,7 @@ var http = require('http');
 describe('http-form-body-parser 测试', () => {
   it('测试：基本事例', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body;
       });
       handler.use(formBodyParser()).use(jsonBodyParser());

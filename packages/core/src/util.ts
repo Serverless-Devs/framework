@@ -1,6 +1,6 @@
 import { EVENT, HTTP, INITIALIZER } from './constant';
-import { IFcHttpRes, IFcRequest, IFcContext, INoahRequest, IFcResponse } from './interface';
-import { isContainerEmpty, omit } from '@serverless-devs/noah-util';
+import { IFcHttpRes, IFcRequest, IFcContext, IdkRequest, IFcResponse } from './interface';
+import { isContainerEmpty, omit } from '@serverless-devs/dk-util';
 import body from 'body';
 
 const makeHttpResponse = (
@@ -80,7 +80,7 @@ export const analizeEvents = (first, second, thrid?: any) => {
   }
 };
 
-export const makeResult = ({ res, type, callback, result, error }: INoahRequest) => {
+export const makeResult = ({ res, type, callback, result, error }: IdkRequest) => {
   if (type === INITIALIZER || type === EVENT) {
     error ? callback(error) : callback(null, result);
   } else {
@@ -96,7 +96,7 @@ export const analizeRequestParams = ({
   context,
   event,
   type,
-}: INoahRequest) => {
+}: IdkRequest) => {
   if (type === INITIALIZER) {
     return {
       context,

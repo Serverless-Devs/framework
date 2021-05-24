@@ -1,11 +1,11 @@
-import noah from '@serverless-devs/noah-core';
+import dk from '@serverless-devs/dk-core';
 import tablestoreInitialzerPlugin from '@serverless-devs/tablestore-initialzer-plugin';
 import { mockContext, mockCallback } from './fixtures/mock-data';
 import tablestoreEventParser from '../src/index';
 
 describe('tablestore-event-parser 测试', () => {
   test('table client 连接', async () => {
-    const handler = noah((request) => {
+    const handler = dk((request) => {
       return request.internal.tableClient;
     });
 
@@ -18,8 +18,6 @@ describe('tablestore-event-parser 测试', () => {
 
     await handler(Buffer.from('61626364', 'hex'), mockContext, (err, result) => {
       expect(result).not.toBeNull();
-    })
+    });
   });
 });
-
-

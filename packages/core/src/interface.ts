@@ -65,7 +65,7 @@ export interface IFcResponse {
   send: Function;
 }
 
-export interface INoahRequest {
+export interface IdkRequest {
   req?: IFcRequest;
   res?: IFcResponse;
   event?: string | Buffer;

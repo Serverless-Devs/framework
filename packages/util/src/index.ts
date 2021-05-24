@@ -93,7 +93,7 @@ export const getInternal = async (variables, request) => {
     promises.push(valuePromise.then((value) => pathOptionKey.reduce((p, c) => p?.[c], value)));
   }
   // ensure promise has resolved by the time it's needed
-  // If one of the promises throws it will bubble up to @noah/core
+  // If one of the promises throws it will bubble up to @dk/core
   // @ts-ignore
   values = await Promise.allSettled(promises);
   const errors = values.filter((res) => res.status === 'rejected').map((res) => res.reason.message);

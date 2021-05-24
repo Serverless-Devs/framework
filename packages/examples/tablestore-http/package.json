@@ -7,7 +7,7 @@
     "@serverless-devs/http-form-body-parser": "^0.0.1",
     "@serverless-devs/http-json-body-parser": "^0.0.1",
     "@serverless-devs/http-route-parser": "^0.0.1",
-    "@serverless-devs/noah-core": "^0.0.1",
+    "@serverless-devs/dk-core": "^0.0.1",
     "@serverless-devs/tablestore-initialzer-plugin": "^0.0.1"
   },
   "devDependencies": {},

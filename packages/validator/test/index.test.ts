@@ -1,10 +1,10 @@
-import noah from '@serverless-devs/noah-core';
+import dk from '@serverless-devs/dk-core';
 import validator from '../src/index';
 import { mockContext } from './fixtures/mock-data';
 
 describe('validator测试', () => {
   test('It should validate an incoming object', async () => {
-    const handler = noah((request) => {
+    const handler = dkrequest) => {
       return request.event.body;
     });
     const schema = {

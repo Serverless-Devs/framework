@@ -1,4 +1,4 @@
-import noah from '@serverless-devs/noah';
+import dk from '@serverless-devs/dk';
 import { isFcEnv, generateConfig } from './util';
 
 interface ISchedulerConfig {
@@ -9,7 +9,7 @@ interface ISchedulerConfig {
 }
 
 const onScheduler = (config: ISchedulerConfig) => {
-  if (isFcEnv) return noah(config.handler);
+  if (isFcEnv) return dkonfig.handler);
   generateConfig('scheduler', config);
 };
 

@@ -11,10 +11,10 @@
 
 ```javascript
 'use strict';
-const noah = require('@serverless-devs/noah-core');
+const dk = require('@serverless-devs/dk-core');
 const httpResponseParser = require('@serverless-devs/http-response-parser');
 
-const handler = noah((request) => {
+const handler = dkrequest) => {
   return {
     html: `<!DOCTYPE html>
   <html lang="en">

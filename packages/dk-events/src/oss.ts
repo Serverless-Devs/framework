@@ -1,5 +1,5 @@
 import { isFcEnv, generateConfig } from './util';
-import noah from '@serverless-devs/noah';
+import dk from '@serverless-devs/dk';
 
 interface IOSSConfig {
   bucketName: string;
@@ -13,7 +13,7 @@ interface IOSSConfig {
 }
 
 const onEvent = (config: IOSSConfig) => {
-  if (isFcEnv) return noah(config.handler);
+  if (isFcEnv) return dk(config.handler);
   generateConfig('oss', config);
 };
 

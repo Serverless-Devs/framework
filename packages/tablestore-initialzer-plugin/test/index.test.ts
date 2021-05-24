@@ -1,10 +1,10 @@
-import noah from '@serverless-devs/noah-core';
+import dk from '@serverless-devs/dk-core';
 import tablestoreInitialzerPlugin from '../src/index';
 import { mockContext, mockCallback } from './fixtures/mock-data';
 
 describe('tablestore-initialzer-plugin测试', () => {
   test('table client 连接', async () => {
-    const handler = noah((request) => {
+    const handler = dk((request) => {
       return request.internal.tableClient;
     });
 

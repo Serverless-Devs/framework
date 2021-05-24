@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/noah-validator",
+  "name": "@serverless-devs/dk-validator",
   "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",
@@ -29,6 +29,6 @@
   },
   "devDependencies": {
     "@types/http-errors": "^1.8.0",
-    "@serverless-devs/noah-core": "^0.0.1"
+    "@serverless-devs/dkore": "^0.0.1"
   }
 }

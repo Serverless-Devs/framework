@@ -1,4 +1,4 @@
-const { jsonSafeParse } = require('@serverless-devs/noah-util');
+const { jsonSafeParse } = require('@serverless-devs/dk-util');
 const cbor = require('cbor');
 
 const otsBodyParserMiddleware = () => {
@@ -7,13 +7,13 @@ const otsBodyParserMiddleware = () => {
       try {
         cbor.decodeFirst(request.event, (error, obj) => {
           request.event = obj || jsonSafeParse(request.event.toString()); // 兼容 FC 手动触发
-          resolve(request)
+          resolve(request);
         });
       } catch (e) {
-        reject(e)
+        reject(e);
       }
     });
-  }
+  };
 
   return {
     before: otsBodyParserMiddlewareBefore,
@@ -21,4 +21,3 @@ const otsBodyParserMiddleware = () => {
 };
 
 export = otsBodyParserMiddleware;
-

@@ -1,4 +1,4 @@
-import noah from '@serverless-devs/noah-core';
+import dk from '@serverless-devs/dk-core';
 import { mockResponse, mockContext } from './fixtures/mock-data';
 import jsonBodyParser from '../src/index';
 
@@ -7,7 +7,7 @@ const http = require('http');
 describe('http-json-body-parser 测试', () => {
   it('测试：基本事例', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -38,7 +38,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：json parse by reviver', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       const reviver = (key, value) => {
@@ -75,7 +75,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：json error', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -112,7 +112,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：未传 content-type，直接返回 body', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -141,7 +141,7 @@ describe('http-json-body-parser 测试', () => {
   });
 
   it('测试：no http request', async () => {
-    const handler = noah((request) => {
+    const handler = dkrequest) => {
       return request.req.body; // propagates the body as a response
     });
     handler.use(jsonBodyParser());
@@ -163,7 +163,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：base64 body', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -198,7 +198,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：base64 body error', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = noah((request) => {
+      const handler = dkrequest) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());

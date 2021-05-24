@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/noah-core": "^0.0.1"
+    "@serverless-devs/dk-core": "^0.0.1"
   },
   "jest": {
     "preset": "ts-jest",

@@ -1,4 +1,4 @@
-import noah from '@serverless-devs/noah';
+import dk from '@serverless-devs/dk';
 import { isFcEnv, generateConfig } from './util';
 
 interface IHttpConfig {
@@ -13,7 +13,7 @@ const onRequest = (
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'],
   },
 ) => {
-  if (isFcEnv) return noah(config.handler);
+  if (isFcEnv) return dk(config.handler);
   generateConfig('http', config);
 };
 

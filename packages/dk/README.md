@@ -2,9 +2,9 @@
 
 ```javascript
 'use strict';
-const noah = require('@serverless-devs/noah');
+const dk = require('@serverless-devs/dk');
 
-const handler = noah((request) => {
+const handler = dk((request) => {
   return {
     json: { result: 'ok' },
   };

@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/noah-core",
+  "name": "@serverless-devs/dk-core",
   "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/noah-util": "^0.0.1",
+    "@serverless-devs/dktil": "^0.0.1",
     "body": "^5.1.0"
   },
   "husky": {

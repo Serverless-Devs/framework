@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/noah-util",
+  "name": "@serverless-devs/dk-util",
   "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",

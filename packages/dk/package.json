@@ -1,11 +1,11 @@
 {
-  "name": "@serverless-devs/noah-events",
+  "name": "@serverless-devs/dk",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest ./test/scheduler.test.ts",
+    "test": "jest",
     "cov": "jest --coverage",
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
@@ -19,11 +19,11 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/noah": "^0.0.1",
-    "fs-extra": "^10.0.0",
-    "js-yaml": "^4.1.0"
+    "@serverless-devs/dkore": "^0.0.1",
+    "@serverless-devs/http-form-body-parser": "^0.0.1",
+    "@serverless-devs/http-json-body-parser": "^0.0.1",
+    "@serverless-devs/http-route-parser": "^0.0.1",
+    "@serverless-devs/http-response-parser": "^0.0.1"
   },
-  "devDependencies": {
-    "@types/fs-extra": "^9.0.11"
-  }
+  "devDependencies": {}
 }

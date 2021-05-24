@@ -10,10 +10,10 @@
 
 ```javascript
 'use strict';
-const noah = require('@serverless-devs/noah-core');
+const dk = require('@serverless-devs/dk-core');
 const tableStorePlugin = require('@serverless-devs/tablestore-initialzer-plugin');
 
-const handler = noah((request) => {
+const handler = dk((request) => {
   console.log('internal', request.internal.tableClient);
   return { body: 'hello world' };
 });
