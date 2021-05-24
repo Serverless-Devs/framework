@@ -32,39 +32,39 @@ import path from 'path';
 
 type ConfigType = 'oss' | 'http' | 'scheduler';
 export const generateConfig = (type: ConfigType, args: any) => {
-  console.log(args, 'args');
-
   const filePath = path.resolve(process.cwd(), 'config.yml');
   if (!fs.existsSync(filePath)) {
     throw new Error(`${process.cwd()}路径下不存在config.yml文件`);
   }
   const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
-  console.log(content, 'content');
-
   // oss配置
+  content.oss = [];
   if (type === 'oss') {
-    content.oss = {
-      bucketName: args.bucketName,
-      events: args.events,
-    };
-    if (args.filter) {
-      content.oss.filter = {
-        key: {
-          Prefix: args.filter.prefix,
-          Suffix: args.filter.suffix,
-          Target: args.filter.target,
-        },
+    args.oss.forEach((item) => {
+      const obj: any = {
+        bucketName: item.bucketName,
+        events: item.events,
       };
-    }
+      if (item.filter) {
+        obj.filter = {
+          key: {
+            Prefix: item.filter.prefix,
+            Suffix: item.filter.suffix,
+            Target: item.filter.target,
+          },
+        };
+      }
+      content.oss.push(obj);
+    });
   }
   // http配置
   if (type === 'http') {
-    content.http = args;
+    content.http = args.http;
   }
 
   // scheduler配置
   if (type === 'scheduler') {
-    content.scheduler = args;
+    content.scheduler = args.scheduler;
   }
 
   // 配置写入config.yml文件

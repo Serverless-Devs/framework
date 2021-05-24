@@ -2,10 +2,8 @@ import dk from '@serverless-devs/dk';
 import { isFcEnv, generateConfig } from './util';
 
 interface ISchedulerConfig {
-  cronExpression: string;
-  enable: boolean;
-  payload: string;
   handler?: (arg0: any) => any;
+  scheduler: { cronExpression: string; enable: boolean; payload: string }[];
 }
 
 const onScheduler = (config: ISchedulerConfig) => {

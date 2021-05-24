@@ -2,14 +2,16 @@ import { isFcEnv, generateConfig } from './util';
 import dk from '@serverless-devs/dk';
 
 interface IOSSConfig {
-  bucketName: string;
   handler: (arg0: any) => any;
-  events?: string[];
-  filter?: {
-    prefix: string;
-    suffix: string;
-    target: string;
-  };
+  oss: {
+    bucketName: string;
+    events?: string[];
+    filter?: {
+      prefix: string;
+      suffix: string;
+      target: string;
+    };
+  }[];
 }
 
 const onEvent = (config: IOSSConfig) => {

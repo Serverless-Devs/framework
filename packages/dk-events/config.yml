@@ -1,23 +1,15 @@
 function:
   runtime: nodejs12
-oss:
-  bucketName: my-bukect-01
-  events:
-    - oss:ObjectCreated:*
-  filter:
-    key:
-      Prefix: source/
-      Suffix: .png
-      Target: target/
+oss: []
 http:
-  authType: anonymous
-  methods:
-    - GET
-    - POST
-    - PUT
-    - DELETE
-    - HEAD
+  - authType: anonymous
+    methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - HEAD
 scheduler:
-  cronExpression: 0 0 8 * * *
-  enable: true
-  payload: awesome-fc
+  - cronExpression: 0 0 8 * * *
+    enable: true
+    payload: awesome-fc
