@@ -4,7 +4,7 @@ import { HTTP, INITIALIZER } from './constant';
 
 const internal = {};
 
-const dk (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
+const dk = (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
   baseHandler = baseHandler || function () {};
   const beforeMiddlewares = [];
   const afterMiddlewares = [];
@@ -14,7 +14,7 @@ const dk (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
   const instance = function (first, second, thrid?: any) {
     const { type, callback, event, req, res, context } = analizeEvents(first, second, thrid);
 
-    const request: Idkquest = {
+    const request: IdkRequest = {
       req,
       res,
       event,
@@ -95,7 +95,7 @@ const dk (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
 };
 
 const runRequest = async (
-  request: Idkquest,
+  request: IdkRequest,
   beforeMiddlewares,
   baseHandler,
   afterMiddlewares,
@@ -157,7 +157,7 @@ const runMiddlewares = async (request, middlewares) => {
 };
 
 const fcInitializer = (initializerList) =>
-  dkcontext) => {
+  dk((context) => {
     const items = {};
     for (const item of initializerList) {
       Object.assign(items, item(context));
@@ -165,4 +165,4 @@ const fcInitializer = (initializerList) =>
     return items;
   });
 
-export = dk
+export = dk;

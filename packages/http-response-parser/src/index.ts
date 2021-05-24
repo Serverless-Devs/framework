@@ -1,7 +1,7 @@
 import { IdkRequest } from '@serverless-devs/dk-core/lib/interface';
 
 const httpResponseParserMiddleware = () => {
-  const httpResponseParserMiddlewareAfter = async (request: Idkquest) => {
+  const httpResponseParserMiddlewareAfter = async (request: IdkRequest) => {
     const { res, result } = request;
     if ('html' in result) {
       res.setHeader('content-type', 'text/html; charset=utf8');

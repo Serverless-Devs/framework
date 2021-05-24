@@ -25,5 +25,9 @@
     "@serverless-devs/http-route-parser": "^0.0.1",
     "@serverless-devs/http-response-parser": "^0.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  }
 }

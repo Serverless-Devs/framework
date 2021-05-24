@@ -28,5 +28,9 @@
   },
   "dependencies": {
     "tablestore": "^5.0.7"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }
