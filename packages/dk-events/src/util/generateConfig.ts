@@ -38,8 +38,8 @@ export const generateConfig = (type: ConfigType, args: any) => {
   }
   const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
   // oss配置
-  content.oss = [];
   if (type === 'oss') {
+    content.oss = [];
     args.oss.forEach((item) => {
       const obj: any = {
         bucketName: item.bucketName,
