@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-validator",
-  "version": "0.0.3-alpha.1",
+  "version": "0.0.3-alpha.3",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.1",
+    "@serverless-devs/http-json-body-parser": "^0.0.3-alpha.3",
     "ajv": "^8.3.0",
     "ajv-formats": "^2.1.0",
     "ajv-formats-draft2019": "^1.4.3",
