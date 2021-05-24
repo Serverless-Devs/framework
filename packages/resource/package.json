@@ -2,7 +2,7 @@
   "name": "@serverless-devs/resource",
   "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "build": "npx tsc",
     "test": "jest",
@@ -23,5 +23,6 @@
   },
   "devDependencies": {
     "@types/http-errors": "^1.8.0"
-  }
+  },
+  "gitHead": "ed3593d072f629ebe45cac90cfd2961ef2bbff48"
 }
