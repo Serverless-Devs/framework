@@ -1,5 +1,5 @@
 import { isFcEnv, generateConfig } from './util';
-import dk from '@serverless-devs/dk';
+import dk from './dk';
 
 interface IOSSConfig {
   handler: (arg0: any) => any;

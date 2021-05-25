@@ -1,4 +1,4 @@
-import dk from '@serverless-devs/dk';
+import dk from './dk';
 import { isFcEnv, generateConfig } from './util';
 
 interface IHttpConfig {
