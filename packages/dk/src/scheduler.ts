@@ -9,6 +9,7 @@ interface ISchedulerConfig {
 const onScheduler = (config: ISchedulerConfig) => {
   if (isFcEnv) return dk(config.handler);
   generateConfig('scheduler', config);
+  return dk(config.handler);
 };
 
 export const scheduler = {
