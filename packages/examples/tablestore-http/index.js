@@ -23,7 +23,7 @@ const route = {
       primaryKey: [{ id: body.id }],
       attributeColumns: params,
     });
-    return JSON.stringify(data, null, 2);
+    return { body: JSON.stringify(data, null, 2) };
   },
   'GET /UpdateRow': async (request) => {
     const { tableClient } = request.internal;
@@ -38,7 +38,7 @@ const route = {
       primaryKey: [{ id: queries.id }],
       updateOfAttributeColumns: [{ PUT: params }],
     });
-    return JSON.stringify(data, null, 2);
+    return { body: JSON.stringify(data, null, 2) };
   },
 };
 
