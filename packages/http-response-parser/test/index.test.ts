@@ -5,7 +5,7 @@ const httpResponseParser = require('../src');
 describe('http-response-parser测试', () => {
   test('html', async () => {
     const mockRequest = { method: 'GET' };
-    const handler = dkrequest) => {
+    const handler = dk((request) => {
       return {
         html: `<!DOCTYPE html>
       <html lang="en">

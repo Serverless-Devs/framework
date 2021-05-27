@@ -7,7 +7,7 @@ const http = require('http');
 describe('http-json-body-parser 测试', () => {
   it('测试：基本事例', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -38,7 +38,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：json parse by reviver', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       const reviver = (key, value) => {
@@ -75,7 +75,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：json error', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -83,9 +83,7 @@ describe('http-json-body-parser 测试', () => {
         await handler(req, mockResponse, mockContext);
       } catch (e) {
         console.log(e);
-        expect(e.message).toEqual(
-          'Content type defined as JSON but an invalid JSON was provided',
-        );
+        expect(e.message).toEqual('Content type defined as JSON but an invalid JSON was provided');
       }
       res.end();
     });
@@ -112,7 +110,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：未传 content-type，直接返回 body', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -141,7 +139,7 @@ describe('http-json-body-parser 测试', () => {
   });
 
   it('测试：no http request', async () => {
-    const handler = dkrequest) => {
+    const handler = dk((request) => {
       return request.req.body; // propagates the body as a response
     });
     handler.use(jsonBodyParser());
@@ -163,7 +161,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：base64 body', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());
@@ -198,7 +196,7 @@ describe('http-json-body-parser 测试', () => {
 
   it('测试：base64 body error', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body; // propagates the body as a response
       });
       handler.use(jsonBodyParser());

@@ -43,7 +43,9 @@ const validatorMiddleware = (opts = {}) => {
   outputSchema = compile(outputSchema, ajvOptions, ajvInstance);
 
   const validatorMiddlewareBefore = async (request) => {
-    const event = jsonSafeParse(request.event.toString());
+    const event = Buffer.isBuffer(request.event)
+      ? jsonSafeParse(request.event.toString())
+      : request.event;
     if (event) {
       // 事件函数
       const valid = eventSchema(event);

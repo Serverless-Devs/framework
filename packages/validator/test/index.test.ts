@@ -4,7 +4,7 @@ import { mockContext } from './fixtures/mock-data';
 
 describe('validator测试', () => {
   test('It should validate an incoming object', async () => {
-    const handler = dkrequest) => {
+    const handler = dk((request) => {
       return request.event.body;
     });
     const schema = {

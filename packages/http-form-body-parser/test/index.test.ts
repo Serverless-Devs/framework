@@ -8,7 +8,7 @@ var http = require('http');
 describe('http-form-body-parser 测试', () => {
   it('测试：基本事例', (done) => {
     var server = http.createServer(async (req, res) => {
-      const handler = dkrequest) => {
+      const handler = dk((request) => {
         return request.req.body;
       });
       handler.use(formBodyParser()).use(jsonBodyParser());
