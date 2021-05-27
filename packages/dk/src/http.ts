@@ -12,6 +12,7 @@ const onRequest = (config: IHttpConfig) => {
     http: [{ authType: 'anonymous', methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'] }],
     ...config,
   });
+  return dk(config.handler);
 };
 
 export const http = {

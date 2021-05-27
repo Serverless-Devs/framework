@@ -17,6 +17,7 @@ interface IOSSConfig {
 const onEvent = (config: IOSSConfig) => {
   if (isFcEnv) return dk(config.handler);
   generateConfig('oss', config);
+  return dk(config.handler);
 };
 
 const onObjectCreated = (config: IOSSConfig) => {
