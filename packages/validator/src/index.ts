@@ -3,6 +3,7 @@ import Ajv from 'ajv/dist/2019.js';
 import localize from 'ajv-i18n';
 import formats from 'ajv-formats';
 import formatsDraft2019 from 'ajv-formats-draft2019';
+const { jsonSafeParse } = require('@serverless-devs/dk-util');
 
 let ajv;
 const ajvDefaults = {
@@ -42,12 +43,13 @@ const validatorMiddleware = (opts = {}) => {
   outputSchema = compile(outputSchema, ajvOptions, ajvInstance);
 
   const validatorMiddlewareBefore = async (request) => {
-    if (request.event) {
+    const event = jsonSafeParse(request.event.toString());
+    if (event) {
       // 事件函数
-      const valid = eventSchema(request.event);
+      const valid = eventSchema(event);
       if (!valid) {
         const error = new createError.BadRequest('Event object failed validation');
-        const language = chooseLanguage(request.event, defaultLanguage);
+        const language = chooseLanguage(event, defaultLanguage);
         localize[language](eventSchema.errors);
         error.details = eventSchema.errors;
         throw error;
