@@ -10,7 +10,7 @@ const dk = (handler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
     baseHandler = async config => {
       try {
         const data = await httpRouteParserHandler(config, handler);
-        return { body: data || '' }
+        return data;
       } catch (e) {
         throw new Error(e);
       }
