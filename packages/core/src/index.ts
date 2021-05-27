@@ -1,11 +1,24 @@
 import { IdkRequest } from './interface';
-import { getBody, analizeRequestParams, analizeEvents, makeResult } from './util';
+import { getBody, analizeRequestParams, analizeEvents, makeResult, httpRouteParserHandler } from './util';
 import { HTTP, INITIALIZER } from './constant';
 
 const internal = {};
 
-const dk = (baseHandler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
-  baseHandler = baseHandler || function () {};
+const dk = (handler?: (arg0: any) => any, baseMiddlewares?: any[]) => {
+  let baseHandler;
+  if (Object.prototype.toString.call(handler) === '[object Object]') { // 传入类型是对象
+    baseHandler = async config => {
+      try {
+        const data = await httpRouteParserHandler(config, handler);
+        return { body: data || '' }
+      } catch (e) {
+        throw new Error(e);
+      }
+    }
+  } else {
+    baseHandler = handler || function () { };
+  }
+
   const beforeMiddlewares = [];
   const afterMiddlewares = [];
   const onErrorMiddlewares = [];
