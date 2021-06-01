@@ -169,4 +169,5 @@ export const httpRouteParserHandler = async (request: IdkRequest, route: { [key:
       }
     }
   }
+  return { body: '' };
 }
