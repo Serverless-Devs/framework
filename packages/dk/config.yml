@@ -15,7 +15,7 @@ http:
 oss:
   - bucketName: my-bukect-01
     events:
-      - 'oss:ObjectCreated:*'
+      - oss:ObjectCreated:*
     filter:
       key:
         Prefix: source/

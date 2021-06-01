@@ -122,14 +122,17 @@ export const analizeRequestParams = ({
 };
 
 export const getBody = async (request) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
+    if (!request.req.on) {
+      resolve(request);
+    }
     try {
       body(request.req, (e, b) => {
         request.req.body = b;
         resolve(request);
       });
     } catch (e) {
-      resolve(request);
+      reject(e);
     }
   });
 
