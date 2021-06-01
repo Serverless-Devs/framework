@@ -2,7 +2,7 @@ import { isFcEnv, generateConfig } from './util';
 import dk from './dk';
 
 interface IOSSConfig {
-  handler: (arg0: any) => any;
+  handler: Function | Object;
   oss: {
     bucketName: string;
     events?: string[];

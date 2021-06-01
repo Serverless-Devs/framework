@@ -3,7 +3,7 @@ import { isFcEnv, generateConfig } from './util';
 
 interface IHttpConfig {
   http?: { authType?: string; methods?: string[] }[];
-  handler?: (arg0: any) => any;
+  handler?: Function | Object;
 }
 
 const onRequest = (config: IHttpConfig) => {
