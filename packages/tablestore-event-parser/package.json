@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/tablestore-event-parser",
-  "version": "0.0.4-alpha.6",
+  "version": "0.0.4-alpha.7",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "cbor": "^7.0.5"
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.6",
-    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.6",
+    "@serverless-devs/dk-core": "^0.0.4-alpha.7",
+    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.7",
     "@types/http-errors": "^1.8.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6"
