@@ -15,7 +15,7 @@ export const omit = (value: object, list: string[]) => {
   const newObject = {};
   if (!isPlainObject(value)) return newObject;
   Object.keys(value)
-    .filter((item) => list.indexOf(item) > -1)
+    .filter((item) => !list.includes(item))
     .map((key) => {
       newObject[key] = value[key];
     });
