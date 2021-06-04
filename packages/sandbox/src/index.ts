@@ -6,7 +6,12 @@ const router = express.Router();
 const noop = () => {};
 const logger = new core.Logger('sandbox');
 
-const sandbox = async (config = {}) => {
+interface IConfig {
+  cwd?: string;
+  port?: number;
+}
+
+const sandbox = async (config: IConfig = {}) => {
   const { cwd = process.cwd(), port = 3000 } = config;
   const currentPath = path.resolve(cwd);
   const content = await core.getYamlContent(path.join(currentPath, './s.yml'));
