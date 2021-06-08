@@ -5,32 +5,39 @@ import generate from '@babel/generator';
 import prettier from 'prettier';
 import fs from 'fs-extra';
 import path from 'path';
-import yaml from 'js-yaml';
+import { getYamlContent, Logger } from '@serverless-devs/core';
 import get from 'lodash.get';
 
-interface IOption {
-  initializer?: string;
-}
+const logger = new Logger('dk-deploy-common');
+
 // 修改index.js和config.yml内容，并返回
-function insertTablestoreinitializer(codeUri: string, option?: IOption) {
-  const { initializer = 'initializer' } = option || {};
+async function insertTablestoreinitializer(codeUri: string) {
   const filepath = path.resolve(codeUri);
   const indexPath = path.join(filepath, 'index.js');
   const content = fs.readFileSync(indexPath, 'utf8');
   const ast = parser.parse(content);
   const { useTableStorePlugin, useExportInitializer, initializerName } = useTableStore(ast);
-  const configYml = insertTablestoreinitializerYml({ filepath, initializerName });
+  logger.debug(`${codeUri}/index.js文件是否使用tablestore: ${useTableStorePlugin}`);
+  logger.debug(`${codeUri}/index.js文件是否已经导出初始化函数: ${useExportInitializer}`);
+  if (useExportInitializer) {
+    logger.debug(`${codeUri}/index.js文件导出初始化函数名称: ${initializerName}`);
+  }
+  if (!useTableStorePlugin) return { indexJs: content };
+  const configYml = await insertTablestoreinitializerYml({ filepath, initializerName });
+  logger.debug(`${codeUri}/config.yml: ${JSON.stringify(configYml, null, 2)}`);
 
-  if (!useTableStorePlugin) return { configYml, indexJs: content };
   // 如果使用tablestore但已经自定义initializer，直接返回原内容
-  if (useTableStorePlugin && useExportInitializer) return { configYml, indexJs: content };
+  if (useTableStorePlugin && useExportInitializer) {
+    logger.debug(`${codeUri}/index.js: ${JSON.stringify(content, null, 2)}`);
+    return { configYml, indexJs: content };
+  }
   traverse(ast, {
     Program({ node }) {
       const { body } = node;
       const newImport = t.expressionStatement(
         t.assignmentExpression(
           '=',
-          t.memberExpression(t.identifier('exports'), t.identifier(initializer)),
+          t.memberExpression(t.identifier('exports'), t.identifier('initializer')),
           t.memberExpression(t.identifier('handler'), t.identifier('initializerHandler')),
         ),
       );
@@ -43,6 +50,8 @@ function insertTablestoreinitializer(codeUri: string, option?: IOption) {
     trailingComma: 'es5',
     printWidth: 100,
   });
+  logger.debug(`${codeUri}/index.js: ${JSON.stringify(indexJs, null, 2)}`);
+
   return { configYml, indexJs };
 }
 
@@ -112,16 +121,24 @@ function useTableStore(ast: t.File) {
 }
 
 // config.yml配置初始化
-function insertTablestoreinitializerYml({ filepath, initializerName }) {
+async function insertTablestoreinitializerYml({ filepath, initializerName = 'initializer' }) {
   const configPath = path.join(filepath, 'config.yml');
-  const result = yaml.load(fs.readFileSync(configPath, 'utf8'));
-  if (!get(result, 'function.initializer')) {
-    result.function.initializer = `index.${initializerName}`;
+  if (fs.existsSync(configPath)) {
+    const result = await getYamlContent(configPath);
+    if (!get(result, 'function.initializer')) {
+      result.function.initializer = `index.${initializerName}`;
+    }
+    if (!get(result, 'function.initializationTimeout')) {
+      result.function.initializationTimeout = 60;
+    }
+    return result;
   }
-  if (!get(result, 'function.initializationTimeout')) {
-    result.function.initializationTimeout = 60;
-  }
-  return result;
+  return {
+    function: {
+      initializer: `index.${initializerName}`,
+      initializationTimeout: 60,
+    },
+  };
 }
 
 export = insertTablestoreinitializer;
