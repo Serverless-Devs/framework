@@ -65,6 +65,6 @@ const handler = http.onRequest({
 
 handler.use(tablestoreInitialzerPlugin());
 
-exports.initializer = handler.initializerHandler;
+exports.initializerxx = handler.initializerHandler;
 
 exports.handler = handler;
