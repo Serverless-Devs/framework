@@ -7,11 +7,31 @@ import fs from 'fs-extra';
 import path from 'path';
 import { getYamlContent, Logger } from '@serverless-devs/core';
 import get from 'lodash.get';
+import yaml from 'js-yaml';
 
 const logger = new Logger('dk-deploy-common');
 
+async function generateTablestoreInitializer(codeUri: string) {
+  const codeUriPath = path.resolve(codeUri);
+  const cwdindex = process.cwd().split('/').length;
+  let filePath: any = codeUriPath.split('/');
+  filePath.splice(cwdindex, 0, '.s');
+  filePath = filePath.join('/');
+  const { indexJs, configYml } = await insertTablestoreInitializer(codeUriPath);
+  if (indexJs) {
+    const indexPath = path.join(filePath, `index.js`);
+    fs.ensureFileSync(indexPath);
+    fs.writeFileSync(indexPath, indexJs);
+  }
+  if (configYml) {
+    const configPath = path.join(filePath, `config.yml`);
+    fs.ensureFileSync(configPath);
+    fs.writeFileSync(configPath, yaml.dump(configYml));
+  }
+}
+
 // 修改index.js和config.yml内容，并返回
-async function insertTablestoreinitializer(codeUri: string) {
+async function insertTablestoreInitializer(codeUri: string) {
   const filepath = path.resolve(codeUri);
   const indexPath = path.join(filepath, 'index.js');
   const content = fs.readFileSync(indexPath, 'utf8');
@@ -141,4 +161,4 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
   };
 }
 
-export = insertTablestoreinitializer;
+export = generateTablestoreInitializer;

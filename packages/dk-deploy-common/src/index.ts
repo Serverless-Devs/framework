@@ -1,1 +1,1 @@
-export { default as insertTablestoreinitializer } from './insertTablestoreinitializer';
+export { default as generateTablestoreInitializer } from './generateTablestoreInitializer';
