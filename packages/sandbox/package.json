@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/sandbox",
-  "version": "0.0.3-alpha.1",
+  "version": "0.0.4-alpha.9",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "access": "public"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "@serverless-devs/core": "latest"
+    "@serverless-devs/core": "latest",
+    "express": "^4.17.1"
   }
 }
