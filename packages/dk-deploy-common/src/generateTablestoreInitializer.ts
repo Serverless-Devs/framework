@@ -11,13 +11,22 @@ import yaml from 'js-yaml';
 
 const logger = new Logger('dk-deploy-common');
 
-async function generateTablestoreInitializer(codeUri: string) {
+interface IOptions {
+  codeUri: string;
+  app: { [keys: string]: any };
+  props: { [keys: string]: any };
+}
+
+async function generateTablestoreInitializer(options: IOptions) {
+  logger.debug(`函数generateTablestoreInitializer入参options: ${JSON.stringify(options, null, 2)}`);
+  const { codeUri } = options;
   const codeUriPath = path.resolve(codeUri);
   const cwdindex = process.cwd().split('/').length;
   let filePath: any = codeUriPath.split('/');
   filePath.splice(cwdindex, 0, '.s');
   filePath = filePath.join('/');
-  const { indexJs, configYml } = await insertTablestoreInitializer(codeUriPath);
+  fs.copySync(codeUri, filePath);
+  const { indexJs, configYml } = await insertTablestoreInitializer(options);
   if (indexJs) {
     const indexPath = path.join(filePath, `index.js`);
     fs.ensureFileSync(indexPath);
@@ -31,7 +40,8 @@ async function generateTablestoreInitializer(codeUri: string) {
 }
 
 // 修改index.js和config.yml内容，并返回
-async function insertTablestoreInitializer(codeUri: string) {
+async function insertTablestoreInitializer(options: IOptions) {
+  const { codeUri } = options;
   const filepath = path.resolve(codeUri);
   const indexPath = path.join(filepath, 'index.js');
   const content = fs.readFileSync(indexPath, 'utf8');
@@ -45,6 +55,11 @@ async function insertTablestoreInitializer(codeUri: string) {
   if (!useTableStorePlugin) return { indexJs: content };
   const configYml = await insertTablestoreinitializerYml({ filepath, initializerName });
   logger.debug(`${codeUri}/config.yml: ${JSON.stringify(configYml, null, 2)}`);
+
+  // 如果使用tablestore，检查role
+  if (useTableStorePlugin) {
+    await generateTablestoreRole(options);
+  }
 
   // 如果使用tablestore但已经自定义initializer，直接返回原内容
   if (useTableStorePlugin && useExportInitializer) {
@@ -159,6 +174,26 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
       initializationTimeout: 60,
     },
   };
+}
+
+// 检测 s.yml以及公共的config.yml 是否存在 role
+async function generateTablestoreRole(options: IOptions) {
+  const { app, props } = options;
+  const sconfigPath = path.resolve(process.cwd(), '.s', props.sourceCode, 'config.yml');
+  const configPath = path.resolve(process.cwd(), props.sourceCode, 'config.yml');
+
+  if (!get(app, 'role')) {
+    fs.copyFileSync(configPath, sconfigPath);
+    const sconfigYml = await getYamlContent(configPath);
+    sconfigYml.app = {
+      ...sconfigYml.app,
+      role: {
+        name: `fcdeploydefaultrole-${get(sconfigYml, 'app.name')}`,
+        policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
+      },
+    };
+    fs.writeFileSync(sconfigPath, yaml.dump(sconfigYml));
+  }
 }
 
 export = generateTablestoreInitializer;
