@@ -8,23 +8,20 @@ import path from 'path';
 import { getYamlContent, Logger } from '@serverless-devs/core';
 import get from 'lodash.get';
 import yaml from 'js-yaml';
+import { transformCodeUriToS } from './utils';
 
 const logger = new Logger('dk-deploy-common');
 
 interface IOptions {
   codeUri: string;
-  app: { [keys: string]: any };
-  props: { [keys: string]: any };
+  sourceCode: string;
+  app: { [key: string]: any };
 }
 
 async function generateTablestoreInitializer(options: IOptions) {
-  logger.debug(`函数generateTablestoreInitializer入参options: ${JSON.stringify(options, null, 2)}`);
+  logger.debug(`函数 generateTablestoreInitializer 入参: ${JSON.stringify(options, null, 2)}`);
   const { codeUri } = options;
-  const codeUriPath = path.resolve(codeUri);
-  const cwdindex = process.cwd().split('/').length;
-  let filePath: any = codeUriPath.split('/');
-  filePath.splice(cwdindex, 0, '.s');
-  filePath = filePath.join('/');
+  const filePath = transformCodeUriToS(codeUri);
   fs.copySync(codeUri, filePath);
   const { indexJs, configYml } = await insertTablestoreInitializer(options);
   if (indexJs) {
@@ -178,9 +175,9 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
 
 // 检测 s.yml以及公共的config.yml 是否存在 role
 async function generateTablestoreRole(options: IOptions) {
-  const { app, props } = options;
-  const sconfigPath = path.resolve(process.cwd(), '.s', props.sourceCode, 'config.yml');
-  const configPath = path.resolve(process.cwd(), props.sourceCode, 'config.yml');
+  const { sourceCode, app } = options;
+  const sconfigPath = path.resolve(process.cwd(), '.s', sourceCode, 'config.yml');
+  const configPath = path.resolve(process.cwd(), sourceCode, 'config.yml');
 
   if (!get(app, 'role')) {
     fs.copyFileSync(configPath, sconfigPath);
