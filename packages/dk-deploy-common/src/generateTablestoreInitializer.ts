@@ -15,7 +15,7 @@ const logger = new Logger('dk-deploy-common');
 interface IOptions {
   codeUri: string;
   sourceCode: string;
-  app: { [key: string]: any };
+  app?: { [key: string]: any };
 }
 
 async function generateTablestoreInitializer(options: IOptions) {
@@ -60,7 +60,6 @@ async function insertTablestoreInitializer(options: IOptions) {
 
   // 如果使用tablestore但已经自定义initializer，直接返回原内容
   if (useTableStorePlugin && useExportInitializer) {
-    logger.debug(`${codeUri}/index.js: ${JSON.stringify(content, null, 2)}`);
     return { configYml, indexJs: content };
   }
   traverse(ast, {
@@ -82,7 +81,6 @@ async function insertTablestoreInitializer(options: IOptions) {
     trailingComma: 'es5',
     printWidth: 100,
   });
-  logger.debug(`${codeUri}/index.js: ${JSON.stringify(indexJs, null, 2)}`);
 
   return { configYml, indexJs };
 }
