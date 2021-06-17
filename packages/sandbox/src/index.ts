@@ -20,7 +20,7 @@ const sandbox = async (config: IConfig = {}) => {
     logger.debug(`获取env文件的环境变量: ${JSON.stringify(result.parsed, null, 2)}`);
   }
 
-  const { cwd = process.cwd(), port = 3000 } = config;
+  const { cwd = path.resolve('..'), port = 3000 } = config;
   const currentPath = path.resolve(cwd);
   const content = await getYamlContent(path.join(currentPath, './s.yml'));
   if (!content) {
