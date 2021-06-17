@@ -13,12 +13,13 @@ interface IOptions {
   codeUri: string;
   routePath: string;
   projectName: string;
+  cwd?: string;
 }
 
 async function generateHttpRouter(options: IOptions) {
   logger.debug(`函数 generateHttpRouter 入参: ${JSON.stringify(options, null, 2)}`);
-  const { codeUri, routePath, projectName } = options;
-  const filePath = transformCodeUriToS(codeUri);
+  const { codeUri, routePath, projectName, cwd = process.cwd() } = options;
+  const filePath = transformCodeUriToS(codeUri, cwd);
   const indexPath = path.join(filePath, 'index.js');
   logger.debug(`indexPath ${indexPath}`);
   const content = fs.readFileSync(indexPath, 'utf8');
