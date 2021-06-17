@@ -15,7 +15,7 @@ interface IConfig {
 
 const sandbox = async (config: IConfig = {}) => {
   const { cwd = path.resolve('..'), port = 3000 } = config;
-  getEnvs({ path: path.resolve('..', 'env') });
+  getEnvs({ path: path.resolve('..', '.env') });
   const currentPath = path.resolve(cwd);
   const content = await getYamlContent(path.join(currentPath, './s.yml'));
   if (!content) {

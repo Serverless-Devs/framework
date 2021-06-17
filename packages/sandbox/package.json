@@ -11,6 +11,9 @@
     "f2elint-scan": "f2elint scan",
     "f2elint-fix": "f2elint fix"
   },
+  "bin": {
+    "sandbox": "./bin/sandbox"
+  },
   "author": "",
   "license": "ISC",
   "husky": {
