@@ -15,13 +15,14 @@ const logger = new Logger('dk-deploy-common');
 interface IOptions {
   codeUri: string;
   sourceCode: string;
+  cwd?: string;
   app?: { [key: string]: any };
 }
 
 async function generateTablestoreInitializer(options: IOptions) {
   logger.debug(`函数 generateTablestoreInitializer 入参: ${JSON.stringify(options, null, 2)}`);
-  const { codeUri } = options;
-  const filePath = transformCodeUriToS(codeUri);
+  const { codeUri, cwd = process.cwd() } = options;
+  const filePath = transformCodeUriToS(codeUri, cwd);
   fs.copySync(codeUri, filePath);
   const { indexJs, configYml } = await insertTablestoreInitializer(options);
   if (indexJs) {
@@ -173,9 +174,9 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
 
 // 检测 s.yml以及公共的config.yml 是否存在 role
 async function generateTablestoreRole(options: IOptions) {
-  const { sourceCode, app } = options;
-  const sconfigPath = path.resolve(process.cwd(), '.s', sourceCode, 'config.yml');
-  const configPath = path.resolve(process.cwd(), sourceCode, 'config.yml');
+  const { sourceCode, app, cwd = process.cwd() } = options;
+  const sconfigPath = path.resolve(cwd, '.s', sourceCode, 'config.yml');
+  const configPath = path.resolve(cwd, sourceCode, 'config.yml');
 
   if (!get(app, 'role')) {
     fs.copyFileSync(configPath, sconfigPath);

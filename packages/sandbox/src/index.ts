@@ -1,9 +1,8 @@
-import { generateTablestoreInitializer } from '@serverless-devs/dk-deploy-common';
+import { generateTablestoreInitializer, getEnvs } from '@serverless-devs/dk-deploy-common';
 import fs from 'fs-extra';
 import path from 'path';
 import { getYamlContent, getCredential, Logger } from '@serverless-devs/core';
 const express = require('express');
-const dotenv = require('dotenv');
 const app = express();
 const router = express.Router();
 const noop = () => {};
@@ -15,12 +14,8 @@ interface IConfig {
 }
 
 const sandbox = async (config: IConfig = {}) => {
-  const result = dotenv.config();
-  if (result.parsed) {
-    logger.debug(`获取env文件的环境变量: ${JSON.stringify(result.parsed, null, 2)}`);
-  }
-
   const { cwd = path.resolve('..'), port = 3000 } = config;
+  getEnvs({ path: path.resolve('..', 'env') });
   const currentPath = path.resolve(cwd);
   const content = await getYamlContent(path.join(currentPath, './s.yml'));
   if (!content) {
@@ -44,16 +39,20 @@ const sandbox = async (config: IConfig = {}) => {
     const { props } = content.services[key];
     const { sourceCode } = props;
     fs.ensureSymlinkSync(
-      path.resolve(sourceCode, 'node_modules'),
-      path.resolve('.s', sourceCode, 'node_modules'),
+      path.join(currentPath, sourceCode, 'node_modules'),
+      path.join(currentPath, '.s', sourceCode, 'node_modules'),
     );
 
     for (const route of props.route) {
       const indexRoute = route === '/' ? '/index' : route;
       logger.info(`http://localhost:${port}${route}`);
-      const sourceCodePath = path.resolve(props.sourceCode);
+      const sourceCodePath = path.join(currentPath, props.sourceCode);
       const codeUri = path.join(sourceCodePath, indexRoute);
-      await generateTablestoreInitializer({ codeUri, sourceCode: props.sourceCode });
+      await generateTablestoreInitializer({
+        codeUri,
+        sourceCode: props.sourceCode,
+        cwd: currentPath,
+      });
       router.all(route, function (req, res) {
         req.queries = req.query;
         const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
