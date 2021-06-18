@@ -1,28 +1,26 @@
-import { generateTablestoreInitializer, getEnvs } from '@serverless-devs/dk-deploy-common';
-import fs from 'fs-extra';
-import path from 'path';
-import { getYamlContent, getCredential, Logger } from '@serverless-devs/core';
+const { generateTablestoreInitializer, getEnvs } = require('@serverless-devs/dk-deploy-common');
+const fs = require('fs-extra');
+const path = require('path');
+const core = require('@serverless-devs/core');
 const express = require('express');
 const app = express();
 const router = express.Router();
 const noop = () => {};
-const logger = new Logger('sandbox');
+const logger = new core.Logger('sandbox');
 
-interface IConfig {
-  cwd?: string;
-  port?: number;
-}
-
-const sandbox = async (config: IConfig = {}) => {
-  const { cwd = path.resolve('..'), port = 3000 } = config;
+const sandbox = async () => {
+  const cwd = path.resolve('..');
+  const port = 3000;
   getEnvs({ path: path.resolve('..', '.env') });
   const currentPath = path.resolve(cwd);
-  const content = await getYamlContent(path.join(currentPath, './s.yml'));
+  const content = await core.getYamlContent(path.join(currentPath, './s.yml'));
   if (!content) {
     throw new Error(`${cwd}路径下不存在s.yml文件`);
   }
   // 获取密钥
-  let credentials = await getCredential(content.access);
+  let credentials = await core.getCredential(content.access);
+  console.log(credentials);
+
   credentials = {
     accessKeyId: credentials.AccessKeyID,
     accessKeySecret: credentials.AccessKeySecret,
@@ -71,4 +69,4 @@ const sandbox = async (config: IConfig = {}) => {
   });
 };
 
-module.exports = sandbox;
+sandbox();

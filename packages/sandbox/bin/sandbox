@@ -1,3 +1,2 @@
 #!/usr/bin/env node
-const sandbox = require('../lib');
-sandbox();
+require('../src');

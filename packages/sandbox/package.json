@@ -4,12 +4,7 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "dev": "npx tsc -w",
-    "build": "npx tsc",
-    "test": "jest",
-    "cov": "jest --coverage",
-    "f2elint-scan": "f2elint scan",
-    "f2elint-fix": "f2elint fix"
+    "server": "nodemon -e html,js ./src/sandbox.js"
   },
   "bin": {
     "sandbox": "./bin/sandbox"
@@ -31,7 +26,8 @@
     "@serverless-devs/dk-deploy-common": "^0.0.4-alpha.14",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "fs-extra": "^9.0.1"
+    "fs-extra": "^9.0.1",
+    "nodemon": "^2.0.7"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.11"
