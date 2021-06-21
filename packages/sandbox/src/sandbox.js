@@ -3,14 +3,16 @@ const fs = require('fs-extra');
 const path = require('path');
 const core = require('@serverless-devs/core');
 const express = require('express');
+const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
 const noop = () => {};
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
+  const port = await portIsOccupied(3000);
+
   const cwd = path.resolve('..');
-  const port = 3000;
   getEnvs({ path: path.resolve('..', '.env') });
   const currentPath = path.resolve(cwd);
   const content = await core.getYamlContent(path.join(currentPath, './s.yml'));
@@ -65,7 +67,7 @@ const sandbox = async () => {
   app.use('/', router);
 
   app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`the server listening at http://localhost:${port}`);
   });
 };
 

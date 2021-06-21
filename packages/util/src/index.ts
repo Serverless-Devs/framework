@@ -1,3 +1,5 @@
+export { default as portIsOccupied } from './portIsOccupied';
+
 export const isPlainObject = (value: object) => {
   return Object.prototype.toString.call(value) === '[object Object]';
 };
