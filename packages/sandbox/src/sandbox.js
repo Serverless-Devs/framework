@@ -10,7 +10,9 @@ const noop = () => {};
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
-  const port = await portIsOccupied(3000);
+  const args = process.env;
+  let port = args.p || args.port || 3000;
+  port = await portIsOccupied(port);
 
   const cwd = path.resolve('..');
   getEnvs({ path: path.resolve('..', '.env') });
@@ -21,8 +23,6 @@ const sandbox = async () => {
   }
   // 获取密钥
   let credentials = await core.getCredential(content.access);
-  console.log(credentials);
-
   credentials = {
     accessKeyId: credentials.AccessKeyID,
     accessKeySecret: credentials.AccessKeySecret,
@@ -34,34 +34,32 @@ const sandbox = async () => {
 
     next();
   });
+  const findKey = args.projectName || Object.keys(content.services)[0];
+  const { props } = content.services[findKey];
+  const { sourceCode } = props;
+  fs.ensureSymlinkSync(
+    path.join(currentPath, sourceCode, 'node_modules'),
+    path.join(currentPath, '.s', sourceCode, 'node_modules'),
+  );
 
-  for (const key in content.services) {
-    const { props } = content.services[key];
-    const { sourceCode } = props;
-    fs.ensureSymlinkSync(
-      path.join(currentPath, sourceCode, 'node_modules'),
-      path.join(currentPath, '.s', sourceCode, 'node_modules'),
-    );
-
-    for (const route of props.route) {
-      const indexRoute = route === '/' ? '/index' : route;
-      logger.info(`http://localhost:${port}${route}`);
-      const sourceCodePath = path.join(currentPath, props.sourceCode);
-      const codeUri = path.join(sourceCodePath, indexRoute);
-      await generateTablestoreInitializer({
-        codeUri,
-        sourceCode: props.sourceCode,
-        cwd: currentPath,
-      });
-      router.all(route, function (req, res) {
-        req.queries = req.query;
-        const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
-        if (fileModule.initializer) {
-          fileModule.initializer({ credentials }, noop);
-        }
-        fileModule.handler(req, res, { credentials });
-      });
-    }
+  for (const route of props.route) {
+    const indexRoute = route === '/' ? '/index' : route;
+    logger.info(`http://localhost:${port}${route}`);
+    const sourceCodePath = path.join(currentPath, props.sourceCode);
+    const codeUri = path.join(sourceCodePath, indexRoute);
+    await generateTablestoreInitializer({
+      codeUri,
+      sourceCode: props.sourceCode,
+      cwd: currentPath,
+    });
+    router.all(route, function (req, res) {
+      req.queries = req.query;
+      const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
+      if (fileModule.initializer) {
+        fileModule.initializer({ credentials }, noop);
+      }
+      fileModule.handler(req, res, { credentials });
+    });
   }
 
   app.use('/', router);
