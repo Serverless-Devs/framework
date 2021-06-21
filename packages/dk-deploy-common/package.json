@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-deploy-common",
-  "version": "0.0.4-alpha.14",
+  "version": "0.0.4-alpha.17",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
