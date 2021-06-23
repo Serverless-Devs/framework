@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
+const os = require('os');
+const core = require('@serverless-devs/core');
 
 const getYamlPath = (prePath, name) => {
   const S_PATH1 = path.join(prePath, `${name}.yaml`);
@@ -27,7 +29,14 @@ function getTemplatekey(str) {
     });
 }
 
+async function getAllCredentials() {
+  const accessFilePath = path.join(os.homedir(), '.s', 'access.yaml');
+  const result = await core.getYamlContent(accessFilePath);
+  return Object.keys(result);
+}
+
 module.exports = {
   getYamlPath,
   getTemplatekey,
+  getAllCredentials,
 };

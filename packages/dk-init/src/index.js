@@ -4,7 +4,7 @@ const minimist = require('minimist');
 const core = require('@serverless-devs/core');
 const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
-const { getYamlPath, getTemplatekey } = require('./utils');
+const { getYamlPath, getTemplatekey, getAllCredentials } = require('./utils');
 const os = require('os');
 const app = express();
 app.set('views', path.join(__dirname, 'views'));
@@ -21,7 +21,6 @@ const sandbox = async () => {
   const spath = getYamlPath(cwd, 's');
   console.log(spath);
   if (!spath) return;
-  const accessFilePath = path.join(os.homedir(), '.s', 'access.yaml');
 
   const templateKeys = [];
   // s.yml
@@ -38,16 +37,16 @@ const sandbox = async () => {
 
   envKeys.forEach((item) => {
     if (item) {
-      templateKeys.push({ ...item, type: '.env' });
+      templateKeys.push({ ...item, type: 'env' });
     }
   });
   if (templateKeys.length === 0) return;
-  app.get('/', (req, res) => {
-    console.log(templateKeys);
-
+  app.get('/', async (req, res) => {
+    const accessList = await getAllCredentials();
     res.render('index', {
       templateKeys: JSON.stringify(templateKeys),
       port,
+      accessList: JSON.stringify(accessList),
     });
   });
 

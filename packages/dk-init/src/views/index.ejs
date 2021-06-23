@@ -7,8 +7,27 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 
-<body>
-    <div id="app" style="padding: 0 24px;">xx</div>
+<body style="background-color: rgb(245, 245, 245);padding: 16px 24px;">
+    <div id="app" style="background-color: #fff;box-shadow: 0 1px 4px 0 rgb(0 0 0 / 13%);border: 1px solid transparent;padding: 0 16px;">
+        <h3>项目初始化</h3>
+        <el-form ref="form" :model="form" label-width="80px">
+            <template v-for="item in templateKeys">
+                <el-form-item v-if="item.name === 'access'" label="access">
+                    <el-select v-model="form.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+            </template>
+            <el-form-item label="活动名称">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            
+            <el-form-item>
+                <el-button type="primary" @click="handleInit">初始化</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -18,10 +37,7 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
 <script>
-    const templateKeys = <%- templateKeys %>;
     const port = <%- port %>;
-    console.log(templateKeys);
-    console.log(port);
 
     function request(options) {
         return axios({
@@ -34,13 +50,28 @@
         el: '#app',
         data: function () {
             return {
-
+                form:{
+                    s:{},
+                    env:{}
+                }
+            }
+        },
+        computed:{
+            templateKeys(){
+                return <%- templateKeys %>
+            },
+            port(){
+                return port
+            },
+             accessList(){
+                return <%- accessList %>
             }
         },
         mounted() {
+            console.log(this.templateKeys,'ss')
         },
         methods: {
-
+            handleInit(){}
         }
     })
 </script>
