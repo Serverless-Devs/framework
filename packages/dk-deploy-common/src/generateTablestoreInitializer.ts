@@ -8,7 +8,6 @@ import path from 'path';
 import { getYamlContent, Logger } from '@serverless-devs/core';
 import get from 'lodash.get';
 import yaml from 'js-yaml';
-import { transformCodeUriToS } from './utils';
 
 const logger = new Logger('dk-deploy-common');
 
@@ -22,7 +21,7 @@ interface IOptions {
 async function generateTablestoreInitializer(options: IOptions) {
   logger.debug(`函数 generateTablestoreInitializer 入参: ${JSON.stringify(options, null, 2)}`);
   const { codeUri, cwd = process.cwd() } = options;
-  const filePath = transformCodeUriToS(codeUri, cwd);
+  const filePath = path.join(cwd, '.s', codeUri.replace(cwd, ''));
   fs.copySync(codeUri, filePath);
   const { indexJs, configYml } = await insertTablestoreInitializer(options);
   if (indexJs) {
