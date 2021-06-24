@@ -35,8 +35,26 @@ async function getAllCredentials() {
   return Object.keys(result);
 }
 
+function replaceFun(str, obj) {
+  const reg = /\{\{(.*?)\}\}/g;
+  let arr = str.match(reg);
+  if (arr) {
+    for (let i = 0; i < arr.length; i++) {
+      let keyContent = arr[i].replace(/{{|}}/g, '');
+      let realKey = keyContent.split('|')[0];
+      realKey = realKey?.trim();
+      if (obj[realKey]) {
+        str = str.replace(arr[i], obj[realKey]);
+      }
+    }
+  }
+
+  return str;
+}
+
 module.exports = {
   getYamlPath,
   getTemplatekey,
   getAllCredentials,
+  replaceFun,
 };
