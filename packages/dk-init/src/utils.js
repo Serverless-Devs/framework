@@ -39,7 +39,7 @@ function getTemplatekey(str) {
 async function getAllCredentials() {
   const accessFilePath = path.join(os.homedir(), '.s', 'access.yaml');
   const result = await core.getYamlContent(accessFilePath);
-  return Object.keys(result);
+  return result ? Object.keys(result) : [];
 }
 
 function replaceFun(str, obj) {
