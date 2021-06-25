@@ -166,7 +166,7 @@
               });
               this.res = data;
               setTimeout(() => {
-                window.close()
+                data?.success && window.close();
               }, 3000);
             } else {
               console.log('error submit!!');

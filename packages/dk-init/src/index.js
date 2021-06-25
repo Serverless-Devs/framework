@@ -63,11 +63,11 @@ const dkInit = async () => {
     logger.debug(`/api接口接收的参数： ${JSON.stringify(req.body, null, 2)}`);
     try {
       const { sconfig, envconfig } = req.body;
-      if (sconfig) {
+      if (Object.keys(sconfig).length > 0) {
         const result = replaceFun(sContent, sconfig);
         fs.writeFileSync(spath, result);
       }
-      if (envconfig) {
+      if (Object.keys(envconfig).length > 0) {
         const result = replaceFun(envContent, envconfig);
         fs.unlink(envExampleFilePath);
         fs.writeFileSync(path.resolve(currentPath, '.env'), result);

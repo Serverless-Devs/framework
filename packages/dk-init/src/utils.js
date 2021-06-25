@@ -31,7 +31,7 @@ function getTemplatekey(str) {
       return {
         defaultValue: defaultValue ? defaultValue.replace(/\(|\)/g, '') : undefined,
         name: name?.trim(),
-        desc: desc ? 'please input' + desc?.trim() : undefined,
+        desc: desc ? 'please input ' + desc?.trim() : undefined,
       };
     });
 }
