@@ -72,9 +72,7 @@
             </div>
             <div>
               👉
-              <span
-                style="margin-left: 8px;"
-              >You could enjoy your serverless journey!</span>
+              <span style="margin-left: 8px;">You could enjoy your serverless journey!</span>
             </div>
             <div>
               🧭
@@ -141,38 +139,37 @@
               return <%- accessList %>
           }
       },
-      mounted() {
-          console.log(this.templateKeys,'ss')
-      },
       methods: {
-          handleInit(){
-              this.$refs.form.validate(async(valid) => {
-                  if (valid) {
-                        const sconfig = {};
-                        const envconfig = {};
-                        Object.keys(this.form).forEach(key=>{
-                            const findObj = this.templateKeys.find(item=>item.name === key)
-                            if (findObj.type === 's') {
-                                sconfig[key] = this.form[key]
-                            }
-                            if(findObj.type === 'env'){
-                                envconfig[key] = this.form[key]
-                            }
-                        })
-                      console.log('submit!', this.form);
-                    const {data}= await request({
-                          url: '/api',
-                          method: 'post',
-                          data: {sconfig, envconfig}
-                      })
-                      this.res = data
-                  } else {
-                      console.log('error submit!!');
-                      return false;
-                  }
+        handleInit() {
+          this.$refs.form.validate(async (valid) => {
+            if (valid) {
+              const sconfig = {};
+              const envconfig = {};
+              Object.keys(this.form).forEach((key) => {
+                const findObj = this.templateKeys.find((item) => item.name === key);
+                if (findObj.type === 's') {
+                  sconfig[key] = this.form[key];
+                }
+                if (findObj.type === 'env') {
+                  envconfig[key] = this.form[key];
+                }
               });
-          }
-      }
-  })
+              const { data } = await request({
+                url: '/api',
+                method: 'post',
+                data: { sconfig, envconfig },
+              });
+              this.res = data;
+              setTimeout(() => {
+                window.close()
+              }, 3000);
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+      },
+    })
   </script>
 </html>

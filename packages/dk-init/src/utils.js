@@ -24,7 +24,7 @@ function getTemplatekey(str) {
       let [name, desc] = keyContent.split('|');
       return {
         name: name?.trim(),
-        desc: desc?.trim(),
+        desc: desc ? 'please input' + desc?.trim() : undefined,
       };
     });
 }
