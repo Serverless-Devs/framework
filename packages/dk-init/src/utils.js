@@ -22,7 +22,14 @@ function getTemplatekey(str) {
     .map((matchValue) => {
       let keyContent = matchValue.replace(/{{|}}/g, '');
       let [name, desc] = keyContent.split('|');
+      const defaultValueForReg = /\((.*?)\)/g;
+      let defaultValue = name.match(defaultValueForReg);
+      if (defaultValue) {
+        defaultValue = defaultValue[0];
+        name = name.replace(defaultValue, '');
+      }
       return {
+        defaultValue: defaultValue ? defaultValue.replace(/\(|\)/g, '') : undefined,
         name: name?.trim(),
         desc: desc ? 'please input' + desc?.trim() : undefined,
       };

@@ -139,6 +139,11 @@
               return <%- accessList %>
           }
       },
+      mounted(){
+        this.templateKeys.forEach(item=>{
+          this.$set(this.form, item.name, item.defaultValue)
+        })
+      },
       methods: {
         handleInit() {
           this.$refs.form.validate(async (valid) => {
