@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-core",
-  "version": "0.0.4-alpha.18",
+  "version": "0.0.4-alpha.22",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {

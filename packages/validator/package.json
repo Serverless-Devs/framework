@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-validator",
-  "version": "0.0.4-alpha.18",
+  "version": "0.0.4-alpha.22",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.18",
+    "@serverless-devs/dk-core": "^0.0.4-alpha.22",
     "@types/http-errors": "^1.8.0"
   },
   "publishConfig": {
