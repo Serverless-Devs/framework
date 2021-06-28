@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
   </head>
 
-  <body style="background-color: rgb(245, 245, 245);padding: 16px 24px;">
+   <body style="background-color: rgb(245, 245, 245);padding: 16px 24px;">
     <div id="app">
       <el-row :gutter="20">
         <el-col :span="12">
@@ -14,37 +14,50 @@
             style="background-color: #fff;box-shadow: 0 1px 4px 0 rgb(0 0 0 / 13%);border: 1px solid transparent;padding: 0 16px;"
           >
             <h3>项目初始化</h3>
-            <el-form
-              ref="form"
-              :model="form"
-              :rules="rules"
-              label-width="200px"
-              label-position="top"
-            >
-              <template v-for="item in templateKeys">
+            <el-form ref="form" :model="form" label-width="200px" label-position="top">
+              <template v-for="item in formatTemplateKeys.normalKeys">
                 <div v-if="item.name === 'access'" :key="item.name">
                   <el-alert
                     v-if="accessList.length === 0"
-                    title="您还未配置过密钥，您可以在终端里通过 s config add 进行添加，添加成功后刷新页面即可"
+                    title="您还未配置过密钥，您可以在终端里通过 s config add 来添加，添加成功后刷新页面即可"
                     type="warning"
                     :closable="false"
                     style="margin-bottom: 22px;"
                   ></el-alert>
-                  <el-form-item label="access" prop="access">
-                    <el-select v-model="form.access" placeholder="请选择密钥" style="width: 100%;">
+                  <el-form-item
+                    label="access（请选择密钥）"
+                    prop="access"
+                    :rules="{ required: true, message: '请选择密钥', trigger: 'change'}"
+                  >
+                    <el-select v-model="form.access" style="width: 100%;">
                       <el-option v-for="obj in accessList" :key="obj" :label="obj" :value="obj"></el-option>
                     </el-select>
                   </el-form-item>
                 </div>
                 <template v-else>
                   <el-form-item
-                    :label="item.name"
+                    :label="getLabel(item)"
                     :key="item.name"
                     :prop="item.name"
                     :rules="{ required: true, message: item.desc, trigger: 'change' }"
                   >
-                    <el-input v-model="form[item.name]" :placeholder="item.desc"></el-input>
+                    <el-input v-model="form[item.name]"></el-input>
                   </el-form-item>
+                </template>
+              </template>
+              <template v-for="item in formatTemplateKeys.classification">
+                <div :key="item.class">
+                  <h3>{{item.class}}</h3>
+                  <template v-for="(child) in item.child">
+                    <el-form-item
+                      :key="child.name"
+                      :label="getChildLabel(child)"
+                      :prop="child.name"
+                      :rules="{ required: true, message: child.desc, trigger: 'change' }"
+                    >
+                      <el-input v-model="form[child.name]"></el-input>
+                    </el-form-item>
+                  </template>
                 </template>
               </template>
               <el-form-item>
@@ -116,21 +129,42 @@
       data: function () {
           return {
               form: {},
-              rules: {
-                  access: [
-                      {
-                          required: true,
-                          message: '请选择密钥',
-                          trigger: 'change'
-                      },
-                  ],
-              },
               res: {}
           }
       },
       computed:{
           templateKeys(){
               return <%- templateKeys %>
+          },
+          formatTemplateKeys() {
+            const allKeys = this.templateKeys;
+            let normalKeys = [];
+            let _keys = [];
+            allKeys.forEach((item) => {
+              const [start, end] = item.name.split('_');
+              if (!end) {
+                normalKeys.push(item);
+              } else {
+                _keys.push(start);
+              }
+            });
+            _keys = Array.from(new Set(_keys));
+            const classification = [];
+            _keys.forEach((item) => {
+              const opt = [];
+              allKeys.forEach((obj) => {
+                const [start, end] = obj.name.split('_');
+                if (start === item) {
+                  opt.push({ ...obj, label: end });
+                }
+              });
+              if (opt.length > 1) {
+                classification.push({ class: item, child: opt });
+              } else {
+                normalKeys = normalKeys.concat(opt);
+              }
+            });
+            return { normalKeys, classification };
           },
           port(){
               return port
@@ -145,6 +179,12 @@
         })
       },
       methods: {
+        getLabel(item){
+          return `${item.name}（${item.desc}）`
+        },
+        getChildLabel(item){
+          return `${item.label}（${item.desc}）`
+        },
         handleInit() {
           this.$refs.form.validate(async (valid) => {
             if (valid) {
