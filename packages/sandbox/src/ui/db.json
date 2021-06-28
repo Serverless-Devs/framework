@@ -1,0 +1,20 @@
+{
+  "swagger": "2.0",
+  "host": "localhost:3000",
+  "info": {
+    "title": "dk-tablestore 接口文档"
+  },
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+  },
+  "definitions": {
+  },
+  "externalDocs": {
+    "description": "查看更多swagger配置",
+    "url": "http://swagger.io"
+  }
+}
