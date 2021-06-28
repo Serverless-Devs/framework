@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/http-form-body-parser",
-  "version": "0.0.4-alpha.22",
+  "version": "0.0.4-alpha.23",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,11 +19,11 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.22",
+    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.23",
     "qs": "^6.10.1"
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.22",
+    "@serverless-devs/dk-core": "^0.0.4-alpha.23",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.6"
   },

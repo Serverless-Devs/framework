@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/rds-mongodb-initialzer-plugin",
-  "version": "0.0.4-alpha.22",
+  "version": "0.0.4-alpha.23",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.22"
+    "@serverless-devs/dk-core": "^0.0.4-alpha.23"
   },
   "jest": {
     "preset": "ts-jest",
