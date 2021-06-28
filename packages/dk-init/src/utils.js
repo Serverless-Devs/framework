@@ -22,7 +22,14 @@ function getTemplatekey(str) {
     .map((matchValue) => {
       let keyContent = matchValue.replace(/{{|}}/g, '');
       let [name, desc] = keyContent.split('|');
+      const defaultValueForReg = /\((.*?)\)/g;
+      let defaultValue = name.match(defaultValueForReg);
+      if (defaultValue) {
+        defaultValue = defaultValue[0];
+        name = name.replace(defaultValue, '');
+      }
       return {
+        defaultValue: defaultValue ? defaultValue.replace(/\(|\)/g, '') : undefined,
         name: name?.trim(),
         desc: desc?.trim(),
       };
@@ -32,11 +39,29 @@ function getTemplatekey(str) {
 async function getAllCredentials() {
   const accessFilePath = path.join(os.homedir(), '.s', 'access.yaml');
   const result = await core.getYamlContent(accessFilePath);
-  return Object.keys(result);
+  return result ? Object.keys(result) : [];
+}
+
+function replaceFun(str, obj) {
+  const reg = /\{\{(.*?)\}\}/g;
+  let arr = str.match(reg);
+  if (arr) {
+    for (let i = 0; i < arr.length; i++) {
+      let keyContent = arr[i].replace(/{{|}}/g, '');
+      let realKey = keyContent.split('|')[0];
+      realKey = realKey?.trim();
+      if (obj[realKey]) {
+        str = str.replace(arr[i], obj[realKey]);
+      }
+    }
+  }
+
+  return str;
 }
 
 module.exports = {
   getYamlPath,
   getTemplatekey,
   getAllCredentials,
+  replaceFun,
 };
