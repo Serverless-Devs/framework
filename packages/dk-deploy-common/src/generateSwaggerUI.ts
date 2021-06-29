@@ -81,16 +81,32 @@ const insertSwaggerUI = async ({ filepath, indexRoute }) => {
             if (!includes(tags, indexRoute)) {
               tags.push(indexRoute);
             }
+            const hasBody = includes(['post', 'patch', 'put'], apiMethod.toLowerCase());
+            let parameters = [];
+            if (hasBody) {
+              parameters = [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "body 数据",
+                  "required": false,
+                  "schema": {
+                    "$ref": "#/definitions/DefaultBody"
+                  }
+                }
+              ]
+            };
             set(paths, `${apiKey}.${apiMethod.toLowerCase()}`, {
               tags: [indexRoute],
               operationId: `${apiMethod.toLowerCase()}-${apiKey}`,
               summary: '标题title',
               description: '描述',
+              parameters,
               produces: [
                 "application/json",
                 "application/xml"
               ],
-              "responses": {
+              responses: {
                 "200": {
                   "description": "操作成功"
                 }
@@ -107,11 +123,27 @@ const insertSwaggerUI = async ({ filepath, indexRoute }) => {
             methodObj.forEach(method => {
               if (t.isObjectProperty(method) && t.isIdentifier(method.key) && (t.isArrowFunctionExpression(method.value) || t.isFunctionExpression(method.value))) {
                 const apiMethod = get(method.key, 'name');
+                const hasBody = includes(['post', 'patch', 'put'], apiMethod.toLowerCase());
+                let parameters = [];
+                if (hasBody) {
+                  parameters = [
+                    {
+                      "in": "body",
+                      "name": "body",
+                      "description": "body 数据",
+                      "required": true,
+                      "schema": {
+                        "$ref": "#/definitions/DefaultBody"
+                      }
+                    }
+                  ]
+                };
                 set(paths, `${apiKey}.${apiMethod.toLowerCase()}`, {
                   tags: [indexRoute],
                   operationId: `${apiMethod.toLowerCase()}-${apiKey}`,
                   summary: '标题title',
                   description: '描述',
+                  parameters,
                   produces: [
                     "application/json",
                     "application/xml"

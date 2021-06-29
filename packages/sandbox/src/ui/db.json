@@ -9,9 +9,19 @@
     "http",
     "https"
   ],
-  "paths": {
-  },
+  "paths": {},
   "definitions": {
+    "DefaultBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "DefaultBody"
+      }
+    }
   },
   "externalDocs": {
     "description": "查看更多swagger配置",
