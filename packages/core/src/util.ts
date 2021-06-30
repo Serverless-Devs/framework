@@ -149,7 +149,7 @@ export const httpRouteParserHandler = async (request: IdkRequest, route: { [key:
   const { method, path } = request.req;
   for (const i in route) {
     const type = Object.prototype.toString.call(route[i]);  // 通过原型判断类型
-    if (type === '[object Function]') { // 如 'GET /user/:id': () => {}
+    if (type === '[object Function]' || type === '[object AsyncFunction]') { // 如 'GET /user/:id': () => {}
       const [routeMethod, url] = i.split(' ');
       const match = matchFunc(url);
       const [uri] = path.split('?');
