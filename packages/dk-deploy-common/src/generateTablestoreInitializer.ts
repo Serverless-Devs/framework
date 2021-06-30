@@ -5,7 +5,7 @@ import generate from '@babel/generator';
 import prettier from 'prettier';
 import fs from 'fs-extra';
 import path from 'path';
-import { getYamlContent, Logger } from '@serverless-devs/core';
+import { getYamlContent, Logger, modifyProps } from '@serverless-devs/core';
 import get from 'lodash.get';
 import yaml from 'js-yaml';
 
@@ -171,23 +171,50 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
   };
 }
 
-// 检测 s.yml以及公共的config.yml 是否存在 role
-async function generateTablestoreRole(options: IOptions) {
-  const { sourceCode, app, cwd = process.cwd() } = options;
-  const sconfigPath = path.resolve(cwd, '.s', sourceCode, 'config.yml');
-  const configPath = path.resolve(cwd, sourceCode, 'config.yml');
+function checkSfileName(cwd) {
+  const path1 = path.join(cwd, 's.yaml');
+  if (fs.existsSync(path1)) {
+    return 's.yaml';
+  }
+  const path2 = path.join(cwd, 's.yml');
+  if (fs.existsSync(path2)) {
+    return 's.yml';
+  }
+  throw new Error(`${cwd} 路径下不存在 s.[yaml|yml] 文件`);
+}
 
+// 检测 s.yml 是否存在 role
+async function generateTablestoreRole(options: IOptions) {
+  const { app, cwd = process.cwd() } = options;
   if (!get(app, 'role')) {
-    fs.copyFileSync(configPath, sconfigPath);
-    const sconfigYml = await getYamlContent(configPath);
-    sconfigYml.app = {
-      ...sconfigYml.app,
-      role: {
-        name: `fcdeploydefaultrole-${get(sconfigYml, 'app.name')}`,
-        policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
+    const sfileName = checkSfileName(cwd);
+    const spath = path.join(cwd, sfileName);
+    const sspath = path.join(cwd, '.s', sfileName);
+    fs.copyFileSync(spath, sspath);
+    const content: any = await getYamlContent(spath);
+    let appName: string;
+    for (const key in content.services) {
+      if (
+        content.services[key].component.endsWith('jamstack-api') ||
+        content.services[key].component === '${path(..)}' ||
+        content.services[key].component.endsWith('lib/index.js')
+      ) {
+        appName = key;
+      }
+    }
+    await modifyProps(
+      appName,
+      {
+        app: {
+          ...app,
+          role: {
+            name: `fcdeploydefaultrole-${app.name}`,
+            policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
+          },
+        },
       },
-    };
-    fs.writeFileSync(sconfigPath, yaml.dump(sconfigYml));
+      sspath,
+    );
   }
 }
 

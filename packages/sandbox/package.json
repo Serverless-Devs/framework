@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@serverless-devs/core": "latest",
-    "@serverless-devs/dk": "0.0.4-alpha.17",
-    "@serverless-devs/dk-deploy-common": "^0.0.4-alpha.23",
-    "@serverless-devs/dk-util": "^0.0.4-alpha.17",
+    "@serverless-devs/dk": "latest",
+    "@serverless-devs/dk-deploy-common": "latest",
+    "@serverless-devs/dk-util": "latest",
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
     "minimist": "^1.2.5",
