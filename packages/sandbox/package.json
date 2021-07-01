@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/sandbox",
-  "version": "0.0.4-alpha.24",
+  "version": "0.0.4-alpha.25",
   "description": "",
   "main": "./src/index.js",
   "bin": {
