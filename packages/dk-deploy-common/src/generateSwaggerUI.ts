@@ -14,19 +14,19 @@ interface IOptions {
   routes: string;
   sourceCode: string;
   cwd?: string;
-  port: string,
+  pathUrl: string,
 }
 
 async function generateSwaggerUI(options: IOptions) {
 
   logger.debug(`函数 generateSwaggerUI 入参: ${JSON.stringify(options, null, 2)}`);
-  const { routes, cwd = process.cwd(), sourceCode, port } = options;
+  const { routes, cwd = process.cwd(), sourceCode, pathUrl } = options;
   const sourceCodePath = path.join(cwd, '.s', sourceCode);
 
   await ui({
     sourceCode,
     cwd,
-    port,
+    pathUrl,
   });
 
   for (const route of routes) {
@@ -41,13 +41,14 @@ async function generateSwaggerUI(options: IOptions) {
 }
 
 // 修改 index.html, db.json
-const ui = ({ sourceCode, cwd, port }) => {
+const ui = ({ sourceCode, cwd, pathUrl }) => {
   const sourceCodePath = path.join(cwd, '.s', sourceCode);
   let html = fs.readFileSync(path.join(sourceCodePath, 'ui/index.html'), 'utf8');
-  html = html.replace('https://petstore.swagger.io/v2/swagger.json', `http://localhost:${port}/api/db.json`);
+  html = html.replace('https://petstore.swagger.io/v2/swagger.json', `${pathUrl}/db.json`);
   fs.outputFileSync(path.join(sourceCodePath, 'ui/index.html'), html, 'utf8');
   const uiJson = fs.readJsonSync(path.join(sourceCodePath, 'ui/db.json'));
-  uiJson.host = `localhost:${port}/api`
+  const [, host] = split(pathUrl, '://');
+  uiJson.host = host;
   fs.outputJsonSync(path.join(sourceCodePath, 'ui/db.json'), uiJson);
 }
 

@@ -75,7 +75,7 @@ const sandbox = async () => {
     routes: props.route,
     sourceCode: props.sourceCode,
     cwd: currentPath,
-    port,
+    pathUrl: `http://localhost:${port}/api`,
   });
   const dbJson = fs.readJsonSync(path.join(uiSourcePath, 'db.json'));
   // 判断是否存在 http api，存在的话，才添加 ui 路由
