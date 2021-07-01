@@ -24,7 +24,7 @@ lerna bootstrap
 
 ## response 转化
 
-1. http-response-parser (华力)
+1. http-response-parser
 
 - html: `content-type`为`text/html; charset=utf8`
 - css: `content-type`为`text/css; charset=utf8`
