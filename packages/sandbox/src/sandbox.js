@@ -10,7 +10,7 @@ const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
-const noop = () => {};
+const noop = () => { };
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
@@ -33,7 +33,7 @@ const sandbox = async () => {
   };
 
   // middleware that is specific to this router
-  router.use(function (req, res, next) {
+  router.use(function(req, res, next) {
     process.env.FC_FUNC_CODE_PATH = 'true';
 
     next();
@@ -58,7 +58,7 @@ const sandbox = async () => {
       app: {},
     });
 
-    router.all(route, function (req, res) {
+    router.all(route, function(req, res) {
       req.queries = req.query;
       const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
       if (fileModule.initializer) {
@@ -81,7 +81,7 @@ const sandbox = async () => {
   // 判断是否存在 http api，存在的话，才添加 ui 路由
   if (Object.keys(dbJson.paths)) {
     logger.info(`http://localhost:${port}/api/ui`);
-    app.get('/db.json', (req, res) => {
+    app.get('/api/db.json', (req, res) => {
       res.json(dbJson);
     });
     router.all('/ui', (req, res) => {

@@ -44,10 +44,10 @@ async function generateSwaggerUI(options: IOptions) {
 const ui = ({ sourceCode, cwd, port }) => {
   const sourceCodePath = path.join(cwd, '.s', sourceCode);
   let html = fs.readFileSync(path.join(sourceCodePath, 'ui/index.html'), 'utf8');
-  html = html.replace('https://petstore.swagger.io/v2/swagger.json', `http://localhost:${port}/db.json`);
+  html = html.replace('https://petstore.swagger.io/v2/swagger.json', `http://localhost:${port}/api/db.json`);
   fs.outputFileSync(path.join(sourceCodePath, 'ui/index.html'), html, 'utf8');
   const uiJson = fs.readJsonSync(path.join(sourceCodePath, 'ui/db.json'));
-  uiJson.host = `localhost:${port}`
+  uiJson.host = `localhost:${port}/api`
   fs.outputJsonSync(path.join(sourceCodePath, 'ui/db.json'), uiJson);
 }
 
