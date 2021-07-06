@@ -63,6 +63,7 @@ export interface IFcResponse {
   setHeader: Function;
   deleteHeader: Function;
   send: Function;
+  statusCode?: number; // 本地http接口请求，不存在setStatusCode，失败时需手动修改statusCode
 }
 
 export interface IdkRequest {

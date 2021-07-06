@@ -14,16 +14,9 @@ const dk = (handler?: Function | Object, baseMiddlewares?: any[]) => {
   let baseHandler;
   if (Object.prototype.toString.call(handler) === '[object Object]') {
     // 传入类型是对象
-    baseHandler = async (config) => {
-      try {
-        const data = await httpRouteParserHandler(config, handler);
-        return data;
-      } catch (e) {
-        throw new Error(e);
-      }
-    };
+    baseHandler = (config) => httpRouteParserHandler(config, handler);
   } else {
-    baseHandler = handler || function () {};
+    baseHandler = handler || function () { };
   }
 
   const beforeMiddlewares = [];
@@ -140,7 +133,7 @@ const runRequest = async (
       // Catch if onError stack hasn't handled the error
       if (request.type === HTTP) {
         if (request.result === undefined || request.res === undefined) {
-          throw request.error;
+          request.result = { statusCode: typeof e.code === 'number' ? e.code : 500, body: { code: e.code, message: e.message } };
         }
       } else {
         request.callback(request.error);

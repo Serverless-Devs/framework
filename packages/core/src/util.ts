@@ -11,7 +11,11 @@ const makeHttpResponse = (
 ) => {
   // statusCode
   if (statusCode !== undefined) {
-    httpResp.setStatusCode(statusCode);
+    if (httpResp.setStatusCode) { // fc 的 res 提供 setStatusCode 方法，本地模拟 http 请求时不存在，需手动修改 statusCode
+      httpResp.setStatusCode(statusCode);
+    } else {
+      httpResp.statusCode = statusCode;
+    }
   }
   // headers
   if (!isContainerEmpty(headers)) {
