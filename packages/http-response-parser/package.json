@@ -4,7 +4,7 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "dev": "npx tsc -w",
+    "watch": "npx tsc -w",
     "build": "npx tsc",
     "test": "jest",
     "cov": "jest --coverage",
