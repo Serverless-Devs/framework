@@ -2,7 +2,7 @@ import dk from '@serverless-devs/dk-core';
 import rdsMongodbInitialzerPlugin from '../src/index';
 import { mockContext, mockCallback } from './fixtures/mock-data';
 
-describe('rds-mongodb-initialzer-plugin测试', () => {
+describe('mongodb-initialzer-plugin测试', () => {
   test('mongodb 连接', async () => {
     const handler = dk((request) => {
       return request.internal.tableClient;

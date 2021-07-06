@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-devs/rds-mongodb-initialzer-plugin",
+  "name": "@serverless-devs/mongodb-initialzer-plugin",
   "version": "0.0.4-alpha.24",
   "description": "",
   "main": "./lib/index.js",
