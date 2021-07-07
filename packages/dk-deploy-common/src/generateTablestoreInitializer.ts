@@ -194,11 +194,7 @@ async function generateTablestoreRole(options: IOptions) {
     const content: any = await getYamlContent(spath);
     let appName: string;
     for (const key in content.services) {
-      if (
-        content.services[key].component.endsWith('jamstack-api') ||
-        content.services[key].component === '${path(..)}' ||
-        content.services[key].component.endsWith('lib/index.js')
-      ) {
+      if (content.services[key].component.endsWith('jamstack-api')) {
         appName = key;
       }
     }
@@ -208,7 +204,7 @@ async function generateTablestoreRole(options: IOptions) {
         app: {
           ...app,
           role: {
-            name: `fcdeploydefaultrole-${app.name}`,
+            name: `fcdeploydefaultrole-${get(app, 'name')}`,
             policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
           },
         },
