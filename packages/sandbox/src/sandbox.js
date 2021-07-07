@@ -2,7 +2,7 @@ const {
   generateTablestoreInitializer,
   getEnvs,
   generateSwaggerUI,
-} = require('@serverless-devs/dk-deploy-common');
+} = require('/Users/huangfushan/project/serveless/framework/packages/dk-deploy-common');
 const fs = require('fs-extra');
 const path = require('path');
 const core = require('@serverless-devs/core');
@@ -79,7 +79,7 @@ const sandbox = async () => {
   });
   const dbJson = fs.readJsonSync(path.join(uiSourcePath, 'db.json'));
   // 判断是否存在 http api，存在的话，才添加 ui 路由
-  if (Object.keys(dbJson.paths)) {
+  if (Object.keys(dbJson.paths).length) {
     logger.info(`http://localhost:${port}/api/ui`);
     app.get('/api/db.json', (req, res) => {
       res.json(dbJson);
