@@ -2,7 +2,7 @@ const {
   generateTablestoreInitializer,
   getEnvs,
   generateSwaggerUI,
-} = require('/Users/huangfushan/project/serveless/framework/packages/dk-deploy-common');
+} = require('@serverless-devs/dk-deploy-common');
 const fs = require('fs-extra');
 const path = require('path');
 const core = require('@serverless-devs/core');
@@ -10,7 +10,7 @@ const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
-const noop = () => {};
+const noop = () => { };
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
@@ -33,7 +33,7 @@ const sandbox = async () => {
   };
 
   // middleware that is specific to this router
-  router.use(function (req, res, next) {
+  router.use(function(req, res, next) {
     process.env.FC_FUNC_CODE_PATH = 'true';
 
     next();
@@ -58,7 +58,7 @@ const sandbox = async () => {
       app: {},
     });
 
-    router.all(route, function (req, res) {
+    router.all(route, function(req, res) {
       req.queries = req.query;
       const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
       if (fileModule.initializer) {
@@ -94,11 +94,7 @@ const sandbox = async () => {
   app.use('/api', router);
 
   app.listen(port, () => {
-    const indexRoute = props.route.find((item) => item === '/' || item === '/index');
-    const url = indexRoute
-      ? `http://localhost:${port}/api`
-      : `http://localhost:${port}/api${props.route[0]}`;
-    console.log(`the server listening at ${url}`);
+    console.log(`the server listening at http://localhost:${port}/api`);
   });
 };
 
