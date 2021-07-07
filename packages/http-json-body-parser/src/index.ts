@@ -7,11 +7,11 @@ const defaults = {
   reviver: undefined,
 };
 
-interface Options {
+interface IOptions {
   reviver?: (key: string, value: any) => any;
 }
 const methods = ['put', 'post', 'patch']; // 理论上只有这些method才需要对body做转换
-const httpJsonBodyParserMiddleware = (opts?: Options) => {
+const httpJsonBodyParserMiddleware = (opts?: IOptions) => {
   const options = { ...defaults, ...(opts || {}) };
   const httpJsonBodyParserMiddlewareBefore = async (request) => {
     const { headers, isBase64Encoded, body, method = '' } = request.req ?? {};

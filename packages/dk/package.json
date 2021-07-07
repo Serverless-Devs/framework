@@ -22,6 +22,7 @@
   "dependencies": {
     "@serverless-devs/dk-core": "^0.0.4-alpha.24",
     "@serverless-devs/dk-validator": "^0.0.4-alpha.24",
+    "@serverless-devs/http-error-handler": "^0.0.4-alpha.24",
     "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.24",
     "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.24",
     "@serverless-devs/http-response-parser": "^0.0.4-alpha.24",
