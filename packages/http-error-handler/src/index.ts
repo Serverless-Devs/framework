@@ -4,12 +4,15 @@ interface IOptions {
 }
 const httpErrorHandlerMiddleware = (opts?: IOptions) => {
   const httpErrorHandlerMiddlewareOnError = async (request) => {
-    // const errorBody = { code: 500, message: 'server error' };
+    const errorBody = {
+      code: typeof request.error?.code === 'number' ? request.error?.code : 500,
+      message: request.error?.message || 'server error'
+    };
 
     if (request.type === 'HTTP') {
       request.result = {
-        statusCode: request.statusCode || typeof request.error?.code === 'number' ? request.error?.code : 500,
-        body: opts || { code: request.error?.code || 500, message: request.error?.message || 'server error' },
+        statusCode: request.statusCode || errorBody.code,
+        body: opts || errorBody,
       }
     }
   }
