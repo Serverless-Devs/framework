@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-init",
-  "version": "0.0.4-alpha.23",
+  "version": "0.0.4-alpha.26",
   "description": "",
   "main": "./src/index.js",
   "author": "",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@serverless-devs/core": "latest",
-    "@serverless-devs/dk-util": "^0.0.4-alpha.17",
+    "@serverless-devs/dk-util": "^0.0.4-alpha.26",
     "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
