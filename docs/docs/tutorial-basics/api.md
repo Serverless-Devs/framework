@@ -38,7 +38,7 @@ s cli init api
     └── index.js
 ```
 
-## 本地启动（TODO）
+## 本地启动
 
 ```
 cd functions
@@ -46,9 +46,55 @@ npm install
 npm run server
 ```
 
-## 前端调用 （TODO）
+## 前端调用
 
-> webpack 配置?
+### creat-react-app 项目
+
+在 package.json 文件中添加 `proxy` 属性，值为执行 `npm run server` 启动的服务， 具体可参考 [应用示例](https://github.com/xsahxl/website-react)
+
+```json
+{
+  // ...
+  "proxy": "http://localhost:3000"
+}
+```
+
+或者 使用 `http-proxy-middleware`
+
+First, install http-proxy-middleware using npm or Yarn:
+
+```
+$ npm install http-proxy-middleware --save
+$ # or
+$ yarn add http-proxy-middleware
+```
+
+Next, create src/setupProxy.js and place the following contents in it:
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function (app) {
+  // ...
+};
+```
+
+You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
+
+```js
+const createProxyMiddleware = require('http-proxy-middleware');
+
+module.exports = function (app) {
+  app.use(
+    '/api',
+    createProxyMiddleware({
+      // target值为 npm run server 启动的服务
+      target: 'http://localhost:3000',
+      changeOrigin: true,
+    }),
+  );
+};
+```
 
 ## 发布上线
 
