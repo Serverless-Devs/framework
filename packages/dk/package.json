@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk",
-  "version": "0.0.4-alpha.26",
+  "version": "0.0.4-alpha.27",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,14 +20,14 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.26",
-    "@serverless-devs/dk-validator": "^0.0.4-alpha.26",
-    "@serverless-devs/http-error-handler": "^0.0.4-alpha.26",
-    "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.26",
-    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.26",
-    "@serverless-devs/http-response-parser": "^0.0.4-alpha.26",
-    "@serverless-devs/tablestore-event-parser": "^0.0.4-alpha.26",
-    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.26",
+    "@serverless-devs/dk-core": "^0.0.4-alpha.27",
+    "@serverless-devs/dk-validator": "^0.0.4-alpha.27",
+    "@serverless-devs/http-error-handler": "^0.0.4-alpha.27",
+    "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.27",
+    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.27",
+    "@serverless-devs/http-response-parser": "^0.0.4-alpha.27",
+    "@serverless-devs/tablestore-event-parser": "^0.0.4-alpha.27",
+    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.27",
     "fs-extra": "^10.0.0",
     "js-yaml": "^4.1.0"
   },
