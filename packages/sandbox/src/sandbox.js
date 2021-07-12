@@ -10,12 +10,12 @@ const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
-const noop = () => { };
+const noop = () => {};
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
   const args = process.env;
-  let port = args.p || args.port || 3000;
+  let port = args.p || args.port || 7001;
   port = await portIsOccupied(port);
 
   const cwd = path.resolve('..');
