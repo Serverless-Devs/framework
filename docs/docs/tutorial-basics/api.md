@@ -43,19 +43,19 @@ s cli init api
 ```
 cd functions
 npm install
-npm run server
+npm run serve
 ```
 
 ## 前端调用
 
 ### creat-react-app 项目
 
-在 package.json 文件中添加 `proxy` 属性，值为执行 `npm run server` 启动的服务， 具体可参考 [应用示例](https://github.com/xsahxl/website-react)
+在 package.json 文件中添加 `proxy` 属性，值为 `functions` 目录下执行 `npm run serve` 启动的服务
 
 ```json
 {
   // ...
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:7001"
 }
 ```
 
@@ -64,9 +64,9 @@ npm run server
 First, install http-proxy-middleware using npm or Yarn:
 
 ```
-$ npm install http-proxy-middleware --save
-$ # or
-$ yarn add http-proxy-middleware
+npm install http-proxy-middleware --save
+# or
+yarn add http-proxy-middleware
 ```
 
 Next, create src/setupProxy.js and place the following contents in it:
@@ -82,19 +82,20 @@ module.exports = function (app) {
 You can now register proxies as you wish! Here's an example using the above `http-proxy-middleware`:
 
 ```js
-const createProxyMiddleware = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      // target值为 npm run server 启动的服务
-      target: 'http://localhost:3000',
+      target: 'http://localhost:7001',
       changeOrigin: true,
     }),
   );
 };
 ```
+
+具体可参考 [应用示例](https://github.com/devsapp/jamstack-example/tree/master/jamstack-react)
 
 ## 发布上线
 
