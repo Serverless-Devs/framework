@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/mongodb-initialzer-plugin",
-  "version": "0.0.4-alpha.27",
+  "version": "0.0.4-alpha.28",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.27"
+    "@serverless-devs/dk-core": "^0.0.4-alpha.28"
   },
   "jest": {
     "preset": "ts-jest",
