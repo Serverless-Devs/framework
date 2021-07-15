@@ -1,17 +1,15 @@
 edition: 1.0.0
-access: "fc-console"
+access: default
 
 services:
   website-starter:
     component: devsapp/website
     actions:
       pre-deploy:
-        - run: npm install
-          path: ./
         - run: npm run build
           path: ./
     props:
-      bucket: "dk"
+      bucket: serverless-dk
       src:
         codeUri: ./
         publishDir: ./build
