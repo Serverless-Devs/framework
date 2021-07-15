@@ -33,7 +33,7 @@ yarn global add @serverless-devs/s
 #### 快速体验一个 hello world 小程序
 
 - 初始化一个 http 模板项目：`s init dk-http`
-- 并给文件夹取一个名字，比如就叫 `dk-http`
+- 给文件夹取一个名字，比如就叫 `dk-http`
 - 进入项目：`cd dk-http/functions`
 - 本地测试： `npm run serve`
   > 高级配置：
@@ -43,7 +43,7 @@ yarn global add @serverless-devs/s
 
 - 首先准备好[tablestore](https://otsnext.console.aliyun.com/)按量付费数据库实例
 - 初始化一个 http 模板项目：`s init dk-tablestore`
-- 并给文件夹取一个名字，比如就叫 `dk-tablestore`
+- 给文件夹取一个名字，比如就叫 `dk-tablestore`
 - 进入项目：`cd dk-tablestore/functions`
 - 本地测试： `npm run serve`
   > 高级配置：
