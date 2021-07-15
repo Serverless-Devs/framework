@@ -23,24 +23,13 @@ npm start
 
 ## 使用 Serverless Devs 部署您的应用程序
 
-1. 安装 `Serverless Dves`, 更多详情可前往[Serverless Dves](https://github.com/Serverless-Devs/docs/blob/master/zh/install.md)查看
-
-```base npm2yarn
-npm install @serverless-devs/s -g
-```
-
-2. 检测 `Serverless Dves` 是否安装成功
-
-```
-s -v
-```
-
-3. 执行部署
+1. [Serverless Dves 工具安装](/docs/intro#环境准备)
+2. 部署
 
 ```
 s deploy
 ```
 
-4. 部署完成之后会返回可访问的域名
+3. 部署完成之后会返回可访问的域名
 
 ![Alt text](https://img.alicdn.com/imgextra/i1/O1CN01RUZyrT1VwQniotkYK_!!6000000002717-2-tps-785-307.png)

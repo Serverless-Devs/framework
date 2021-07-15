@@ -88,20 +88,30 @@ s deploy
 
 ## 示例
 
-- base
+- jamstack-base
 
 ```
 s init jamstack-base
 ```
 
-- react
+- jamstack-react
 
 ```
 s init jamstack-react
 ```
 
-- vue
+- jamstack-vue
 
 ```
 s init jamstack-vue
 ```
+
+本地如何本地调试？
+
+- 进入 `sourceCode指定目录(默认functions)`
+- 执行 `yarn` or `npm i` 安装依赖 （如果已经安装请跳过）
+- 执行 `npm run serve` 可访问 `http://localhost:7001` 服务
+
+- 进入 `根目录`
+- 执行 `yarn` or `npm i` 安装依赖 （如果已经安装请跳过）
+- 执行 `npm start`
