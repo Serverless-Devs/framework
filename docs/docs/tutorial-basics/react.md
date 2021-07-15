@@ -23,9 +23,9 @@ npm start
 
 ## 使用 Serverless Devs 部署您的应用程序
 
-1. 安装 `Serverless Dves`, 更多请前往[Serverless Dves](https://github.com/Serverless-Devs/docs/blob/master/zh/install.md)查看
+1. 安装 `Serverless Dves`, 更多详情可前往[Serverless Dves](https://github.com/Serverless-Devs/docs/blob/master/zh/install.md)查看
 
-```
+```base npm2yarn
 npm install @serverless-devs/s -g
 ```
 

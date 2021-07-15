@@ -86,7 +86,6 @@ middleware1 (after)
 #### Response 转换
 
 1. http-response-parser: HTTP response 响序列化
-2. http-error-handler: 异常报错时，添加默认值 { code: 500, message: 'server error' }
 
 - html: 'xxx' => {header: 'content-type:text/html; charset=utf8', body: 'xxx'}
 - css: 'xxx' => {header: 'content-type:text/css; charset=utf8', body: 'xxx'}
@@ -94,6 +93,8 @@ middleware1 (after)
 - js: 'xxx' => {header: 'content-type:text/javascript; charset=utf8', body: 'xxx'}
 - json: 'xxx' => {header: 'content-type:application/json; charset=utf8', body: 'xxx'}
 - xml: 'xxx' => {header: 'content-type:application/xml; charset=utf8', body: 'xxx'}
+
+2. http-error-handler: 异常报错时，添加默认值 { code: 500, message: 'server error' }
 
 ## 高级特性
 

@@ -1413,6 +1413,13 @@
   dependencies:
     "prop-types" "^15.6.2"
 
+"@docusaurus/remark-plugin-npm2yarn@^2.0.0-beta.3":
+  "integrity" "sha512-LfQLILNCsqorw1qQG+j+wBMBF7eKDFN9pYG1ei0UWB9pmHM3DcEUAFi/WVkVR9zQAXYJUne5Ww4Ny5Hpfmcb4g=="
+  "resolved" "https://registry.npmjs.org/@docusaurus/remark-plugin-npm2yarn/-/remark-plugin-npm2yarn-2.0.0-beta.3.tgz"
+  "version" "2.0.0-beta.3"
+  dependencies:
+    "npm-to-yarn" "^1.0.1"
+
 "@docusaurus/theme-classic@2.0.0-alpha.73":
   "integrity" "sha512-SVjq3xPIFQ/Uzs6WJn+8Gm1b47jLV7YBbcUXpIGd3NBKj16yZml9t7YNpos6Vt7Y5mCVhIP4IqWYJshArw6Aog=="
   "resolved" "https://registry.npmjs.org/@docusaurus/theme-classic/-/theme-classic-2.0.0-alpha.73.tgz"
@@ -6626,6 +6633,11 @@
   "version" "4.0.1"
   dependencies:
     "path-key" "^3.0.0"
+
+"npm-to-yarn@^1.0.1":
+  "integrity" "sha512-bp8T8oNMfLW+N/fE0itFfSu7RReytwhqNd9skbkfHfzGYC+5CCdzS2HnaXz6JiG4AlK2eA0qlT6NJN1SoFvcWQ=="
+  "resolved" "https://registry.npmjs.org/npm-to-yarn/-/npm-to-yarn-1.0.1.tgz"
+  "version" "1.0.1"
 
 "nprogress@^0.2.0":
   "integrity" "sha1-y480xTIT2JVyP8urkH6UIq28r7E="

@@ -2,13 +2,13 @@
 module.exports = {
   title: 'DK',
   tagline: '为函数计算而生',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'http://serverless-dk.oss.devsapp.net',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Serverless Devs', // Usually your GitHub org/user name.
+  projectName: 'framework', // Usually your repo name.
   themeConfig: {
     navbar: {
       title: 'DK',
@@ -23,7 +23,7 @@ module.exports = {
           position: 'left',
           label: '帮助文档',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/Serverless-Devs/framework',
           label: 'GitHub',
@@ -80,14 +80,14 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/Serverless-Devs/framework/edit/master/website/',
+          editUrl: 'https://github.com/Serverless-Devs/framework/edit/master/docs',
+          remarkPlugins: [[require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }]],
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/Serverless-Devs/framework/edit/master/website/blog/',
+          editUrl: 'https://github.com/Serverless-Devs/framework/edit/master/docs',
+          remarkPlugins: [[require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }]],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
