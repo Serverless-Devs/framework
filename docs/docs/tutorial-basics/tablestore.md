@@ -10,7 +10,7 @@ sidebar_position: 3
 
 ## 创建 Tablestore 实例
 
-请到阿里云[tablestore](https://otsnext.console.aliyun.com/)控制台创建实例：
+请前往阿里云[tablestore](https://otsnext.console.aliyun.com/)控制台创建实例：
 ![Alt text](https://img.alicdn.com/imgextra/i1/O1CN01Syakde1TJqCE9Ff7e_!!6000000002362-2-tps-1804-972.png)
 
 ## 添加 api 到您的应用程序中：(TODO)

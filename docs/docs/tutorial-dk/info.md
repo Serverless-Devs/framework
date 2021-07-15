@@ -21,11 +21,10 @@ title: DK起源
 纯函数可以灵活的配置每个函数的
 首先来看一段官方的示例
 
-```
+```js
 var getRawBody = require('raw-body');
 var getFormBody = require('body/form');
 var body = require('body');
-
 
 /*
 To enable the initializer feature (https://help.aliyun.com/document_detail/156876.html)
@@ -37,28 +36,28 @@ exports.initializer = (context, callback) => {
 */
 
 exports.handler = (req, resp, context) => {
-    console.log('hello world');
-    console.log(JSON.stringify(context))
+  console.log('hello world');
+  console.log(JSON.stringify(context));
 
-    var params = {
-        path: req.path,
-        queries: req.queries,
-        headers: req.headers,
-        method : req.method,
-        requestURI : req.url,
-        clientIP : req.clientIP,
-    }
+  var params = {
+    path: req.path,
+    queries: req.queries,
+    headers: req.headers,
+    method: req.method,
+    requestURI: req.url,
+    clientIP: req.clientIP,
+  };
 
-    getRawBody(req, function(err, body) {
-        // for (var key in req.queries) {
-        //   var value = req.queries[key];
-        //   resp.setHeader(key, value);
-        // }
-        // params.body = body.toString();
-        resp.send(JSON.stringify(context, null, '    '));
-    });
+  getRawBody(req, function (err, body) {
+    // for (var key in req.queries) {
+    //   var value = req.queries[key];
+    //   resp.setHeader(key, value);
+    // }
+    // params.body = body.toString();
+    resp.send(JSON.stringify(context, null, '    '));
+  });
 
-    /*
+  /*
     getFormBody(req, function(err, formBody) {
         for (var key in req.queries) {
           var value = req.queries[key];
@@ -69,7 +68,7 @@ exports.handler = (req, resp, context) => {
         resp.send(JSON.stringify(params));
     });
     */
-}
+};
 ```
 
 纯函数的方式需要用户手动处理 http request, response 等，编程体验非常糟糕。
@@ -80,7 +79,7 @@ exports.handler = (req, resp, context) => {
 
 一码胜千言，假设你在构建一个 Rest API 应用
 
-```
+```js
 const { dk } = require('@serverless-devs/dk');
 
 const handler = dk((ctx) => {

@@ -5,33 +5,32 @@ title: DK使用
 
 ## 使用方法
 
-```
+```js
 const { dk, validator } = require('@serverless-devs/dk');
 
 const schema = {
-    type: 'object',
-    required: ['body'],
-    properties: {
+  type: 'object',
+  required: ['body'],
+  properties: {
     body: {
-        type: 'object',
-        properties: {
+      type: 'object',
+      properties: {
         string: {
-            type: 'string',
+          type: 'string',
         },
         boolean: {
-            type: 'boolean',
+          type: 'boolean',
         },
         integer: {
-            type: 'integer',
+          type: 'integer',
         },
         number: {
-            type: 'number',
+          type: 'number',
         },
-        },
+      },
     },
-    },
+  },
 };
-
 
 const handler = dk((ctx) => {
   // ctx 包含 ctx.req 可获取入参信息
@@ -41,9 +40,9 @@ const handler = dk((ctx) => {
 });
 
 handler.use(
-    validator({
-        eventSchema: schema,
-    }),
+  validator({
+    eventSchema: schema,
+  }),
 );
 
 exports.handler = handler;

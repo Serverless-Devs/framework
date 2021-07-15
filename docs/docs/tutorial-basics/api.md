@@ -60,10 +60,8 @@ npm run serve
 
 1. 安装
 
-```
+```base npm2yarn
 npm install http-proxy-middleware --save
-# or
-yarn add http-proxy-middleware
 ```
 
 2. 在 `src` 目录下新建 `setupProxy.js` 文件
