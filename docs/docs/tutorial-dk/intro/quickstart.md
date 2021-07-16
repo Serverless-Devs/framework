@@ -15,7 +15,7 @@ DK 是阿里云函数计算的配套编程框架，配合[serverless devs](https
 
 #### Serverless Dves 工具安装
 
-通过 npm 包管理安装：适用于已经预装了 npm 的 Windows、Mac、Linux 平台。在 Windows、Mac、Linux 平台执行以下命令安装 Serverless Devs Tool 工具。更多详情可前往[Serverless Dves](https://github.com/Serverless-Devs/docs/blob/master/zh/install.md)查看。
+通过 npm 包管理安装：适用于已经预装了 npm 的 Windows、Mac、Linux 平台。在 Windows、Mac、Linux 平台执行以下命令安装 Serverless Devs Tool 工具。更多详情可前往[Serverless Dves](https://www.serverless-devs.com/docs/install)查看。
 
 ```base npm2yarn
 npm install @serverless-devs/s -g

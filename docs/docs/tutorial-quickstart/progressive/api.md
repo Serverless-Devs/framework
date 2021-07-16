@@ -5,112 +5,65 @@ title: 添加API
 
 本模块中，使用 serverless devs 将 API 添加您的应用程序中
 
-## 添加 api 到您的应用程序中
+## 1. 添加 api 到您的应用程序中
 
 ```
 s cli init api
-? 请输入部署函数的路径: functions
-? 请输入部署的函数名称: user
 ```
+
+![image](https://gw.alicdn.com/imgextra/i4/O1CN01HYuUWr1bQj54OLQL0_!!6000000003460-2-tps-1000-106.png)
 
 整个项目的目录结构如下:
 
 ```
 .
-├── README.md
 ├── functions // 函数的文件目录
 ├── node_modules
-├── package.json
 ├── public
-├── s.yml // devs工具配置文件
 ├── src // 前端文件目录
+├── .gitignore
+├── package.json
+├── README.md
+├── s.yml // devs工具配置文件
 ```
 
 我们看下 functions 函数的目录结构
 
 ```
 .
-├── config.yml
 ├── package.json
 └── user
     └── index.js
 ```
 
-## 本地启动
-
-```
-cd functions
-npm install // 如果已经安装请跳过
-npm run serve
-```
-
-## 前端调用
-
-在 package.json 文件中添加 `proxy`，值为 `functions` 目录下执行 `npm run serve` 启动的服务
-
-```json
-{
-  // ...
-  "proxy": "http://localhost:7001"
-}
-```
-
-或者 使用 `http-proxy-middleware`
-
-1. 安装
-
-```base npm2yarn
-npm install http-proxy-middleware --save
-```
-
-2. 在 `src` 目录下新建 `setupProxy.js` 文件
-
-```js
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
-module.exports = function (app) {
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'http://localhost:7001',
-      changeOrigin: true,
-    }),
-  );
-};
-```
-
-## 发布上线
+## 2. 部署
 
 ```
 s deploy
 ```
 
-## 示例
+部署完成之后会返回可访问的域名
 
-- jamstack-base
+![image](https://gw.alicdn.com/imgextra/i4/O1CN01thwoMx28rdfqNUxHX_!!6000000007986-2-tps-1000-296.png)
 
-```
-s init jamstack-base
-```
+访问域名会看到如下界面
 
-- jamstack-react
+![image](https://gw.alicdn.com/imgextra/i4/O1CN01Adi2B51ZTM7cd4WCk_!!6000000003195-2-tps-1000-498.png)
 
-```
-s init jamstack-react
-```
+当访问 域名加上/api/user 可以看到如下界面
 
-- jamstack-vue
+![image](https://gw.alicdn.com/imgextra/i1/O1CN01s4yxWT1evMPz4lMvf_!!6000000003933-2-tps-998-127.png)
 
-```
-s init jamstack-vue
-```
+:::caution
+http://website-react-project-f508b5ad21e848f54f46dfd66acec16e.jamstack.devsapp.net/api/user
 
-本地如何本地调试？
+// 302 重定向
 
-- 进入 `sourceCode指定目录(默认functions)`
-- 执行 `yarn` or `npm i` 安装依赖 （如果已经安装请跳过）
-- 执行 `npm run serve` 可访问 `http://localhost:7001` 服务
+http://jamstack-api.system.rest-api-demo.1694024725952210.cn-hangzhou.fc.devsapp.net/user
 
-- 进入 `根目录`
-- 执行 `yarn` or `npm i` 安装依赖 （如果已经安装请跳过）
-- 执行 `npm start`
+// 返回数据
+
+{
+"title": "hello serverless dk"
+}
+:::
