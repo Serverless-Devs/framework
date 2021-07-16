@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
-title: DK使用
+sidebar_position: 3
+title: DK设计
 ---
 
 ## 使用方法

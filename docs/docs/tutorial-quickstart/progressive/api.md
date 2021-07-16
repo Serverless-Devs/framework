@@ -1,8 +1,7 @@
 ---
 sidebar_position: 2
+title: 添加API
 ---
-
-# 添加 API
 
 本模块中，使用 serverless devs 将 API 添加您的应用程序中
 

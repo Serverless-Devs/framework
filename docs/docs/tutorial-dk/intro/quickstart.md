@@ -1,8 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
+title: 快速开始
 ---
-
-# 什么是 serverless DK
 
 欢迎使用 serverless DK 框架！
 

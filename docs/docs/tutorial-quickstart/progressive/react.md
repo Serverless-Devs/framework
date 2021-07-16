@@ -1,8 +1,7 @@
 ---
 sidebar_position: 1
+title: 部署并托管React应用程序
 ---
-
-# 部署并托管 React 应用程序
 
 本模块中，我们首先通过模板创建一个新的 React 应用程序，将其部署到 devsapp.net 域上托管的全球可用内容分发网络 (CDN)。
 

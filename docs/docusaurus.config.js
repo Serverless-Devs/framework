@@ -18,12 +18,24 @@ module.exports = {
       },
       items: [
         {
-          type: 'doc',
-          docId: 'intro',
+          to: 'docs/tutorial-quickstart/progressive/react',
           position: 'left',
-          label: '帮助文档',
+          label: '快速开始',
+          activeBasePath: 'docs/tutorial-quickstart',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        {
+          to: 'docs/tutorial-dk/intro/origin',
+          position: 'left',
+          label: 'DK文档',
+          activeBasePath: 'docs/tutorial-dk',
+        },
+        {
+          to: 'docs/tutorial-solution/oss-zip',
+          position: 'left',
+          label: '解决方案',
+          activeBasePath: 'docs/tutorial-solution',
+        },
+        // { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/Serverless-Devs/framework',
           label: 'GitHub',

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: tablestore初始化
+title: tablestore数据库连接
 ---
 
 ## 介绍

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: 路由配置
+title: validator数据校验
 ---
 
 #### 作用
