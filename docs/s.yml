@@ -14,6 +14,8 @@ services:
         codeUri: ./
         publishDir: ./build
         index: index.html
+        subDir:
+          type: index
       region: cn-hangzhou
       hosts:
         - host: auto

@@ -6,8 +6,7 @@ title: 本地调试和部署
 ## 1. 本地启动服务来访问函数
 
 ```
-cd functions
-npm install
+cd functions && npm install
 npm run serve
 ```
 
@@ -35,6 +34,8 @@ npm run serve
   "proxy": "http://localhost:7001"
 }
 ```
+
+<strong>or</strong>
 
 ### 2. http-proxy-middleware
 
@@ -119,7 +120,7 @@ npm run start
 
 ![image](https://gw.alicdn.com/imgextra/i1/O1CN01el66Jr1dsKB79Wz1d_!!6000000003791-1-tps-997-479.gif)
 
-## 4. 发布上线
+## 4. 部署
 
 ```
 s deploy

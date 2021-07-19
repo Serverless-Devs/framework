@@ -33,17 +33,17 @@ s -v
 
 - 初始化一个 http 模板项目：`s init dk-http`
 - 给文件夹取一个名字，比如就叫 `dk-http`
-- 进入项目：`cd dk-http/functions`
+- 进入项目：`cd dk-http/functions && npm install`
 - 本地测试： `npm run serve`
   > 高级配置：
       一键部署到线上环境： s deploy
 
-#### 快速体验一个 CRUD 的小应用
+#### 快速体验一个 CRUD 的小应用（[示例](https://github.com/devsapp/dk-example/tree/master/dk-tablestore)）
 
 - 首先准备好[tablestore](https://otsnext.console.aliyun.com/)按量付费数据库实例
 - 初始化一个 http 模板项目：`s init dk-tablestore`
 - 给文件夹取一个名字，比如就叫 `dk-tablestore`
-- 进入项目：`cd dk-tablestore/functions`
+- 进入项目：`cd dk-tablestore/functions && npm install`
 - 本地测试： `npm run serve`
   > 高级配置：
       一键部署到线上环境： s deploy

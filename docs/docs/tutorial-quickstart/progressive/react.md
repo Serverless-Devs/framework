@@ -17,7 +17,9 @@ s init website-react
 
 根据交互式的提示给文件夹命名：`website-react`
 
-新建或者使用已有的[oss](https://oss.console.aliyun.com/) Bucket: `website-react-bucket`（新建 `Bucket` 的时候请确保具有唯一性）
+新建或者使用已有的[oss](https://oss.console.aliyun.com/) Bucket: `website-react-bucket`（新建 `Bucket` 的时候请确保具有唯一性）。
+
+新建或者选择已有的密钥，新建密钥可前往[阿里云密钥获取](https://www.serverless-devs.com/docs/provider-config/alibabacloud)查看。
 
 ```
 cd website-react
