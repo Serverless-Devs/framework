@@ -45,3 +45,11 @@ npm run start
 ```
 s deploy
 ```
+
+部署完成之后会返回可访问的域名
+
+![image](https://img.alicdn.com/imgextra/i3/O1CN01UtQieZ1F8TkmPbFCO_!!6000000000442-2-tps-1000-277.png)
+
+访问域名会看到如下界面
+
+![image](https://img.alicdn.com/imgextra/i3/O1CN01l6uI5g2AIUVmFKfGS_!!6000000008180-1-tps-997-554.gif)
