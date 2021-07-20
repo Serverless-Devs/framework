@@ -14,6 +14,7 @@ module.exports = {
         'tutorial-quickstart/progressive/react',
         'tutorial-quickstart/progressive/api',
         'tutorial-quickstart/progressive/deploy',
+        'tutorial-quickstart/progressive/tablestore',
       ],
     },
 
@@ -23,7 +24,6 @@ module.exports = {
       items: [
         'tutorial-quickstart/integration/jamstack-react',
         'tutorial-quickstart/integration/jamstack-vue',
-        'tutorial-quickstart/integration/jamstack-base',
       ],
     },
     {

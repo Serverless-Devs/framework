@@ -5,7 +5,7 @@ title: jamstack-react
 
 ## 1. 初始化
 
-```
+```bash
 s init jamstack-react
 ```
 
@@ -21,7 +21,7 @@ s init jamstack-react
 
 ## 2. 本地调试
 
-```
+```bash
 cd jamstack-react/functions && npm install
 npm run serve
 ```
@@ -34,7 +34,7 @@ npm run serve
 
 前端项目本地启动
 
-```
+```bash
 npm run start
 ```
 
@@ -42,7 +42,7 @@ npm run start
 
 ## 3. 部署
 
-```
+```bash
 s deploy
 ```
 

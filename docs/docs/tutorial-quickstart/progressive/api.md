@@ -7,7 +7,7 @@ title: 添加API
 
 ## 1. 添加 api 到您的应用程序中
 
-```
+```bash
 s cli init api
 ```
 
@@ -38,7 +38,7 @@ s cli init api
 
 ## 2. 部署
 
-```
+```bash
 s deploy
 ```
 

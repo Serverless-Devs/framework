@@ -23,7 +23,7 @@ npm install @serverless-devs/s -g
 
 检测 `s工具` 是否安装成功
 
-```
+```bash
 s -v
 ```
 
@@ -38,7 +38,7 @@ s -v
   > 高级配置：
       一键部署到线上环境： s deploy
 
-#### 快速体验一个 CRUD 的小应用（[示例](https://github.com/devsapp/dk-example/tree/master/dk-tablestore)）
+#### 快速体验一个 CRUD 的小应用（[示例](/docs/tutorial-quickstart/database/tablestore)）
 
 - 首先准备好[tablestore](https://otsnext.console.aliyun.com/)按量付费数据库实例
 - 初始化一个 http 模板项目：`s init dk-tablestore`

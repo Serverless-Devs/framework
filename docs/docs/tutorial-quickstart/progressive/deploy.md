@@ -5,7 +5,7 @@ title: 本地调试和部署
 
 ## 1. 本地启动服务来访问函数
 
-```
+```bash
 cd functions && npm install
 npm run serve
 ```
@@ -114,7 +114,7 @@ export default App;
 
 4. 前端项目本地启动
 
-```
+```bash
 npm run start
 ```
 
@@ -122,7 +122,7 @@ npm run start
 
 ## 4. 部署
 
-```
+```bash
 s deploy
 ```
 

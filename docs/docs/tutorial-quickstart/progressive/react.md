@@ -9,7 +9,7 @@ title: 部署并托管React应用程序
 
 ## 2. 创建新的 React 应用程序
 
-```
+```bash
 s init website-react
 ```
 
@@ -21,14 +21,14 @@ s init website-react
 
 新建或者选择已有的密钥，新建密钥可前往[阿里云密钥获取](https://www.serverless-devs.com/docs/provider-config/alibabacloud)查看。
 
-```
+```bash
 cd website-react
 npm start
 ```
 
 ## 3. 部署
 
-```
+```bash
 s deploy
 ```
 
