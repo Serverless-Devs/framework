@@ -3,7 +3,7 @@ sidebar_position: 4
 title: 路由配置
 ---
 
-#### 介绍
+### 介绍
 我们在初始化一个 Rest API 应用时，假设我们需要对此函数处理某一逻辑功能，如商品列表对，如商品列表的增删改查时，我们需要在 `handler` 函数中添加条件语句，用于监听并处理触发器触发的事件条件。如
 ```
 const { dk } = require('@serverless-devs/dk');
