@@ -3,7 +3,7 @@ import { isFcEnv, generateConfig } from './util';
 
 interface ISchedulerConfig {
   handler?: Function | Object;
-  scheduler: { cronExpression: string; enable: boolean; payload: string }[];
+  scheduler: { cronExpression: string; enable: boolean; payload: string };
 }
 
 const onScheduler = (config: ISchedulerConfig) => {
