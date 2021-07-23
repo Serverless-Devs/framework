@@ -67,11 +67,13 @@ const validatorMiddleware = (opts = {}) => {
       : request.event;
     if (event) {
       // 事件函数
+      let validEventSchemaTemp = null
       if(!validEventSchema){
-        validEventSchema = getCorrespondingvalidSchema(request, eventSchema)
+        validEventSchemaTemp = getCorrespondingvalidSchema(request, eventSchema)
       }
       // 没有找到匹配的就不校验
-      if(!validEventSchema) return
+      if(!validEventSchema && !validEventSchemaTemp) return
+      validEventSchema = validEventSchema || validEventSchemaTemp
       const valid = validEventSchema(event);
       if (!valid) {
         const error = new createError.BadRequest('Event object failed validation');
@@ -84,10 +86,12 @@ const validatorMiddleware = (opts = {}) => {
       // http函数
       // body
       if (bodySchema) {
+        let validBodySchemaTemp = null
         if(!validBodySchema){
-          validBodySchema = getCorrespondingvalidSchema(request, bodySchema)
+          validBodySchemaTemp = getCorrespondingvalidSchema(request, bodySchema)
         }
-        if(!validBodySchema) return
+        if(!validBodySchema && !validBodySchemaTemp) return
+        validBodySchema = validBodySchema || validBodySchemaTemp
         const valid = validBodySchema(request.req.body);
         if (!valid) {
           const error = new createError.BadRequest('Body object failed validation');
@@ -99,10 +103,12 @@ const validatorMiddleware = (opts = {}) => {
       }
       // path和queries
       if (urlSchema) {
+        let validUrlSchemaTemp = null
         if(!validUrlSchema){
-          validUrlSchema = getCorrespondingvalidSchema(request, urlSchema)
+          validUrlSchemaTemp = getCorrespondingvalidSchema(request, urlSchema)
         }
-        if(!validUrlSchema) return
+        if(!validUrlSchema && !validUrlSchemaTemp) return
+        validUrlSchema = validUrlSchema || validUrlSchemaTemp
         const valid = validUrlSchema({ path: request.req.path, queries: request.req.queries });
         if (!valid) {
           const error = new createError.BadRequest('Url object failed validation');
@@ -116,10 +122,12 @@ const validatorMiddleware = (opts = {}) => {
   };
 
   const validatorMiddlewareAfter = async (request) => {
+    let validOutputSchemaTemp = null
     if(!validOutputSchema){
-      validOutputSchema = getCorrespondingvalidSchema(request, outputSchema)
+      validOutputSchemaTemp = getCorrespondingvalidSchema(request, outputSchema)
     }
-    if(!validOutputSchema) return
+    if(!validOutputSchema && !validOutputSchemaTemp) return
+    validOutputSchema = validOutputSchema || validOutputSchemaTemp
     const valid = validOutputSchema(request.result);
     if (!valid) {
       const error = new createError.InternalServerError('Response object failed validation');
