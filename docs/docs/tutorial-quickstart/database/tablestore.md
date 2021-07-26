@@ -15,10 +15,6 @@ s init dk-tablestore
 
 ![image](https://img.alicdn.com/imgextra/i2/O1CN01VF6kv724mMdiMPC9q_!!6000000007433-2-tps-2184-1190.png)
 
-请将 `functions/index/index.html` 和 `functions/index/info.html` 的 `baseURL` 值改成自己部署的函数 url
-
-![image](https://img.alicdn.com/imgextra/i3/O1CN01SglMAI1jJPgUwH0Tk_!!6000000004527-2-tps-1000-192.png)
-
 ## 3. 部署
 
 ```bash
