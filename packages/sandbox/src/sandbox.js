@@ -10,12 +10,12 @@ const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
-const noop = () => { };
+const noop = () => {};
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
   const args = process.env;
-  let port = args.p || args.port || 3000;
+  let port = args.p || args.port || 7001;
   port = await portIsOccupied(port);
 
   const cwd = path.resolve('..');
@@ -33,7 +33,7 @@ const sandbox = async () => {
   };
 
   // middleware that is specific to this router
-  router.use(function(req, res, next) {
+  router.use((req, res, next) => {
     process.env.FC_FUNC_CODE_PATH = 'true';
 
     next();
@@ -58,7 +58,7 @@ const sandbox = async () => {
       app: {},
     });
 
-    router.all(route, function(req, res) {
+    router.all(route, (req, res) => {
       req.queries = req.query;
       const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
       if (fileModule.initializer) {
@@ -79,7 +79,7 @@ const sandbox = async () => {
   });
   const dbJson = fs.readJsonSync(path.join(uiSourcePath, 'db.json'));
   // 判断是否存在 http api，存在的话，才添加 ui 路由
-  if (Object.keys(dbJson.paths)) {
+  if (Object.keys(dbJson.paths).length) {
     logger.info(`http://localhost:${port}/api/ui`);
     app.get('/api/db.json', (req, res) => {
       res.json(dbJson);
@@ -94,7 +94,11 @@ const sandbox = async () => {
   app.use('/api', router);
 
   app.listen(port, () => {
-    console.log(`the server listening at http://localhost:${port}/api`);
+    const indexRoute = props.route.find((item) => item === '/' || item === '/index');
+    const url = indexRoute
+      ? `http://localhost:${port}/api`
+      : `http://localhost:${port}/api${props.route[0]}`;
+    console.log(`the server listening at ${url}`);
   });
 };
 

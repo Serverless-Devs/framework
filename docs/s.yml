@@ -1,0 +1,21 @@
+edition: 1.0.0
+access: default
+
+services:
+  website-starter:
+    component: devsapp/website
+    actions:
+      pre-deploy:
+        - run: npm run build
+          path: ./
+    props:
+      bucket: serverless-dk
+      src:
+        codeUri: ./
+        publishDir: ./build
+        index: index.html
+        subDir:
+          type: index
+      region: cn-hangzhou
+      hosts:
+        - host: auto

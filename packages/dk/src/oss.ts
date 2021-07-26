@@ -1,36 +1,45 @@
 import { isFcEnv, generateConfig } from './util';
 import dk from './dk';
 
-interface IOSSConfig {
-  handler: Function | Object;
-  oss: {
-    bucketName: string;
-    events?: string[];
-    filter?: {
-      prefix: string;
-      suffix: string;
-      target: string;
-    };
-  }[];
+interface IOnEvent {
+  bucketName: string;
+  events: string[];
+  filter: {
+    prefix: string;
+    suffix: string;
+  };
 }
 
-const onEvent = (config: IOSSConfig) => {
+interface IOnObject {
+  bucketName: string;
+  events?: string[];
+  filter: {
+    prefix: string;
+    suffix: string;
+  };
+}
+interface IOSSConfig<IOss> {
+  handler: Function | Object;
+  oss: IOss;
+}
+
+const onEvent = (config: IOSSConfig<IOnEvent>) => {
   if (isFcEnv) return dk(config.handler);
   generateConfig('oss', config);
   return dk(config.handler);
 };
 
-const onObjectCreated = (config: IOSSConfig) => {
+const onObjectCreated = (config: IOSSConfig<IOnObject>) => {
   return onEvent({
     ...config,
-    oss: config.oss.map((item) => ({
+    oss: {
       events: ['oss:ObjectCreated:*'],
-      ...item,
-    })),
+      ...config.oss,
+    },
   });
 };
 
-const onObjectRemoved = (config: IOSSConfig) => {
+const onObjectRemoved = (config: IOSSConfig<IOnObject>) => {
   const defaultEvents = [
     'oss:ObjectRemoved:DeleteObject',
     'oss:ObjectRemoved:DeleteObjects',
@@ -38,10 +47,10 @@ const onObjectRemoved = (config: IOSSConfig) => {
   ];
   return onEvent({
     ...config,
-    oss: config.oss.map((item) => ({
+    oss: {
       events: defaultEvents,
-      ...item,
-    })),
+      ...config.oss,
+    },
   });
 };
 

@@ -33,29 +33,18 @@ import path from 'path';
 type ConfigType = 'oss' | 'http' | 'scheduler';
 export const generateConfig = (type: ConfigType, args: any) => {
   const filePath = path.resolve(process.cwd(), 'config.yml');
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`${process.cwd()}路径下不存在config.yml文件`);
-  }
-  const content = yaml.load(fs.readFileSync(filePath, 'utf8'));
+  fs.ensureFileSync(filePath);
+  const content = yaml.load(fs.readFileSync(filePath, 'utf8')) || {};
   // oss配置
   if (type === 'oss') {
-    content.oss = [];
-    args.oss.forEach((item) => {
-      const obj: any = {
-        bucketName: item.bucketName,
-        events: item.events,
-      };
-      if (item.filter) {
-        obj.filter = {
-          key: {
-            Prefix: item.filter.prefix,
-            Suffix: item.filter.suffix,
-            Target: item.filter.target,
-          },
-        };
-      }
-      content.oss.push(obj);
-    });
+    const { oss } = args;
+    oss.filter = {
+      Key: {
+        Prefix: oss.filter.prefix,
+        Suffix: oss.filter.suffix,
+      },
+    };
+    content.oss = oss;
   }
   // http配置
   if (type === 'http') {

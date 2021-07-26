@@ -8,16 +8,13 @@ describe('oss测试', () => {
           success: 'true',
         };
       },
-      oss: [
-        {
-          bucketName: 'my-bukect-01',
-          filter: {
-            prefix: 'source/',
-            suffix: '.png',
-            target: 'target/',
-          },
+      oss: {
+        bucketName: 'my-bukect-01',
+        filter: {
+          prefix: 'source/',
+          suffix: '.png',
         },
-      ],
+      },
     });
   });
   // test('onObjectRemoved 测试', async () => {
