@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-util",
-  "version": "0.0.4-alpha.27",
+  "version": "0.0.4-alpha.31",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
