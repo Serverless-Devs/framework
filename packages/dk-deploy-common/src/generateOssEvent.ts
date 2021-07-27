@@ -50,7 +50,10 @@ async function generateOssEvent(options: IOptions) {
 }
 
 function getPolicies(sprops) {
-  const policies = concat(get(sprops, 'app.role.policies'), ['AliyunOSSFullAccess']);
+  const policies = concat(get(sprops, 'app.role.policies', []), [
+    'AliyunECSNetworkInterfaceManagementAccess',
+    'AliyunOSSFullAccess',
+  ]);
   return uniq(policies);
 }
 
