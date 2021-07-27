@@ -32,15 +32,12 @@
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",
     "js-yaml": "^4.1.0",
-    "lodash.get": "^4.4.2",
-    "lodash.includes": "^4.3.0",
-    "lodash.isempty": "^4.4.0",
-    "lodash.set": "^4.3.2",
-    "lodash.split": "^4.4.2",
+    "lodash": "^4.17.21",
     "prettier": "1.12.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.11",
+    "@types/lodash": "^4.14.171",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3"
   }

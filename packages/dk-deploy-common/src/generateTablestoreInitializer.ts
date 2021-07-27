@@ -6,7 +6,7 @@ import prettier from 'prettier';
 import fs from 'fs-extra';
 import path from 'path';
 import { getYamlContent, Logger, modifyProps } from '@serverless-devs/core';
-import get from 'lodash.get';
+import { get } from 'lodash';
 import yaml from 'js-yaml';
 
 const logger = new Logger('dk-deploy-common');
