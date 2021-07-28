@@ -72,6 +72,7 @@ function cookieSession(options) {
 
     function getSession() {
       // already retrieved
+      setHeaders();
       if (sess) {
         return sess;
       }

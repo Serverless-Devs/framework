@@ -29,11 +29,13 @@ exports.handler = handler;
 ### cookies.set( name, [ value ], [ options ] )
 这将在响应中设置给定的cookie
 如果省略了value，将会删除此cookies
-如果提供了options对象，它将用于生成出站cookie头，如下所示：
+如果提供了options对象，它将用于生成出cookie头，如下所示：
 - `maxAge`: session存在的时间，24 * 60 * 60 * 1000
 - `expires`: 一个“Date”对象，指示cookie的过期日期（默认在会话结束时过期）。
 - `path`: cookie的路径（默认情况下为`/`)。
+- `httpOnly`: 一个布尔值，指cookie是否仅通过HTTP发送，而不可用于客户端JavaScript获取（默认为true）。
 - `domain`: 表示cookie的域的字符串（无默认值）。
+- `secure`:一个布尔值，指示cookie是否仅通过HTTPS发送（HTTP默认为false，HTTPS默认为true）。。
 - `sameSite`: 一个布尔值或字符串，指示cookie是否为“同一站点”cookie（默认为“false”）。可以将其设置为“strict”、“lax”、“none”或“true”。
 - `signed`: 一个布尔值，指示是否对cookie进行签名（默认为“true”）。
 - `overwrite`: 一个布尔值，指示是否覆盖以前设置的同名cookie（默认为“true”）。
