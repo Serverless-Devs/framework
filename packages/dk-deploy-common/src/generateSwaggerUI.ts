@@ -4,10 +4,7 @@ import traverse from '@babel/traverse';
 import { Logger } from '@serverless-devs/core';
 import path from 'path';
 import fs from 'fs-extra';
-import split from 'lodash.split';
-import set from 'lodash.set';
-import get from 'lodash.get';
-import includes from 'lodash.includes';
+import { get, includes, split, set } from 'lodash';
 
 const logger = new Logger('dk-deploy-common');
 interface IOptions {
@@ -22,7 +19,6 @@ interface IUiJson {
 }
 
 async function generateSwaggerUI(options: IOptions) {
-
   logger.debug(`函数 generateSwaggerUI 入参: ${JSON.stringify(options, null, 2)}`);
   const { routes, cwd = process.cwd(), sourceCode, pathUrl } = options;
   const sourceCodePath = path.join(cwd, '.s', sourceCode);
@@ -57,7 +53,7 @@ const ui = ({ sourceCode, cwd, pathUrl }) => {
   const [, host] = split(pathUrl, '://');
   uiJson.host = host;
   fs.outputJsonSync(path.join(sourceCodePath, 'ui/db.json'), uiJson);
-}
+};
 
 // 读取 index.js 下的 http api
 const insertSwaggerUI = async ({ filepath, indexRoute }) => {
@@ -87,7 +83,7 @@ const insertSwaggerUI = async ({ filepath, indexRoute }) => {
           const { properties: apiObj } = node.init;
           uiJson = mapApi(apiObj, indexRoute);
         }
-      }
+      },
     });
   } else if (t.isObjectExpression(dkArguments)) {
     const { properties: apiObj } = dkArguments;
@@ -97,14 +93,18 @@ const insertSwaggerUI = async ({ filepath, indexRoute }) => {
   logger.debug(`函数 insertSwaggerUI 解析结果：${JSON.stringify(uiJson)}`);
 
   return uiJson;
-}
+};
 
 const mapApi = (apiObj, indexRoute): IUiJson => {
   const paths = {};
   const tags = [];
-  apiObj.forEach(api => {
+  apiObj.forEach((api) => {
     // 单行模式
-    if (t.isObjectProperty(api) && t.isStringLiteral(api.key) && (t.isArrowFunctionExpression(api.value) || t.isFunctionExpression(api.value))) {
+    if (
+      t.isObjectProperty(api) &&
+      t.isStringLiteral(api.key) &&
+      (t.isArrowFunctionExpression(api.value) || t.isFunctionExpression(api.value))
+    ) {
       const [apiMethod, apiKey] = split(api.key.value, ' ');
       if (!apiMethod || !apiKey) return;
       if (!includes(tags, indexRoute)) {
@@ -131,12 +131,9 @@ const mapApi = (apiObj, indexRoute): IUiJson => {
         summary: '标题title',
         description: '描述',
         parameters: [],
-        produces: [
-          "application/json",
-          "application/xml"
-        ],
-        responses: {}
-      })
+        produces: ['application/json', 'application/xml'],
+        responses: {},
+      });
     }
     // 对象型
     if (t.isObjectProperty(api) && t.isStringLiteral(api.key) && t.isObjectExpression(api.value)) {
@@ -145,8 +142,12 @@ const mapApi = (apiObj, indexRoute): IUiJson => {
         tags.push(indexRoute);
       }
       const { properties: methodObj } = api.value;
-      methodObj.forEach(method => {
-        if (t.isObjectProperty(method) && t.isIdentifier(method.key) && (t.isArrowFunctionExpression(method.value) || t.isFunctionExpression(method.value))) {
+      methodObj.forEach((method) => {
+        if (
+          t.isObjectProperty(method) &&
+          t.isIdentifier(method.key) &&
+          (t.isArrowFunctionExpression(method.value) || t.isFunctionExpression(method.value))
+        ) {
           const apiMethod = get(method.key, 'name');
           // const hasBody = includes(['post', 'patch', 'put'], apiMethod.toLowerCase());
           // let parameters = [];
@@ -169,18 +170,14 @@ const mapApi = (apiObj, indexRoute): IUiJson => {
             summary: '标题title',
             description: '描述',
             parameters: [],
-            produces: [
-              "application/json",
-              "application/xml"
-            ],
-            responses: {}
-          })
+            produces: ['application/json', 'application/xml'],
+            responses: {},
+          });
         }
-      })
+      });
     }
-  })
-  return { paths, tags }
-}
+  });
+  return { paths, tags };
+};
 
 export = generateSwaggerUI;
-

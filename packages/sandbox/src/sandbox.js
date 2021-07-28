@@ -21,10 +21,13 @@ const sandbox = async () => {
   const cwd = path.resolve('..');
   getEnvs({ path: path.resolve('..', '.env') });
   const currentPath = path.resolve(cwd);
-  const content = await core.getYamlContent(path.join(currentPath, './s.yml'));
+  const spath = path.join(currentPath, './s.yml');
+  const content = await core.getYamlContent(spath);
   if (!content) {
-    throw new Error(`${cwd}路径下不存在s.yml文件`);
+    throw new Error(`${cwd}路径下不存在s.[yaml|yml]文件`);
   }
+  process.env.templateFile = path.join(currentPath, fs.existsSync(spath) ? './s.yml' : './s.yaml');
+
   // 获取密钥
   let credentials = await core.getCredential(content.access);
   credentials = {
@@ -54,8 +57,7 @@ const sandbox = async () => {
     await generateTablestoreInitializer({
       codeUri,
       sourceCode: props.sourceCode,
-      cwd: currentPath,
-      app: {},
+      app: { name: 'sandbox-demo' },
     });
 
     router.all(route, (req, res) => {

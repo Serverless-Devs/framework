@@ -6,7 +6,7 @@ import prettier from 'prettier';
 import fs from 'fs-extra';
 import path from 'path';
 import { getYamlContent, Logger, modifyProps } from '@serverless-devs/core';
-import get from 'lodash.get';
+import { get } from 'lodash';
 import yaml from 'js-yaml';
 
 const logger = new Logger('dk-deploy-common');
@@ -14,15 +14,17 @@ const logger = new Logger('dk-deploy-common');
 interface IOptions {
   codeUri: string;
   sourceCode: string;
-  cwd?: string;
   app?: { [key: string]: any };
 }
 
 async function generateTablestoreInitializer(options: IOptions) {
   logger.debug(`函数 generateTablestoreInitializer 入参: ${JSON.stringify(options, null, 2)}`);
-  const { codeUri, cwd = process.cwd() } = options;
-  const filePath = path.join(cwd, '.s', codeUri.replace(cwd, ''));
-  fs.copySync(codeUri, filePath);
+  const { templateFile } = process.env;
+
+  if (templateFile === 'null') return;
+  const spath = path.join(path.resolve(templateFile, '..'), '.s');
+  const filePath = path.join(spath, options.sourceCode, path.basename(options.codeUri));
+  fs.copySync(options.codeUri, filePath);
   const { indexJs, configYml } = await insertTablestoreInitializer(options);
   if (indexJs) {
     const indexPath = path.join(filePath, `index.js`);
@@ -171,27 +173,15 @@ async function insertTablestoreinitializerYml({ filepath, initializerName = 'ini
   };
 }
 
-function checkSfileName(cwd) {
-  const path1 = path.join(cwd, 's.yaml');
-  if (fs.existsSync(path1)) {
-    return 's.yaml';
-  }
-  const path2 = path.join(cwd, 's.yml');
-  if (fs.existsSync(path2)) {
-    return 's.yml';
-  }
-  throw new Error(`${cwd} 路径下不存在 s.[yaml|yml] 文件`);
-}
-
 // 检测 s.yml 是否存在 role
 async function generateTablestoreRole(options: IOptions) {
-  const { app, cwd = process.cwd() } = options;
+  const { app } = options;
   if (!get(app, 'role')) {
-    const sfileName = checkSfileName(cwd);
-    const spath = path.join(cwd, sfileName);
-    const sspath = path.join(cwd, '.s', sfileName);
-    fs.copyFileSync(spath, sspath);
-    const content: any = await getYamlContent(spath);
+    const { templateFile } = process.env;
+    const spath = path.join(path.resolve(templateFile, '..'), '.s');
+    const sspath = path.join(spath, path.basename(templateFile));
+    fs.copyFileSync(templateFile, sspath);
+    const content: any = await getYamlContent(templateFile);
     let appName: string;
     for (const key in content.services) {
       if (content.services[key].component.endsWith('jamstack-api')) {
