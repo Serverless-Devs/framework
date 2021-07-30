@@ -51,7 +51,7 @@ export interface IHandler {
   verify: (signature: any, data: any, secret: string) => boolean;
   on?: Function;
   emit?: Function
-  (ctx: any, callback: any): any;
+  (req: any): any;
   [key: string]: any;
 }
 
@@ -66,10 +66,10 @@ export const createGithubHandler = (initOptions) => {
     checkType(initOptions)
   }
 
-  const handler: IHandler = (ctx, callback) => {
+  const handler: IHandler = (req) => {
     let events
 
-    options = findHandler(ctx.req.url, initOptions)
+    options = findHandler(req.url, initOptions)
 
     if (typeof options.events === 'string' && options.events !== '*') {
       events = [options.events]
@@ -77,19 +77,19 @@ export const createGithubHandler = (initOptions) => {
       events = options.events
     }
 
-    if (ctx.req.url !== options.path || ctx.req.method !== 'POST') {
-      return callback()
+    if (req.url !== options.path || req.method !== 'POST') {
+      return { code: 404, message: 'no match path' }
     }
 
     function hasError(msg) {
       const err = new Error(msg);
-      handler.emit('error', err, ctx.req);
-      callback(err)
+      handler.emit('error', err, req);
+      return { code: 400, message: err.message }
     }
 
-    const sig = ctx.req.headers['x-hub-signature']
-    const event = ctx.req.headers['x-github-event']
-    const id = ctx.req.headers['x-github-delivery']
+    const sig = req.headers['x-hub-signature']
+    const event = req.headers['x-github-event']
+    const id = req.headers['x-github-delivery']
 
     if (!sig) {
       return hasError('No X-Hub-Signature found on request')
@@ -109,22 +109,23 @@ export const createGithubHandler = (initOptions) => {
 
     // todo 令牌校验
     // console.log('verify(sig, data)-----0', sig)
-    // if (!verify(sig, Buffer.from(ctx.req.body), options.secret)) {
+    // if (!verify(sig, Buffer.from(req.body), options.secret)) {
     //   console.log('verify(sig, data)-----2', sig)
     //   return hasError('X-Hub-Signature does not match blob signature')
     // }
     const emitData = {
       event,
       id,
-      payload: ctx.req.body,
-      protocol: ctx.req.protocol,
-      host: ctx.req.headers.host,
-      url: ctx.req.url,
+      payload: req.body,
+      protocol: req.protocol,
+      host: req.headers.host,
+      url: req.url,
       path: options.path
     }
 
     handler.emit(event, emitData)
     handler.emit('event', emitData)
+    return { code: 200, message: 'success' }
   }
 
   // make it an EventEmitter
