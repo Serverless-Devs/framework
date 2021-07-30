@@ -4,6 +4,9 @@ title: 部署并托管React应用程序
 ---
 
 本模块中，我们首先通过模板创建一个新的 React 应用程序，将其部署到 devsapp.net 域上托管的全球可用内容分发网络 (CDN)。
+:::caution
+请确保已经开通 [CDN](https://cdn.console.aliyun.com) 和 [OSS](https://oss.console.aliyun.com) 服务
+:::
 
 ## 1. [Serverless Dves 工具安装](/docs/tutorial-dk/intro/quickstart#环境准备)
 

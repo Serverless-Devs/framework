@@ -32,6 +32,7 @@ module.exports = {
       label: '数据库操作',
       items: ['tutorial-quickstart/database/tablestore'],
     },
+    'tutorial-quickstart/faq',
   ],
   'tutorial-dk': [
     {
