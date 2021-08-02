@@ -16,7 +16,7 @@ const dk = (handler?: Function | Object, baseMiddlewares?: any[]) => {
     // 传入类型是对象
     baseHandler = (config) => httpRouteParserHandler(config, handler);
   } else {
-    baseHandler = handler || function () { };
+    baseHandler = handler || function () {};
   }
 
   const beforeMiddlewares = [];
@@ -133,7 +133,10 @@ const runRequest = async (
       // Catch if onError stack hasn't handled the error
       if (request.type === HTTP) {
         if (request.result === undefined || request.res === undefined) {
-          request.result = { statusCode: typeof e.code === 'number' ? e.code : 500, body: { code: e.code, message: e.message } };
+          request.result = {
+            statusCode: typeof e.code === 'number' ? e.code : 500,
+            body: { code: e.code, message: e.message },
+          };
         }
       } else {
         request.callback(request.error);
@@ -170,10 +173,10 @@ const runMiddlewares = async (request, middlewares) => {
 };
 
 const fcInitializer = (initializerList) =>
-  dk((context) => {
+  dk(async (context) => {
     const items = {};
-    for (const item of initializerList) {
-      Object.assign(items, item(context));
+    for await (const item of initializerList.map(async (child) => await child(context))) {
+      Object.assign(items, item);
     }
     return items;
   });
