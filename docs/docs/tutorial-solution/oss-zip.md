@@ -9,11 +9,17 @@ title: oss zip包上传解压
 s init dk-oss-unzip
 ```
 
-![image](https://img.alicdn.com/imgextra/i1/O1CN01h5OBik26mwNoMebvX_!!6000000007705-2-tps-1000-313.png)
+![image](https://img.alicdn.com/imgextra/i3/O1CN01l0UIVY1t8YSHNKqxa_!!6000000005857-2-tps-1000-356.png)
 
 根据交互式的提示给文件夹命名：`dk-oss-unzip`
 
 使用已有的[oss](https://oss.console.aliyun.com/) Bucket: `dk-oss-unzip-bucket-demo`
+
+输入触发规则前缀： `source/`
+
+输入触发规则后缀： `.zip`
+
+输入文件解压后的目标目录： `target/`
 
 新建或者选择已有的密钥，新建密钥可前往[阿里云密钥获取](https://www.serverless-devs.com/docs/provider-config/alibabacloud)查看。
 
