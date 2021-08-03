@@ -15,11 +15,11 @@ interface IOptions {
 const middlewares = [
   {
     name: 'cookiesMiddleware',
-    policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOSSFullAccess'],
+    policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
   },
   {
     name: 'cookieSessionMiddleware',
-    policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOSSFullAccess'],
+    policies: ['AliyunECSNetworkInterfaceManagementAccess', 'AliyunOTSFullAccess'],
   },
 ];
 
