@@ -66,7 +66,7 @@ const sandbox = async () => {
       if (fileModule.initializer) {
         fileModule.initializer({ credentials }, noop);
       }
-      fileModule.handler(req, res, { credentials });
+      fileModule.handler(req, res, { context: { credentials } });
     });
   }
 
