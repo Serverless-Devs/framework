@@ -98,7 +98,6 @@ function getUseTableStorePlugin(indexPath: string) {
 // 检查是否已经export.initializer
 function useTableStore(ast: t.File) {
   let icount = 0;
-  let tcount = 0;
   let initializerName: string;
   traverse(ast, {
     Program({ node }) {
