@@ -175,8 +175,8 @@ const runMiddlewares = async (request, middlewares) => {
 const fcInitializer = (initializerList) =>
   dk(async (context) => {
     const items = {};
-    for await (const item of initializerList.map(async (child) => await child(context))) {
-      Object.assign(items, item);
+    for (const item of initializerList) {
+      Object.assign(items, await item(context));
     }
     return items;
   });
