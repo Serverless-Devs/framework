@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/cookies-session",
-  "version": "0.0.4-alpha.32",
+  "version": "0.0.4-alpha.34",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.32"
+    "@serverless-devs/dk-core": "^0.0.4-alpha.34"
   },
   "jest": {
     "preset": "ts-jest",
