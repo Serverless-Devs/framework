@@ -41,6 +41,7 @@ const dk = (handler?: Function | Object, baseMiddlewares?: any[]) => {
 
     return runRequest(
       request,
+      [...initializerPlugins],
       [...beforeMiddlewares],
       baseHandler,
       [...afterMiddlewares],
@@ -77,8 +78,6 @@ const dk = (handler?: Function | Object, baseMiddlewares?: any[]) => {
 
   instance.initializer = (initializerPlugin) => {
     initializerPlugins.push(initializerPlugin);
-    // @ts-ignore
-    instance.initializerHandler = fcInitializer(initializerPlugins);
     return instance;
   };
 
@@ -109,6 +108,7 @@ const dk = (handler?: Function | Object, baseMiddlewares?: any[]) => {
 
 const runRequest = async (
   request: IdkRequest,
+  initializerList,
   beforeMiddlewares,
   baseHandler,
   afterMiddlewares,
@@ -118,6 +118,7 @@ const runRequest = async (
     if (request.type === 'HTTP') {
       await getBody(request);
     }
+    await fcInitializer(request, initializerList)
     await runMiddlewares(request, beforeMiddlewares);
     // Check if before stack hasn't exit early
     if (request.result === undefined) {
@@ -172,13 +173,9 @@ const runMiddlewares = async (request, middlewares) => {
   }
 };
 
-const fcInitializer = (initializerList) =>
-  dk(async (context) => {
-    const items = {};
-    for (const item of initializerList) {
-      Object.assign(items, await item(context));
-    }
-    return items;
-  });
-
+const fcInitializer = async (request, initializerList) => {
+  for (const item of initializerList) {
+    Object.assign(internal, item(request.context));
+  }
+}
 export = dk;
