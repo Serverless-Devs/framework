@@ -96,6 +96,7 @@ function cookieSession(options) {
       if ((sess = tryGetSession(cookies, name, req.sessionOptions))) {
         if(store){
           put(sess)
+          update()
         }
         return sess;
       }
