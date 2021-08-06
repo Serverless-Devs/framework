@@ -69,7 +69,7 @@ export const createGithubHandler = (initOptions) => {
   const handler: IHandler = (req) => {
     let events
 
-    options = findHandler(req.url, initOptions)
+    options = findHandler(req.path, initOptions)
 
     if (typeof options.events === 'string' && options.events !== '*') {
       events = [options.events]
@@ -77,7 +77,7 @@ export const createGithubHandler = (initOptions) => {
       events = options.events
     }
 
-    if (req.url !== options.path || req.method !== 'POST') {
+    if (req.path !== options.path || req.method !== 'POST') {
       return { code: 404, message: 'no match path' }
     }
 
