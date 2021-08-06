@@ -58,11 +58,10 @@ module.exports = {
         'tutorial-dk/event/oss',
         'tutorial-dk/event/tablestore',
         'tutorial-dk/event/scheduler',
-        'tutorial-dk/event/github',
         'tutorial-dk/event/gitee',
         'tutorial-dk/event/yuqueInner',
       ],
     },
   ],
-  'tutorial-solution': ['tutorial-solution/oss-zip', 'tutorial-solution/idcard-recognition'],
+  'tutorial-solution': ['tutorial-solution/oss-zip', 'tutorial-solution/idcard-recognition', 'tutorial-solution/github',],
 };
