@@ -16,6 +16,7 @@ module.exports = {
         'tutorial-quickstart/progressive/deploy',
         'tutorial-quickstart/progressive/tablestore',
         'tutorial-quickstart/progressive/oss',
+        'tutorial-quickstart/progressive/scheduler',
       ],
     },
 

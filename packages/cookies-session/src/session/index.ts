@@ -4,11 +4,8 @@
  * Module dependencies.
  * @private
  */
-
-//import { Buffer } from 'safe-buffer'
-// const Buffer = require('safe-buffer').Buffer;
-var debug = require('debug')('cookie-session');
 var Cookies = require('../cookies');
+var storeFn = require('../store')
 interface SessionContextThis {
   _new: any;
   _val: any;
@@ -33,13 +30,13 @@ module.exports = cookieSession;
  * @return {function} middleware
  * @public
  */
-
+var storeSess;
 function cookieSession(options) {
   var opts = options || {};
 
   // cookie name
   var name = opts.name || 'session';
-
+  var store = opts.store;
   // secrets
   var keys = opts.keys;
   if (!keys && opts.secret) keys = [opts.secret];
@@ -51,14 +48,14 @@ function cookieSession(options) {
 
   if (!keys && opts.signed) throw new Error('.keys required.');
 
-  debug('session options %j', opts);
-
-  return function _cookieSession(req, res) {
+  return async function _cookieSession (request) {
+    const {req, res, context} = request;
+    const { init, put, get, update, remove} =storeFn(opts, context);
+    
     var cookies = new Cookies(req, res, {
       keys: keys,
     });
     var sess;
-
     // for overriding
     req.sessionOptions = Object.create(opts);
 
@@ -66,17 +63,30 @@ function cookieSession(options) {
     Object.defineProperty(req, 'session', {
       configurable: true,
       enumerable: true,
-      get: getSession,
-      set: setSession,
+      get(){return getSession() },
+      set(val){return setSession(val)},
     });
-
+    if(store){
+      await init();
+      const data = await get();
+      if(data && data.row && data.row.attributes){
+        const obj ={};
+        data.row.attributes.forEach(v => {
+          obj[v.columnName] = v.columnValue
+        });
+        storeSess = obj;
+      }
+    }
     function getSession() {
       // already retrieved
       setHeaders();
       if (sess) {
         return sess;
       }
-
+      if(storeSess && cookies.get(name, opts)){
+        sess = storeSess
+        return storeSess
+      }
       // unset
       if (sess === false) {
         return null;
@@ -84,11 +94,13 @@ function cookieSession(options) {
 
       // get session
       if ((sess = tryGetSession(cookies, name, req.sessionOptions))) {
+        if(store){
+          put(sess)
+        }
         return sess;
       }
 
       // create session
-      debug('new session');
       return (sess = Session.create({}));
     }
 
@@ -96,6 +108,9 @@ function cookieSession(options) {
       if (val == null) {
         // unset session
         sess = false;
+        if(store){
+          remove()
+        }
         setHeaders();
         return val;
       }
@@ -103,6 +118,9 @@ function cookieSession(options) {
       if (typeof val === 'object') {
         // create a new session
         sess = Session.create(val);
+        if(store){
+          put(sess)
+        }
         setHeaders();
         return sess;
       }
@@ -119,15 +137,12 @@ function cookieSession(options) {
       try {
         if (sess === false) {
           // remove
-          debug('remove %s', name);
           cookies.set(name, '', req.sessionOptions);
         } else if ((!sess.isNew || sess.isPopulated) && sess.isChanged) {
           // save populated or non-new changed session
-          debug('save %s', name);
           cookies.set(name, Session.serialize(sess), req.sessionOptions);
         }
       } catch (e) {
-        debug('error saving session %s', e.message);
       }
     }
   };
@@ -274,8 +289,6 @@ function tryGetSession(cookies, name, opts) {
   if (!str) {
     return undefined;
   }
-
-  debug('parse %s', str);
 
   try {
     return Session.deserialize(str);

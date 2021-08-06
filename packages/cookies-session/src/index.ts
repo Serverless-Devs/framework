@@ -12,7 +12,7 @@ const cookiesMiddleware = (options) => {
 
 const cookieSessionMiddleware = (options) => {
   const cookieSessionMiddlewareBefore = async (request) => {
-    cookieSession(options)(request.req, request.res)
+    cookieSession(options)(request)
   };
   return {
     before: cookieSessionMiddlewareBefore,
