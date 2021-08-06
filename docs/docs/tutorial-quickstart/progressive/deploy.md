@@ -5,6 +5,8 @@ title: 本地调试和部署
 
 ## 1. 本地启动服务来访问函数
 
+cd 到 rest-api 路径下，默认 cd function
+
 ```bash
 cd functions && npm install
 npm run serve

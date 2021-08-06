@@ -1,11 +1,13 @@
 import { MongoClient } from 'mongodb';
 
-
-const rdsDbInitialzerPlugin = () => {
+const MongoDBInitialzerPlugin = () => {
   const url = process.env.MONGO_URL;
+  const dbName = process.env.dbName;
   return {
-    initializer: () => {
-      const dbClient = new MongoClient(url);
+    initializer: async () => {
+      const client = new MongoClient(url);
+      await client.connect();
+      const dbClient = client.db(dbName);
       return {
         dbClient,
         MongoClient,
@@ -14,4 +16,4 @@ const rdsDbInitialzerPlugin = () => {
   };
 };
 
-export = rdsDbInitialzerPlugin;
+export = MongoDBInitialzerPlugin;

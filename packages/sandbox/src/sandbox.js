@@ -60,13 +60,13 @@ const sandbox = async () => {
       app: { name: 'sandbox-demo' },
     });
 
-    router.all(route, (req, res) => {
+    router.all(route, async (req, res) => {
       req.queries = req.query;
       const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
       if (fileModule.initializer) {
-        fileModule.initializer({ credentials }, noop);
+        await fileModule.initializer({ credentials }, noop);
       }
-      fileModule.handler(req, res, { credentials });
+      fileModule.handler(req, res, { context: { credentials } });
     });
   }
 

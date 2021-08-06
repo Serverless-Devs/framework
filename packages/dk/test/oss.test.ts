@@ -3,10 +3,8 @@ import { oss } from '../src';
 describe('oss测试', () => {
   test('onObjectCreated 测试', async () => {
     oss.onObjectCreated({
-      handler: (request) => {
-        return {
-          success: 'true',
-        };
+      handler: (ctx) => {
+        console.log(ctx.event);
       },
       oss: {
         bucketName: 'my-bukect-01',

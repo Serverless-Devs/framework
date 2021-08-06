@@ -16,6 +16,7 @@ module.exports = {
         'tutorial-quickstart/progressive/deploy',
         'tutorial-quickstart/progressive/tablestore',
         'tutorial-quickstart/progressive/oss',
+        'tutorial-quickstart/progressive/scheduler',
       ],
     },
 
@@ -32,6 +33,7 @@ module.exports = {
       label: '数据库操作',
       items: ['tutorial-quickstart/database/tablestore'],
     },
+    'tutorial-quickstart/faq',
   ],
   'tutorial-dk': [
     {

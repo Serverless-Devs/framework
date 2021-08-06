@@ -45,7 +45,8 @@ async function insertTablestoreInitializer(options: IOptions) {
   const indexPath = path.join(filepath, 'index.js');
   const content = fs.readFileSync(indexPath, 'utf8');
   const ast = parser.parse(content);
-  const { useTableStorePlugin, useExportInitializer, initializerName } = useTableStore(ast);
+  const useTableStorePlugin = getUseTableStorePlugin(indexPath);
+  const { useExportInitializer, initializerName } = useTableStore(ast);
   logger.debug(`${codeUri}/index.js文件是否使用tablestore: ${useTableStorePlugin}`);
   logger.debug(`${codeUri}/index.js文件是否已经导出初始化函数: ${useExportInitializer}`);
   if (useExportInitializer) {
@@ -87,36 +88,21 @@ async function insertTablestoreInitializer(options: IOptions) {
   return { configYml, indexJs };
 }
 
-// 检查是否使用use(tablestore) 和是否已经export.initializer
+// 检查是否使用use tablestore
+function getUseTableStorePlugin(indexPath: string) {
+  const tablestoreRegx = /.use\(tablestoreInitialzerPlugin\(\)\)/g;
+  const content = fs.readFileSync(indexPath, 'utf8');
+  return tablestoreRegx.test(content);
+}
+
+// 检查是否已经export.initializer
 function useTableStore(ast: t.File) {
   let icount = 0;
-  let tcount = 0;
   let initializerName: string;
   traverse(ast, {
     Program({ node }) {
       const { body } = node;
       body.forEach((item) => {
-        // 是否使用tablestore
-        if (t.isExpressionStatement(item)) {
-          if (t.isCallExpression(item.expression)) {
-            if (t.isMemberExpression(item.expression.callee)) {
-              if (t.isIdentifier(item.expression.callee.property)) {
-                if (item.expression.callee.property.name === 'use') {
-                  tcount++;
-                  item.expression.arguments.forEach((obj) => {
-                    if (t.isCallExpression(obj)) {
-                      if (t.isIdentifier(obj.callee)) {
-                        if (obj.callee.name === 'tablestoreInitialzerPlugin') {
-                          tcount++;
-                        }
-                      }
-                    }
-                  });
-                }
-              }
-            }
-          }
-        }
         // 是否已经export.initializer
         if (t.isExpressionStatement(item)) {
           if (t.isAssignmentExpression(item.expression)) {
@@ -146,7 +132,6 @@ function useTableStore(ast: t.File) {
     },
   });
   return {
-    useTableStorePlugin: tcount === 2,
     useExportInitializer: icount === 3,
     initializerName,
   };

@@ -2,7 +2,7 @@ import dk from './dk';
 import { isFcEnv, generateConfig } from './util';
 
 interface ISchedulerConfig {
-  handler?: Function | Object;
+  handler: Function | Object;
   scheduler: { cronExpression: string; enable: boolean; payload: string };
 }
 
