@@ -50,7 +50,13 @@ const validatorMiddleware = (opts = {}) => {
     let validSchema = null;
     for(const [key, schema] of Object.entries(schemaConfig)){
       if(key.toLowerCase().replace(/\s+/g,"") === method.toLowerCase() + path.toLowerCase()){
-        validSchema = compile(schema, ajvOptions, ajvInstance)
+        try{
+          validSchema = compile(schema, ajvOptions, ajvInstance)
+        }catch(err){
+          throw new createError.InternalServerError(
+            `There may be a problem with the schema format, you can refer to the detailed error information: ${err}`,
+          );
+        }
       }
     }
     return validSchema
