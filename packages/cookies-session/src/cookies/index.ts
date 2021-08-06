@@ -91,11 +91,10 @@ Cookies.prototype.get = function (name, opts) {
 
 Cookies.prototype.set = function (name, value, opts) {
     let res = this.response
-        , headers = res.headersMap["Set-Cookie"] || []
+        , headers = res.headersMap ? (res.headersMap["Set-Cookie"] || []) : (res.getHeader("Set-Cookie") ||[])
         , secure = this.secure !== undefined ? !!this.secure : false
         , cookie = new Cookie(name, value, opts)
         , signed = opts && opts.signed !== undefined ? opts.signed : !!this.keys
-
     if (typeof headers == "string") headers = [headers]
 
     if (!secure && opts && opts.secure) {
