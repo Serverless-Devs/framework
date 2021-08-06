@@ -2,6 +2,7 @@ const {
   generateTablestoreInitializer,
   getEnvs,
   generateSwaggerUI,
+  generateGithub,
 } = require('@serverless-devs/dk-deploy-common');
 const fs = require('fs-extra');
 const path = require('path');
@@ -10,7 +11,7 @@ const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
 const router = express.Router();
-const noop = () => {};
+const noop = () => { };
 const logger = new core.Logger('sandbox');
 
 const sandbox = async () => {
@@ -19,7 +20,7 @@ const sandbox = async () => {
   port = await portIsOccupied(port);
 
   const cwd = path.resolve('..');
-  getEnvs({ path: path.resolve('..', '.env') });
+  const env = getEnvs({ path: path.resolve('..', '.env') });
   const currentPath = path.resolve(cwd);
   const spath = path.join(currentPath, './s.yml');
   const content = await core.getYamlContent(spath);
@@ -68,6 +69,24 @@ const sandbox = async () => {
       }
       fileModule.handler(req, res, { context: { credentials } });
     });
+    /** github wehooks —— 开始 */
+    const hasGithub = await generateGithub({
+      route,
+      sourceCode: props.sourceCode,
+      cwd: currentPath,
+    });
+    if (hasGithub) {
+      router.all(env.github_path, async (req, res) => {
+        req.queries = req.query;
+        const fileModule = require(path.join(currentPath, '.s', props.sourceCode, indexRoute));
+        if (fileModule.initializer) {
+          await fileModule.initializer({ credentials }, noop);
+        }
+        fileModule.handler(req, res, { context: { credentials } });
+      })
+      app.use(`/api${route}`, router);
+    }
+    /** github wehooks —— 结束 */
   }
 
   /** 创建 UI 配置 --- 开始 */
