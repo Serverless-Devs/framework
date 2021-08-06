@@ -24,12 +24,15 @@ Fc 函数计算的 HTTP 函数参数格式为`(req, res, context)`。校验 req.
 
 ## 使用方式
 
+### 基础使用方式
+
 - eventSchema
 
 ```javascript
 'use strict';
-const dk = require('@serverless-devs/dk-core').default;
-const validator = require('@serverless-devs/dkalidator').default;
+
+const dk = require('@serverless-devs/dk');
+const validator = require('@serverless-devs/dk-validator');
 
 const handler = dkrequest) => {
   return { body: 'hello world' };
@@ -78,8 +81,9 @@ module.exports = { handler };
 
 ```javascript
 'use strict';
-const dk require('@serverless-devs/dkdke').default;
-const validator = require('@serverless-devs/dkalidator').default;
+
+const dk require('@serverless-devs/dk');
+const validator = require('@serverless-devs/dk-validator');
 
 const handler = dkrequest) => {
   return { body: 'hello world', statusCode: 200 };
@@ -102,3 +106,70 @@ handler.use(validator({ outputSchema: schema }));
 
 module.exports = { handler };
 ```
+
+### 高级使用方式
+
+schema 内部依然可使用对象式写法，以针对不同路由地址配置不同 schema。
+
+```js
+'use strict';
+
+const dk = require('@serverless-devs/dk-core');
+const validator = require('@serverless-devs/dk-validator');
+
+const baseHandler = {
+  'GET /list': async (ctx) => {
+    return { body: 'hello world', statusCode: 200 };
+  },
+  'POST /list': async (ctx) => {
+    const { tableName } = ctx.req.body;
+    const { tableClient } = ctx.internal;
+    const params = {
+      tableMeta: {
+        tableName,
+        primaryKey: [
+          {
+            name: 'id',
+            type: 'INTEGER',
+          },
+        ],
+      },
+      reservedThroughput: {
+        capacityUnit: {
+          read: 0,
+          write: 0,
+        },
+      },
+      tableOptions: {
+        timeToLive: -1, 
+        maxVersions: 1, 
+      },
+      streamSpecification: {
+        enableStream: true, 
+        expirationTime: 24, 
+      },
+    };
+    await tableClient.createTable(params);
+    return {
+      json: {
+        success: true,
+        message: `${tableName}表已创建成功`,
+      },
+    };
+  }
+}
+
+const bodySchema = {
+  type: 'object',
+  required: ['tableName'],
+  properties: {
+    tableName:{
+      type: 'string',
+    }
+  },
+};
+
+
+handler.use(validator({ bodySchema: {"POST /list/" : bodySchema}}));
+```
+
