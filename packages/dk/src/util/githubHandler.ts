@@ -27,17 +27,21 @@ function checkType(options) {
     throw new TypeError('must provide a \'path\' option')
   }
 
-  if (typeof options.secret !== 'string') {
+  const { secret = '' } = options;
+  if (typeof secret !== 'string') {
     throw new TypeError('must provide a \'secret\' option')
   }
 }
 
 // 生成令牌
-function sign(data, secret) {
-  return `sha1=${crypto.createHmac('sha1', secret).update(data).digest('hex')}`
+function sign(data, secret = '') {
+  const hmac = crypto.createHmac('sha1', secret);
+  hmac.update(new Buffer(JSON.stringify(data)));
+  return `sha1=${hmac.digest('hex')}`;
 }
 // 校验令牌
-function verify(signature, data, secret) {
+function verify(signature, data, secret = '') {
+  if (!secret) return true;
   const sig = Buffer.from(signature)
   const signed = Buffer.from(sign(data, secret))
   if (sig.length !== signed.length) {
@@ -47,8 +51,8 @@ function verify(signature, data, secret) {
 }
 
 export interface IHandler {
-  sign: (data: any, secret: string) => string;
-  verify: (signature: any, data: any, secret: string) => boolean;
+  sign: (data: any, secret?: string) => string;
+  verify: (signature: any, data: any, secret?: string) => boolean;
   on?: Function;
   emit?: Function
   (req: any): any;
@@ -90,8 +94,9 @@ export const createGithubHandler = (initOptions) => {
     const sig = req.headers['x-hub-signature']
     const event = req.headers['x-github-event']
     const id = req.headers['x-github-delivery']
+    const contentType = req.headers['content-type'];
 
-    if (!sig) {
+    if (options.secret && !sig) {
       return hasError('No X-Hub-Signature found on request')
     }
 
@@ -107,16 +112,22 @@ export const createGithubHandler = (initOptions) => {
       return hasError('X-Github-Event is not acceptable')
     }
 
-    // todo 令牌校验
-    // console.log('verify(sig, data)-----0', sig)
-    // if (!verify(sig, Buffer.from(req.body), options.secret)) {
-    //   console.log('verify(sig, data)-----2', sig)
-    //   return hasError('X-Hub-Signature does not match blob signature')
-    // }
+    // github 发起的请求中，form 比 json 方式多包一层 payload
+    const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;
+    let { body } = req;
+    if (mimePattern.test(contentType)) {
+      body = JSON.parse(body.payload)
+    }
+
+    // 令牌校验
+    if (!verify(sig, body, options.secret)) {
+      return hasError('X-Hub-Signature does not match blob signature')
+    }
+
     const emitData = {
       event,
       id,
-      payload: req.body,
+      payload: body,
       protocol: req.protocol,
       host: req.headers.host,
       url: req.url,
