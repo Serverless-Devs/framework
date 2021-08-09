@@ -1,5 +1,6 @@
-// https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks
+// https://docs.github.com/cn/developers/webhooks-and-events/webhooks/about-webhooks
 // https://github.com/rvagg/github-webhook-handler
+// https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
