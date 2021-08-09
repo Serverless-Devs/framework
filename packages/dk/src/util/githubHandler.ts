@@ -83,7 +83,7 @@ export const createGithubHandler = (initOptions) => {
 
     function hasError(msg) {
       const err = new Error(msg);
-      handler.emit('error', err, req);
+      handler.emit('err', err, req); //  handler.emit('error') 事件会导致整个流程直接中断抛异常，所以改成了handler.emit('err')
       return { code: 400, message: err.message }
     }
 
