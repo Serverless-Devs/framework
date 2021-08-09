@@ -50,16 +50,22 @@ const validatorMiddleware = (opts = {}) => {
     let validSchema = null;
     for(const [key, schema] of Object.entries(schemaConfig)){
       if(key.toLowerCase().replace(/\s+/g,"") === method.toLowerCase() + path.toLowerCase()){
-        validSchema = compile(schema, ajvOptions, ajvInstance)
+        try{
+          validSchema = compile(schema, ajvOptions, ajvInstance)
+        }catch(err){
+          throw new createError.InternalServerError(
+            `There may be a problem with the schema format, you can refer to the detailed error information: ${err}`,
+          );
+        }
       }
     }
     return validSchema
   }
 
-  let validEventSchema = useSchemaForAll(eventSchema) ? compile(eventSchema, ajvOptions, ajvInstance) : null
-  let validBodySchema = useSchemaForAll(bodySchema) ? compile(bodySchema, ajvOptions, ajvInstance) : null
-  let validUrlSchema = useSchemaForAll(urlSchema) ? compile(urlSchema, ajvOptions, ajvInstance) : null
-  let validOutputSchema = useSchemaForAll(outputSchema) ? compile(outputSchema, ajvOptions, ajvInstance) : null
+  const validEventSchema = useSchemaForAll(eventSchema) ? compile(eventSchema, ajvOptions, ajvInstance) : null
+  const validBodySchema = useSchemaForAll(bodySchema) ? compile(bodySchema, ajvOptions, ajvInstance) : null
+  const validUrlSchema = useSchemaForAll(urlSchema) ? compile(urlSchema, ajvOptions, ajvInstance) : null
+  const validOutputSchema = useSchemaForAll(outputSchema) ? compile(outputSchema, ajvOptions, ajvInstance) : null
 
   const validatorMiddlewareBefore = async (request) => {
     const event = Buffer.isBuffer(request.event)
@@ -73,13 +79,13 @@ const validatorMiddleware = (opts = {}) => {
       }
       // 没有找到匹配的就不校验
       if(!validEventSchema && !validEventSchemaTemp) return
-      validEventSchema = validEventSchema || validEventSchemaTemp
-      const valid = validEventSchema(event);
+      const validate = validEventSchema || validEventSchemaTemp
+      const valid = validate(event);
       if (!valid) {
         const error = new createError.BadRequest('Event object failed validation');
         const language = chooseLanguage(event, defaultLanguage);
-        localize[language](validEventSchema.errors);
-        error.details = validEventSchema.errors;
+        localize[language](validate.errors);
+        error.details = validate.errors;
         throw error;
       }
     } else {
@@ -88,16 +94,16 @@ const validatorMiddleware = (opts = {}) => {
       if (bodySchema) {
         let validBodySchemaTemp = null
         if(!validBodySchema){
-          validBodySchemaTemp = getCorrespondingvalidSchema(request, bodySchema)
+            validBodySchemaTemp = getCorrespondingvalidSchema(request, bodySchema)
         }
         if(!validBodySchema && !validBodySchemaTemp) return
-        validBodySchema = validBodySchema || validBodySchemaTemp
-        const valid = validBodySchema(request.req.body);
+        const validate = validBodySchema || validBodySchemaTemp
+        const valid = validate(request.req.body);
         if (!valid) {
           const error = new createError.BadRequest('Body object failed validation');
           const language = chooseLanguage(request.req.body, defaultLanguage);
-          localize[language](validBodySchema.errors);
-          error.details = validBodySchema.errors;
+          localize[language](validate.errors);
+          error.details = validate.errors;
           throw error;
         }
       }
@@ -108,13 +114,13 @@ const validatorMiddleware = (opts = {}) => {
           validUrlSchemaTemp = getCorrespondingvalidSchema(request, urlSchema)
         }
         if(!validUrlSchema && !validUrlSchemaTemp) return
-        validUrlSchema = validUrlSchema || validUrlSchemaTemp
-        const valid = validUrlSchema({ path: request.req.path, queries: request.req.queries });
+        const validate = validUrlSchema || validUrlSchemaTemp
+        const valid = validate({ path: request.req.path, queries: request.req.queries });
         if (!valid) {
           const error = new createError.BadRequest('Url object failed validation');
           const language = chooseLanguage(request.req.queries, defaultLanguage);
-          localize[language](validUrlSchema.errors);
-          error.details = validUrlSchema.errors;
+          localize[language](validate.errors);
+          error.details = validate.errors;
           throw error;
         }
       }
@@ -127,11 +133,11 @@ const validatorMiddleware = (opts = {}) => {
       validOutputSchemaTemp = getCorrespondingvalidSchema(request, outputSchema)
     }
     if(!validOutputSchema && !validOutputSchemaTemp) return
-    validOutputSchema = validOutputSchema || validOutputSchemaTemp
-    const valid = validOutputSchema(request.result);
+    const validate = validOutputSchema || validOutputSchemaTemp
+    const valid = validate(request.result);
     if (!valid) {
       const error = new createError.InternalServerError('Response object failed validation');
-      error.details = validOutputSchema.errors;
+      error.details = validate.errors;
       error.response = request.result;
       throw error;
     }
