@@ -4,6 +4,8 @@
 import EventEmitter from 'events';
 import crypto from 'crypto';
 
+const { stringify } = require('qs');
+
 function findHandler(url, arr) {
   if (!Array.isArray(arr)) {
     return arr
@@ -38,7 +40,7 @@ function checkType(options) {
 // 生成令牌
 function sign(data, secret = '') {
   const hmac = crypto.createHmac('sha1', secret);
-  hmac.update(new Buffer(JSON.stringify(data)));
+  hmac.update(new Buffer(data));
   return `sha1=${hmac.digest('hex')}`;
 }
 // 校验令牌
@@ -114,22 +116,18 @@ export const createGithubHandler = (initOptions) => {
       return hasError('X-Github-Event is not acceptable')
     }
 
-    // github 发起的请求中，form 比 json 方式多包一层 payload
+    const { body } = req;
     const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;
-    let { body } = req;
-    if (mimePattern.test(contentType)) {
-      body = JSON.parse(body.payload)
-    }
 
-    // 令牌校验
-    if (!verify(sig, body, options.secret)) {
+    // 令牌校验, 这里的 body 已经在 dk-core 中转为对象
+    if (!verify(sig, mimePattern.test(contentType) ? stringify(body) : JSON.stringify(body), options.secret)) {
       return hasError('X-Hub-Signature does not match blob signature')
     }
 
     const emitData = {
       event,
       id,
-      payload: body,
+      payload: mimePattern.test(contentType) ? JSON.parse(body.payload) : body, // github 发起的请求中，form 比 json 方式多包一层 payload
       protocol: req.protocol,
       host: req.headers.host,
       url: req.url,
