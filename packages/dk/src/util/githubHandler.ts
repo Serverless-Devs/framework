@@ -40,7 +40,7 @@ function checkType(options) {
 // 生成令牌
 function sign(data, secret = '') {
   const hmac = crypto.createHmac('sha1', secret);
-  hmac.update(new Buffer(data));
+  hmac.update(Buffer.from(data));
   return `sha1=${hmac.digest('hex')}`;
 }
 // 校验令牌
