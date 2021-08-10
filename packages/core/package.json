@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk-core",
-  "version": "0.0.4-alpha.35",
+  "version": "0.0.4-alpha.36",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serverless-devs/dk-util": "^0.0.4-alpha.35",
+    "@serverless-devs/dk-util": "^0.0.4-alpha.36",
     "body": "^5.1.0",
     "path-to-regexp": "^6.2.0"
   },

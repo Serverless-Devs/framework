@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/resource",
-  "version": "0.0.4-alpha.35",
+  "version": "0.0.4-alpha.36",
   "private": "true",
   "description": "",
   "main": "./lib/index.js",
