@@ -1,6 +1,6 @@
 {
   "name": "@serverless-devs/dk",
-  "version": "0.0.4-alpha.36",
+  "version": "0.0.4-alpha.37",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -20,16 +20,16 @@
     }
   },
   "dependencies": {
-    "@serverless-devs/cookies-session": "^0.0.4-alpha.36",
-    "@serverless-devs/dk-core": "^0.0.4-alpha.36",
-    "@serverless-devs/dk-validator": "^0.0.4-alpha.36",
-    "@serverless-devs/http-error-handler": "^0.0.4-alpha.36",
-    "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.36",
-    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.36",
-    "@serverless-devs/http-response-parser": "^0.0.4-alpha.36",
-    "@serverless-devs/mongodb-initialzer-plugin": "^0.0.4-alpha.36",
-    "@serverless-devs/tablestore-event-parser": "^0.0.4-alpha.36",
-    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.36",
+    "@serverless-devs/cookies-session": "^0.0.4-alpha.37",
+    "@serverless-devs/dk-core": "^0.0.4-alpha.37",
+    "@serverless-devs/dk-validator": "^0.0.4-alpha.37",
+    "@serverless-devs/http-error-handler": "^0.0.4-alpha.37",
+    "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.37",
+    "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.37",
+    "@serverless-devs/http-response-parser": "^0.0.4-alpha.37",
+    "@serverless-devs/mongodb-initialzer-plugin": "^0.0.4-alpha.37",
+    "@serverless-devs/tablestore-event-parser": "^0.0.4-alpha.37",
+    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.37",
     "fs-extra": "^10.0.0",
     "github-webhook-handler": "^1.0.0",
     "js-yaml": "^4.1.0"
