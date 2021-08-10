@@ -24,11 +24,12 @@ function checkType(options) {
     throw new TypeError('must provide an options object')
   }
 
-  if (typeof options.path !== 'string') {
+  const { secret = '', path = '' } = options;
+
+  if (typeof path !== 'string') {
     throw new TypeError('must provide a \'path\' option')
   }
 
-  const { secret = '' } = options;
   if (typeof secret !== 'string') {
     throw new TypeError('must provide a \'secret\' option')
   }

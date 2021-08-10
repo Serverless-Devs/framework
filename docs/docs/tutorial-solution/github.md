@@ -14,7 +14,9 @@ title: github 事件
 ### 第一步
 - 通过 `s init dk-github` 快速部署一个 `FC` 函数，如`dk-github-demo`。
 - 根据指令输入 `path`，`secret`。
-- `s deploy` 部署，得到 `FC` 部署地址 `Url`。
+- `s deploy` 部署，得到 `FC` 触发器地址 `Url`。
+
+![img](https://img.alicdn.com/imgextra/i1/O1CN01f9WZaM1y9zmP983zK_!!6000000006537-0-tps-2344-590.jpg)
 
 如下代码，`Url + path` 即第二步中 `Github Webhooks` 的 `Payload URL`。
 
@@ -41,7 +43,9 @@ exports.handler = handler;
 - 创建一个 `Github` 仓库，如 `github-webhooks`。
 - 到 `github-webhooks` 下 `Settings`，配置 `Github Webhooks` 监听，将 `Payload URL` 指向自己 `FC` 函数指定的接口，如 `https://xxx.cn-xxx.fc.aliyuncs.com/2016-08-15/proxy/dk-github-demo/webhooks`
 
-<!-- ![img]('../../../static/img/github-webhooks.png') -->
+![img](https://img.alicdn.com/imgextra/i4/O1CN01y60HqD1pKgTznR8Qt_!!6000000005342-2-tps-2834-1020.png)
+
+![img](https://img.alicdn.com/imgextra/i1/O1CN01SD0Hyh1DElyIDjbHV_!!6000000000185-0-tps-2780-1358.jpg)
 
 ### 第三步
 - 将任意代码关联到 `dk-github-demo` Github 仓库。
@@ -50,10 +54,10 @@ exports.handler = handler;
 
 ```
 github.onEvent(data => {
-  console.log('监听到 event', data.event)
+  console.log('监听event', data.event)
 });
 ```
-
+![img](https://img.alicdn.com/imgextra/i3/O1CN01QM48eL1E2EkBWUq84_!!6000000000293-0-tps-2424-976.jpg)
 ## 高阶使用: `Secret` 令牌加密
 > 在 `Github Webhooks` 中，配置了 `secret`, 当 `Repo` 操作 发起的发起的请求时，将携带 `secret` 加密令牌。
 
