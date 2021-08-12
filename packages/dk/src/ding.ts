@@ -16,7 +16,7 @@ interface ActionCardSingle {
     singleURL: string
 }
 
-interface ActionCardBtn {
+interface Btn {
     title: string,
     actionURL: string
 }
@@ -25,7 +25,7 @@ interface ActionCardBtns {
     title: string,
     text: string,
     btnOrientation : '0' | '1',
-    btns: ActionCardBtn[]
+    btns: Btn[]
 }
 
 type ActionCardOptions = ActionCardSingle | ActionCardBtns
@@ -46,7 +46,7 @@ interface FeedCard {
     picURL: string
 }
 
-type FeedCardsOptions = FeedCard[]
+type FeedCardOptions = FeedCard[]
 
 //参考：https://developers.dingtalk.com/document/robots/customize-robot-security-settings
 const sign = (webhook: string, secret: string): string => {
@@ -83,7 +83,7 @@ export class DtalkRobot {
     sendText(content:string)
     sendText(content:string, atAll: boolean)
     sendText(content:string, ats:  AtOptions)
-    sendText(content:string, at?: boolean| AtOptions){
+    sendText(content:string, at?: boolean | AtOptions){
         const base = {
             msgtype:'text',
             text:{
@@ -159,7 +159,7 @@ export class DtalkRobot {
         })
     }
 
-    sendFeedCard(options: FeedCardsOptions){
+    sendFeedCard(options: FeedCardOptions){
         return this.send({
             msgtype:'feedCard',
             feedCard:{
