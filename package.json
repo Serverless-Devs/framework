@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
-    "@types/node": "^12.12.6",
+    "@types/node": "^12.20.19",
     "f2elint": "^1.1.2",
     "git-cz": "^4.7.6",
     "jest": "^26.4.0",
