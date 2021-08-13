@@ -20,7 +20,8 @@
     }
   },
   "devDependencies": {
-    "@serverless-devs/dk-core": "^0.0.4-alpha.37"
+    "@serverless-devs/dk-core": "^0.0.4-alpha.37",
+    "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.37"
   },
   "jest": {
     "preset": "ts-jest",

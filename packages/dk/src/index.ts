@@ -7,4 +7,4 @@ export { cookiesMiddleware, cookieSessionMiddleware } from '@serverless-devs/coo
 export { oss } from './oss';
 export { http } from './http';
 export { scheduler } from './scheduler';
-export { githubHandler } from './github';
+export { github } from './github';

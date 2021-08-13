@@ -3,8 +3,7 @@
 // https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
 import EventEmitter from 'events';
 import crypto from 'crypto';
-
-const { stringify } = require('qs');
+import { stringify } from 'qs';
 
 function findHandler(url, arr) {
   if (!Array.isArray(arr)) {
@@ -86,12 +85,13 @@ export const createGithubHandler = (initOptions) => {
     }
 
     if (req.path !== options.path || req.method !== 'POST') {
-      return { code: 404, message: 'no match path' }
+      return { code: 404, message: 'The interface does not match github' }
     }
 
     function hasError(msg) {
       const err = new Error(msg);
-      handler.emit('err', err, req); //  handler.emit('error') 事件会导致整个流程直接中断抛异常，所以改成了handler.emit('err')
+      // 与最初设计违背，目前是直接执行，不是通过 emit 事件监听触发
+      // handler.emit('err', err, req); //  handler.emit('error') 事件会导致整个流程直接中断抛异常，所以改成了handler.emit('err')
       return { code: 400, message: err.message }
     }
 
@@ -133,10 +133,10 @@ export const createGithubHandler = (initOptions) => {
       url: req.url,
       path: options.path
     }
-
-    handler.emit(event, emitData)
-    handler.emit('event', emitData)
-    return { code: 200, message: 'success' }
+    // 与最初设计违背，目前是直接执行，不是通过 emit 事件监听触发
+    // handler.emit(event, emitData)
+    // handler.emit('event', emitData)
+    return { code: 200, message: 'success', data: emitData }
   }
 
   // make it an EventEmitter

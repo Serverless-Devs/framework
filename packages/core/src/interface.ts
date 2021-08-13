@@ -22,6 +22,7 @@ export interface IFcRequest {
   clientIP: string;
   url: string;
   match?: { [key: string]: any };
+  github?: { [key: string]: any }; // github webhooks
 }
 
 export interface IFcContext {

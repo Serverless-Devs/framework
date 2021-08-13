@@ -33,10 +33,14 @@ const insertGithub = async ({ filepath }) => {
 
   let hasGithub;
   traverse(ast, {
-    CallExpression({ node }) {
-      if (t.isIdentifier(node.callee, { name: 'githubHandler' }) && node.arguments && node.arguments.length) {
-        // dkArguments = node.arguments[0];
-        hasGithub = true;
+    VariableDeclarator: ({ node }) => {
+      if (t.isObjectPattern(node.id) && t.isCallExpression(node.init)) {
+        const { properties } = node.id
+        for (const item of properties) {
+          if (t.isProperty(item) && t.isIdentifier(item.key, { name: 'github' })) {
+            hasGithub = true;
+          }
+        }
       }
     },
   });

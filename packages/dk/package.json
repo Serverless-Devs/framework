@@ -32,7 +32,8 @@
     "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.37",
     "fs-extra": "^10.0.0",
     "github-webhook-handler": "^1.0.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.11"
