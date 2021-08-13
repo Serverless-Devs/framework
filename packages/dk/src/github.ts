@@ -1,7 +1,15 @@
 import { createGithubHandler } from './util';
 import dk from './dk'
 
-const github = (options) => {
+interface IGithubOptions {
+  handler: Function;
+  config: {
+    path: string,
+    secret?: string,
+  };
+}
+
+const github = (options: IGithubOptions) => {
   const githubHandler = createGithubHandler(options.config);
   return dk((ctx) => {
     const data = githubHandler(ctx.req);
@@ -10,7 +18,7 @@ const github = (options) => {
   })
 };
 
-github.onEvent = (options) => github(options);
+github.onEvent = (options: IGithubOptions) => github(options);
 
 export {
   github,
