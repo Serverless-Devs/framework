@@ -84,7 +84,9 @@ export const createGithubHandler = (initOptions) => {
       events = options.events
     }
 
-    if (req.path !== options.path || req.method !== 'POST') {
+    let { path } = options;
+    path = path || '/';
+    if (req.path !== path || req.method !== 'POST') {
       return { code: 404, message: 'The interface does not match github' }
     }
 
@@ -131,7 +133,7 @@ export const createGithubHandler = (initOptions) => {
       protocol: req.protocol,
       host: req.headers.host,
       url: req.url,
-      path: options.path
+      path
     }
     // 与最初设计违背，目前是直接执行，不是通过 emit 事件监听触发
     // handler.emit(event, emitData)
