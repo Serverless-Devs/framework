@@ -54,7 +54,10 @@ exports.handler = handler;
 
 ```
 const handler = github.onEvent({
-  handler: (ctx) => console.log('监听event', ctx.req.github.event),
+  handler: (ctx) => {
+    console.log('监听event', ctx.req.github.event),
+    return { json: ctx.req.github }
+  }
   config: { path: '/webhooks' }
 });
 ```
