@@ -18,7 +18,7 @@ title: dk-github  事件监听
 
 ![img](https://img.alicdn.com/imgextra/i1/O1CN01f9WZaM1y9zmP983zK_!!6000000006537-0-tps-2344-590.jpg)
 
-如下代码，`Url + path` 即第二步中 `Github Webhooks` 的 `Payload URL`，默认为根路径。
+如下代码，`Url + path` 即第二步中 `Github Webhooks` 的 `Payload URL`，默认为根路径 '/'。
 
 ```
 const { github } = require('@serverless-devs/dk');
@@ -83,16 +83,17 @@ exports.handler = handler;
 ## 常见事件
 event 事件 | 类型 | 描述
 ---- | --- | ---
-onEvent     | Function(ctx) => void      | github 事件
+onEvent     | Function(ctx) => void      | github event事件
 
+通过 `const { github } = ctx.req;`， 可拿到当前 github 事件携带的内容。
 
 ## Event Github
-type | 说明
---- | --- 
-event | x-github-event
-id    | x-github-delivery
-payload | 请求体
+type |说明
+--- | ---
+event | X-Github-Event 请求头， 指当前的事件类型，如 `issues`、`push` 等
+id    | X-Github-Delivery 请求头，请求ID
+payload | 请求体，包含事件所有的详细信息
 protocol  | --
 host  | --
 url | --
-path  | --
+path  | 接口，默认为`/`
