@@ -9,4 +9,4 @@ const http = (req, res, context) => serverless(app)(req, res, context);
 http.app = app;
 Object.setPrototypeOf(http, router);
 
-module.exports = { http, serverless };
+export { http, serverless };
