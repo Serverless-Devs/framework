@@ -64,5 +64,10 @@ module.exports = {
       ],
     },
   ],
-  'tutorial-solution': ['tutorial-solution/oss-zip', 'tutorial-solution/idcard-recognition', 'tutorial-solution/github',],
+  'tutorial-solution': [
+    'tutorial-solution/oss-zip',
+    'tutorial-solution/idcard-recognition',
+    'tutorial-solution/github',
+    'tutorial-solution/http',
+  ],
 };
