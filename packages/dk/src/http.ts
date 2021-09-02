@@ -1,20 +1,12 @@
-import dk from './dk';
-import { isFcEnv, generateConfig } from './util';
+const serverless = require('@serverless-devs/fc-http');
+const Koa = require('koa');
+const Router = require("koa-router");
 
-interface IHttpConfig {
-  http?: { authType?: string; methods?: string[] };
-  handler?: Function | Object;
-}
+const router = new Router()
+const app = new Koa();
 
-const onRequest = (config: IHttpConfig) => {
-  if (isFcEnv) return dk(config.handler);
-  generateConfig('http', {
-    http: { authType: 'anonymous', methods: ['GET', 'POST', 'PUT', 'DELETE', 'HEAD'] },
-    ...config,
-  });
-  return dk(config.handler);
-};
+const http = (req, res, context) => serverless(app)(req, res, context);
+http.app = app;
+Object.setPrototypeOf(http, router);
 
-export const http = {
-  onRequest,
-};
+module.exports = { http, serverless };

@@ -23,6 +23,7 @@
     "@serverless-devs/cookies-session": "^0.0.4-alpha.38",
     "@serverless-devs/dk-core": "^0.0.4-alpha.38",
     "@serverless-devs/dk-validator": "^0.0.4-alpha.38",
+    "@serverless-devs/fc-http": "0.0.1",
     "@serverless-devs/http-error-handler": "^0.0.4-alpha.38",
     "@serverless-devs/http-form-body-parser": "^0.0.4-alpha.38",
     "@serverless-devs/http-json-body-parser": "^0.0.4-alpha.38",
@@ -33,6 +34,8 @@
     "fs-extra": "^10.0.0",
     "github-webhook-handler": "^1.0.0",
     "js-yaml": "^4.1.0",
+    "koa": "^2.13.1",
+    "koa-router": "^10.1.1",
     "qs": "^6.10.1"
   },
   "devDependencies": {

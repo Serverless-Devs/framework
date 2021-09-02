@@ -5,6 +5,6 @@ export { default as mongodbInitialzerPlugin } from '@serverless-devs/mongodb-ini
 export { default as validator } from '@serverless-devs/dk-validator';
 export { cookiesMiddleware, cookieSessionMiddleware } from '@serverless-devs/cookies-session';
 export { oss } from './oss';
-export { http } from './http';
+export { http, serverless } from './http';
 export { scheduler } from './scheduler';
 export { github } from './github';
