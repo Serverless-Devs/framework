@@ -1,25 +1,31 @@
 import { createGithubHandler } from './util';
-import dk from './dk'
+import { http, IOptions } from './http';
+
+interface Iconfig {
+  path?: string,
+  secret?: string,
+}
 
 interface IGithubOptions {
-  handler: Function;
-  config: {
-    path: string,
-    secret?: string,
-  };
+  handler?: Function;
+  config?: Iconfig | Iconfig[];
+  httpOpts?: IOptions;
 }
 
-const github = (options: IGithubOptions) => {
-  const githubHandler = createGithubHandler(options.config);
-  return dk((ctx) => {
-    const data = githubHandler(ctx.req);
-    ctx.req.github = data;
-    return options.handler(ctx);
-  })
-};
+const github = (options?: IGithubOptions) => {
+  const { config = {}, handler, httpOpts = {} } = options;
+  const githubHandler = createGithubHandler(config);
 
-github.onEvent = (options: IGithubOptions) => github(options);
+  http.app.use(async (ctx, next) => {
+    const data = await githubHandler(ctx.request);
+    ctx.status = data.code;
+    ctx.body = data.message;
+    ctx.github = data;
+    await handler?.(ctx);
+    next();
+  });
 
-export {
-  github,
+  return http(httpOpts);
 }
+
+export default github;

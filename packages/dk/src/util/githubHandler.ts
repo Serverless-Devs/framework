@@ -92,8 +92,6 @@ export const createGithubHandler = (initOptions) => {
 
     function hasError(msg) {
       const err = new Error(msg);
-      // 与最初设计违背，目前是直接执行，不是通过 emit 事件监听触发
-      // handler.emit('err', err, req); //  handler.emit('error') 事件会导致整个流程直接中断抛异常，所以改成了handler.emit('err')
       return { code: 400, message: err.message }
     }
 
@@ -121,7 +119,7 @@ export const createGithubHandler = (initOptions) => {
     const { body } = req;
     const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;
 
-    // 令牌校验, 这里的 body 已经在 dk-core 中转为对象
+    // 令牌校验, 这里的 body 已经在 dk-http 中转为对象
     if (!verify(sig, mimePattern.test(contentType) ? stringify(body) : JSON.stringify(body), options.secret)) {
       return hasError('X-Hub-Signature does not match blob signature')
     }
@@ -135,9 +133,7 @@ export const createGithubHandler = (initOptions) => {
       url: req.url,
       path
     }
-    // 与最初设计违背，目前是直接执行，不是通过 emit 事件监听触发
-    // handler.emit(event, emitData)
-    // handler.emit('event', emitData)
+
     return { code: 200, message: 'success', data: emitData }
   }
 

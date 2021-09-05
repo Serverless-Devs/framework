@@ -1,12 +1,22 @@
-const serverless = require('@serverless-devs/fc-http');
-const Koa = require('koa');
-const Router = require("koa-router");
+import serverless from '@serverless-devs/fc-http';
+import Koa from 'koa';
+import Router from "koa-router";
+import koaBody from 'koa-body';
+
+interface IOptions {
+  basePath?: string;
+  request?: Function;
+  response?: Function;
+  binary?: Boolean | Function | Object[]; // 二进制 Binary Mode
+}
 
 const router = new Router()
 const app = new Koa();
 
-const http = (options) => (req, res, context) => serverless(app, options)(req, res, context);
+app.use(koaBody());
+
+const http = (options?: IOptions) => serverless(app, options);
 http.app = app;
 Object.setPrototypeOf(http, router);
 
-export { http, serverless };
+export { http, serverless, IOptions };
