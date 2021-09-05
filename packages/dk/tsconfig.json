@@ -5,5 +5,8 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "include": ["./src/**/*.ts"]
+  "include": [
+    "./src/**/*.ts",
+    "src/http.js"
+  ]
 }
