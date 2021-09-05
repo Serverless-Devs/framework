@@ -35,4 +35,4 @@ const github = (options?: IGithubOptions) => {
   return http(httpOpts);
 }
 
-export default github;
+export = github;
