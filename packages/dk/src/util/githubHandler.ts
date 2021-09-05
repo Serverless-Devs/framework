@@ -62,7 +62,7 @@ export interface IHandler {
   [key: string]: any;
 }
 
-export const createGithubHandler = (initOptions) => {
+export const createGithubHandler = (initOptions = {}) => {
   let options
   // validate type of options
   if (Array.isArray(initOptions)) {

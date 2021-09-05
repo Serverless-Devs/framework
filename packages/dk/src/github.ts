@@ -20,19 +20,18 @@ interface IOptions {
 }
 
 const github = (options?: IGithubOptions) => {
-  const { config = {}, handler, httpOpts = {} } = options;
-  const githubHandler = createGithubHandler(config);
+  const githubHandler = createGithubHandler(options?.config);
 
   http.app.use(async (ctx, next) => {
     const data = await githubHandler(ctx.request);
     ctx.status = data.code;
     ctx.body = data.message;
     ctx.github = data;
-    await handler?.(ctx);
+    await options?.handler?.(ctx);
     next();
   });
 
-  return http(httpOpts);
+  return http(options?.httpOpts);
 }
 
 export = github;
