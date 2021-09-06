@@ -6,7 +6,6 @@ describe('dk-deploy-common', () => {
     const result = generateTablestoreInitializer({
       codeUri: path.resolve(__dirname, 'functions/index'),
       sourceCode: 'functions',
-      cwd: path.resolve(process.cwd(), 'test'),
       app: {},
     });
     expect(result).toBeTruthy();
