@@ -3,10 +3,10 @@
   "compileOnSave": true,
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "skipLibCheck": true,
   },
   "include": [
     "./src/**/*.ts",
-    "src/http.js"
   ]
 }

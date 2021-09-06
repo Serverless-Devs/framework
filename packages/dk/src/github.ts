@@ -1,5 +1,5 @@
 import { createGithubHandler } from './util';
-import { http } from './http';
+import { http, IOptions } from './http';
 
 interface Iconfig {
   path?: string,
@@ -10,13 +10,6 @@ interface IGithubOptions {
   handler?: Function;
   config?: Iconfig | Iconfig[];
   httpOpts?: IOptions;
-}
-
-interface IOptions {
-  basePath?: string;
-  request?: Function;
-  response?: Function;
-  binary?: Boolean | Function | Object[]; // 二进制 Binary Mode
 }
 
 const github = (options?: IGithubOptions) => {

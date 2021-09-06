@@ -23,7 +23,7 @@
     "@serverless-devs/cookies-session": "^0.0.4-alpha.38",
     "@serverless-devs/dk-core": "^0.0.4-alpha.38",
     "@serverless-devs/dk-validator": "^0.0.4-alpha.38",
-    "@serverless-devs/fc-http": "0.0.1",
+    "@serverless-devs/fc-http": "latest",
     "@serverless-devs/mongodb-initialzer-plugin": "^0.0.4-alpha.38",
     "@serverless-devs/tablestore-event-parser": "^0.0.4-alpha.38",
     "@serverless-devs/tablestore-initialzer-plugin": "^0.0.4-alpha.38",
