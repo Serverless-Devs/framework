@@ -17,11 +17,16 @@ export interface IOptions {
   binary?: Boolean | Function | Object[]; // 二进制 Binary Mode
 }
 
+interface IHttp {
+  (options?: IOptions): any;
+  [key: string]: any;
+}
+
 const router = new Router()
 const app = new Koa();
 app.use(koaBody());
 
-const http = (options?: IOptions) => serverless(app, options);
+const http: IHttp = (options?: IOptions) => serverless(app, options);
 http.app = app;
 
 Object.setPrototypeOf(http, router);
