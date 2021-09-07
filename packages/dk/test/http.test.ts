@@ -1,11 +1,11 @@
-import { github } from '../src';
+import { http } from '../src';
 import { mockResponse, mockContext } from './fixtures/mock-data';
 const Http = require('http');
 
 describe('http 测试', () => {
   it('测试：基本事例', (done) => {
     var server = Http.createServer(async (req, res) => {
-      await github()(req, mockResponse, mockContext);
+      await http()(req, mockResponse, mockContext);
       res.end();
     });
 
