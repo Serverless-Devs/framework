@@ -24,13 +24,13 @@ module.exports = {
           activeBasePath: 'docs/tutorial-quickstart',
         },
         {
-          to: 'docs/tutorial-dk/intro/origin',
+          to: 'docs/tutorial-dk/intro/http',
           position: 'left',
           label: 'DK文档',
           activeBasePath: 'docs/tutorial-dk',
         },
         {
-          to: 'docs/tutorial-solution/oss-zip',
+          to: 'docs/tutorial-solution/http',
           position: 'left',
           label: '解决方案',
           activeBasePath: 'docs/tutorial-solution',
