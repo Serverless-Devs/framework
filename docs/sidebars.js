@@ -43,7 +43,8 @@ module.exports = {
         'tutorial-dk/intro/origin',
         'tutorial-dk/intro/quickstart',
         'tutorial-dk/intro/design',
-        'tutorial-dk/intro/route',
+        // 'tutorial-dk/intro/route',
+        'tutorial-dk/intro/http',
         'tutorial-dk/intro/middleware',
       ],
     },
@@ -67,7 +68,14 @@ module.exports = {
   'tutorial-solution': [
     'tutorial-solution/oss-zip',
     'tutorial-solution/idcard-recognition',
-    'tutorial-solution/github',
-    'tutorial-solution/http',
+    {
+      type: 'category',
+      label: 'HTTP 事件',
+      items: [
+        'tutorial-solution/http',
+        'tutorial-solution/serverless',
+        'tutorial-solution/github',
+      ]
+    }
   ],
 };

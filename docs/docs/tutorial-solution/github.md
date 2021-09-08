@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: dk-github  事件监听
+title: dk-github 监听 Webooks
 ---
 
 ## 介绍
@@ -8,7 +8,7 @@ title: dk-github  事件监听
 
 #### 场景：
 - 个人博客
-如： `github` 仓库 `README.md` 文档更新 => 触发 `Github Webhooks` => 触发 `dk-github` 函数 `onEvent` 事件=> 同步更新博客
+如： `github` 仓库 `README.md` 文档更新 => 触发 `Github Webhooks` => 触发 `dk-github` 函数 => 同步更新博客
 
 ## 快速体验
 ### 第一步
@@ -23,15 +23,9 @@ title: dk-github  事件监听
 ```
 const { github } = require('@serverless-devs/dk');
 
-const baseHandler = (ctx) => {
-  return {
-    json: ctx.req.github,
-  };
-};
-
-const handler = github.onEvent({
+const handler = github({
   handler: (ctx) => {
-    return { json: ctx.req.github }
+    // 自定义内容
   },
   config: { path: '/webhooks' }
 });
@@ -50,13 +44,14 @@ exports.handler = handler;
 ### 第三步
 - 将任意代码关联到 `dk-github-demo` Github 仓库。
 > 当 `Github` 收到 `Repo` 的操作行为时，会向指定的 `Payload URL` 发送一个带有描述操作内容的 `Post` 请求。
-> 如下，当代码发生事件，如 `issues`、`push` 操作时，函数将监听并执行 `onEvent` 方法。
+> 如下，当代码发生事件，如 `issues`、`push` 操作时，函数将监听并执行 handler。
 
 ```
-const handler = github.onEvent({
+const handler = github({
   handler: (ctx) => {
-    console.log('监听event', ctx.req.github.event),
-    return { json: ctx.req.github }
+    if (ctx.code  === 200) {
+      console.log('监听event', ctx.github.data.event),
+    }
   }
   config: { path: '/webhooks' }
 });
@@ -70,24 +65,42 @@ const handler = github.onEvent({
 const { github } = require('@serverless-devs/dk');
 const github_secret = process.env.github_secret;
 
-const handler = github.onEvent({
+const handler = github({
   handler: (ctx) => {
-    return { json: ctx.req.github }
-  },
+    if (ctx.code  === 200) {
+      console.log('监听成功'),
+    }
+  }
   config: { path: '/webhooks', secret: github_secret }
 });
 
 exports.handler = handler;
 ```
 
-## 常见事件
-event 事件 | 类型 | 描述
+## Github Options Apis
+事件 | 类型 | 描述
 ---- | --- | ---
-onEvent     | Function(ctx) => void      | github event事件
+handler    | Function(ctx) => void      | github event事件
+config     | Object      | github 配置
+httpOpts   | Object      | http 函数 options 配置，具体见 [& HTTP 设计](/docs/tutorial-dk/intro/http)
 
-通过 `const { github } = ctx.req;`， 可拿到当前 github 事件携带的内容。
+### Apis： Config
+参数 |说明
+--- | ---
+path | 请求路径
+secret | 令牌密匙
+
+### Apis： Handler
+通过 `const { github } = ctx;`， 可拿到当前 github 事件携带的内容。
 
 ## Event Github
+type |说明
+--- | ---
+code | 返回code
+message | 消息提示
+data | github 监听成功后，返回 github event 所有数据
+
+## Github.Data
 type |说明
 --- | ---
 event | X-Github-Event 请求头， 指当前的事件类型，如 `issues`、`push` 等
@@ -95,5 +108,5 @@ id    | X-Github-Delivery 请求头，请求ID
 payload | 请求体，包含事件所有的详细信息
 protocol  | --
 host  | --
-url | --
 path  | 接口，默认为`/`
+url | --
