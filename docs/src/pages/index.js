@@ -16,7 +16,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/tutorial-quickstart/progressive/react"
+            to="/docs/tutorial-dk/intro/react"
           >
             DK Tutorial - 1min ⏱️
           </Link>

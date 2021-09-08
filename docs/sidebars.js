@@ -7,7 +7,6 @@
 
 module.exports = {
   'tutorial-quickstart': [
-    'tutorial-quickstart/progressive/react',
     //   {
     //     type: 'category',
     //     label: '渐进式体验',
@@ -37,6 +36,7 @@ module.exports = {
     //   'tutorial-quickstart/faq',
   ],
   'tutorial-dk': [
+    'tutorial-dk/intro/react',
     'tutorial-dk/intro/http',
     // {
     //   type: 'category',

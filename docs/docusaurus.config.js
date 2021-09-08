@@ -17,14 +17,14 @@ module.exports = {
         src: 'img/logo.svg',
       },
       items: [
+        // {
+        //   to: 'docs/tutorial-quickstart/progressive/react',
+        //   position: 'left',
+        //   label: '快速开始',
+        //   activeBasePath: 'docs/tutorial-quickstart',
+        // },
         {
-          to: 'docs/tutorial-quickstart/progressive/react',
-          position: 'left',
-          label: '快速开始',
-          activeBasePath: 'docs/tutorial-quickstart',
-        },
-        {
-          to: 'docs/tutorial-dk/intro/http',
+          to: 'docs/tutorial-dk/intro/react',
           position: 'left',
           label: 'DK文档',
           activeBasePath: 'docs/tutorial-dk',
