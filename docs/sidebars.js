@@ -76,7 +76,7 @@ module.exports = {
       items: [
         'tutorial-solution/http',
         'tutorial-solution/serverless',
-        'tutorial-solution/github',
+        // 'tutorial-solution/github',
       ]
     }
   ],
