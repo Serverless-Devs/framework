@@ -120,7 +120,8 @@ export const createGithubHandler = (initOptions = {}) => {
     const mimePattern = /^application\/x-www-form-urlencoded(;.*)?$/;
 
     // 令牌校验, 这里的 body 已经在 dk-http 中转为对象
-    if (!verify(sig, mimePattern.test(contentType) ? stringify(body) : JSON.stringify(body), options.secret)) {
+    // qs.stringify空格会被转换为 '%20'，而 github 发起的数据中空格被转换为 '+'
+    if (!verify(sig, mimePattern.test(contentType) ? stringify(body).replace(new RegExp('%20', 'gm'), '+') : JSON.stringify(body), options.secret)) {
       return hasError('X-Hub-Signature does not match blob signature')
     }
 
