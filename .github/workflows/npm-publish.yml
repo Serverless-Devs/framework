@@ -13,8 +13,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - run: npm install
       - run: lerna bootstrap
-      - run: npm run build
-      - run: lerna publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - run: lerna run build
+#       - run: lerna publish
+#         env:
+#           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
