@@ -51,7 +51,7 @@ const sandbox = async () => {
       process.env.FC_FUNC_CODE_PATH = 'true';
       next();
     })
-    .use('/api', async (req, res) => {
+    .use('/', async (req, res) => {
       const fileModule = require(path.join(currentPath, '.s', codeUri, '/index'));
       const context = { credentials };
       if (fileModule.initializer) {
@@ -60,7 +60,7 @@ const sandbox = async () => {
       fileModule.handler(req, res, context);
     });
   app.listen(port, () => {
-    const url = `http://localhost:${port}/api`
+    const url = `http://localhost:${port}`
     console.log(`the server listening at ${url}`);
   });
 };

@@ -37,7 +37,7 @@ cd functions && npm run serve
 
 ![image](https://img.alicdn.com/imgextra/i3/O1CN012LvND61nSLsSQhNDT_!!6000000005088-2-tps-1000-360.png)
 
-访问 `http://localhost:7002/api` 可以看到如下界面
+访问 `http://localhost:7002` 可以看到如下界面
 
 ![image](https://img.alicdn.com/imgextra/i4/O1CN014aT0k31V1dgtImoX0_!!6000000002593-1-tps-997-554.gif)
 
