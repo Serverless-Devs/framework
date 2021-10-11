@@ -1,3 +1,4 @@
+const { getEnvs } = require('./utils');
 const fs = require('fs-extra');
 const path = require('path');
 const core = require('@serverless-devs/core');
@@ -30,18 +31,18 @@ const sandbox = async () => {
 
   const findKey = args.projectName || Object.keys(content.services)[0];
   const { props } = content.services[findKey];
-  const environmentVariables = get(props, 'function.environmentVariables', {});
 
-  // 添加环境变量
-  for (const i in environmentVariables) {
-    process.env[i] = environmentVariables[i]
-  }
-  // todo 暂时用的是 devsapp/fc 组件，后续用jamstack-api 后 codeUri 需要改成 sourceCode
   const { codeUri } = props.function;
   fs.ensureSymlinkSync(
     path.join(currentPath, codeUri),
     path.join(currentPath, '.s', codeUri),
   );
+
+  // 添加环境变量
+  const env = getEnvs({ path: path.resolve('..', '.env') });
+  for (const i in env) {
+    process.env[i] = env[i]
+  }
 
   /**
    * 启动服务
