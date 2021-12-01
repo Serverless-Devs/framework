@@ -5,7 +5,6 @@ const core = require('@serverless-devs/core');
 const express = require('express');
 const { portIsOccupied } = require('@serverless-devs/dk-util');
 const app = express();
-const get = require('lodash.get');
 
 const sandbox = async () => {
   const args = process.env;
@@ -29,15 +28,6 @@ const sandbox = async () => {
     accessKeySecret: credentials.AccessKeySecret,
   };
 
-  const findKey = args.projectName || Object.keys(content.services)[0];
-  const { props } = content.services[findKey];
-
-  const { codeUri } = props.function;
-  fs.ensureSymlinkSync(
-    path.join(currentPath, codeUri),
-    path.join(currentPath, '.s', codeUri),
-  );
-
   // 添加环境变量
   const env = getEnvs({ path: path.resolve('..', '.env') });
   for (const i in env) {
@@ -53,7 +43,7 @@ const sandbox = async () => {
       next();
     })
     .use('/', async (req, res) => {
-      const fileModule = require(path.join(currentPath, '.s', codeUri, '/index'));
+      const fileModule = require(path.join(path.resolve(), '/index'));
       const context = { credentials };
       if (fileModule.initializer) {
         await fileModule.initializer(context, () => { });
